@@ -1,2 +1,2 @@
 # Projectwerk
-Het projectwerk-werk over het coockiemonster
+Het projectwerk-werk over het cookiemonster
