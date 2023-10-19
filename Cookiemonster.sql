@@ -1,0 +1,13 @@
+CREATE TABLE Recipe (RecipeId int IDENTITY NOT NULL, Title nvarchar(255) NOT NULL, Description nvarchar(max) NOT NULL, TotalUpvotes int NOT NULL, TotalDownvotes int NOT NULL, CreationDate datetime2(7) NOT NULL, CategoryId int NOT NULL, UserId int NOT NULL, PRIMARY KEY (RecipeId));
+CREATE TABLE Image (ImageId int IDENTITY NOT NULL, URI nvarchar(max) NOT NULL, RecipeId int NOT NULL, PRIMARY KEY (ImageId));
+CREATE TABLE Category (CategoryId int IDENTITY NOT NULL, Name nvarchar(255) NOT NULL, Description nvarchar(max) NOT NULL, BannerURI nvarchar(max) NOT NULL, StartDate datetime2(7) NOT NULL, EndDate datetime2(7) NOT NULL, PRIMARY KEY (CategoryId));
+CREATE TABLE [User] (UserId int IDENTITY NOT NULL, Username nvarchar(255) NOT NULL, Password nvarchar(255) NOT NULL, Role tinyint NOT NULL, PRIMARY KEY (UserId));
+CREATE TABLE Vote (Vote bit NOT NULL, Timestamp datetime2(7) NOT NULL, RecipeId int NOT NULL, UserId int NOT NULL, PRIMARY KEY (RecipeId, UserId));
+CREATE TABLE Todo (UserId int NOT NULL, RecipeId int NOT NULL, PRIMARY KEY (UserId, RecipeId));
+ALTER TABLE Image ADD CONSTRAINT FKImage300869 FOREIGN KEY (RecipeId) REFERENCES Recipe (RecipeId);
+ALTER TABLE Recipe ADD CONSTRAINT FKRecipe132963 FOREIGN KEY (CategoryId) REFERENCES Category (CategoryId);
+ALTER TABLE Recipe ADD CONSTRAINT FKRecipe762748 FOREIGN KEY (UserId) REFERENCES [User] (UserId);
+ALTER TABLE Todo ADD CONSTRAINT FKTodo898936 FOREIGN KEY (UserId) REFERENCES [User] (UserId);
+ALTER TABLE Todo ADD CONSTRAINT FKTodo152364 FOREIGN KEY (RecipeId) REFERENCES Recipe (RecipeId);
+ALTER TABLE Vote ADD CONSTRAINT FKVote212432 FOREIGN KEY (RecipeId) REFERENCES Recipe (RecipeId);
+ALTER TABLE Vote ADD CONSTRAINT FKVote959004 FOREIGN KEY (UserId) REFERENCES [User] (UserId);
