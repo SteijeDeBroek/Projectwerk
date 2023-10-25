@@ -2,7 +2,7 @@ import React from "react";
 import UploadComponent from "../components/UploadComponent";
 
 const LoginPage = () => {
-  return <UploadComponent />;
+  return <div>LoginPage</div>;
 };
 
 export default LoginPage;

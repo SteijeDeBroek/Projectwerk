@@ -1,7 +1,8 @@
 import React from "react";
+import UploadComponent from "../components/UploadComponent";
 
 const UploadPage = () => {
-  return <div>UploadPage</div>;
+  return <UploadComponent />;
 };
 
 export default UploadPage;

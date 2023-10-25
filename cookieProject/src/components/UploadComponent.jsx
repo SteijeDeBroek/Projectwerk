@@ -4,7 +4,7 @@
 import React from "react";
 import { useState } from "react";
 
-function Upload() {
+function UploadComponent() {
   const [file, setFile] = useState();
 
   function handleFile(event) {
@@ -37,4 +37,4 @@ function Upload() {
   );
 }
 
-export default Upload;
+export default UploadComponent;
