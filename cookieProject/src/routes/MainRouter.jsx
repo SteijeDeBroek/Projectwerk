@@ -8,7 +8,7 @@ const MainRouter = () => {
   return (
     <Routes>
       {pages.map((page) => {
-        return RouteTo(page);
+        return RouteTo(page, page.path);
       })}
     </Routes>
   );

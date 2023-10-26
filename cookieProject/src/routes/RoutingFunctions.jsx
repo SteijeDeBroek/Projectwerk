@@ -7,11 +7,11 @@ const IsValidLogin = (pageElement) => {
   return LoggedIn ? pageElement : <LoginPage />;
 };
 
-export const RouteTo = (page) => {
+export const RouteTo = (page, key) => {
   const pageElement = page.element;
   const routePageElement = page.shouldLogin
     ? IsValidLogin(pageElement)
     : pageElement;
 
-  return <Route path={page.path} element={routePageElement} />;
+  return <Route path={page.path} element={routePageElement} key={key} />;
 };

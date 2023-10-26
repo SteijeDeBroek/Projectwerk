@@ -1,8 +1,8 @@
 import React from "react";
-import UploadComponent from "../components/UploadComponent";
+import LoginComponent from "../components/LoginComponent";
 
 const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return <LoginComponent />;
 };
 
 export default LoginPage;

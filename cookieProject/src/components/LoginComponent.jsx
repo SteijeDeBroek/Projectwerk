@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-const Login = () => {
+
+const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
@@ -10,7 +11,7 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label for="e-mail">E-mail</label>
+      <label htmlFor="e-mail">E-mail</label>
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -19,7 +20,7 @@ const Login = () => {
         id="e-mail"
         name="e-mail"
       />
-      <label for="wachtwoord">Wachtwoord</label>
+      <label htmlFor="wachtwoord">Wachtwoord</label>
       <input
         value={pass}
         onChange={(e) => setPass(e.target.value)}
@@ -33,4 +34,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginComponent;
