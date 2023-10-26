@@ -3,6 +3,7 @@
 // exeptie op 0 fotos
 import React from "react";
 import { useState } from "react";
+import "../css/Upload.css";
 
 function UploadComponent() {
   const [file, setFile] = useState();
@@ -11,6 +12,7 @@ function UploadComponent() {
     setFile(event.target.files[0]);
     console.log(event.target.files[0]);
   }
+
   function handleUpload() {
     const formData = new FormData();
     formData.append("file", file);
@@ -26,11 +28,35 @@ function UploadComponent() {
         console.error("Error: ", error);
       });
   }
+
   return (
-    <div>
+    <div className="upload-container">
       <h2>Upload Files</h2>
       <form onSubmit={handleUpload}>
-        <input type="file" name="file" onChange={handleFile} />
+        <input
+          className="upload-input"
+          type="text"
+          name="title"
+          placeholder="Voeg een titel toe"
+        />
+        <input
+          className="upload-input"
+          type="file"
+          name="file"
+          onChange={handleFile}
+        />
+        <input
+          className="upload-input"
+          type="file"
+          name="file2"
+          onChange={handleFile}
+        />
+        <input
+          className="upload-input"
+          type="file"
+          name="file3"
+          onChange={handleFile}
+        />
         <button>Upload</button>
       </form>
     </div>
