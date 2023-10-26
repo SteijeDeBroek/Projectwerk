@@ -5,3 +5,4 @@ C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookie
 C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.RazorAssemblyInfo.cache
 C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.RazorAssemblyInfo.cs
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.csproj.AssemblyReference.cache
