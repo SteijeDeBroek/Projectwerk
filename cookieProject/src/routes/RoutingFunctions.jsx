@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 const LoggedIn = true; // TODO: Test if logged in
 
 const IsValidLogin = (pageElement) => {
-  return LoggedIn ? pageElement : <LoginPage />;
+  return LoggedIn ? pageElement : <LoginPage />; // FIXME: This should not return LoginPage, it should navigate to LoginPage instead
 };
 
 export const RouteTo = (page, key) => {
