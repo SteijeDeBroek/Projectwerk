@@ -5,30 +5,30 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email);
+    console.log(email); // TODO: API aanspreken
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label for="email">email</label>
+      <label for="e-mail">E-mail</label>
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         type="email"
         placeholder="youremail@gmail.com"
-        id="email"
-        name="email"
+        id="e-mail"
+        name="e-mail"
       />
-      <label for="password">password</label>
+      <label for="wachtwoord">Wachtwoord</label>
       <input
         value={pass}
         onChange={(e) => setPass(e.target.value)}
         type="password"
         placeholder="********"
-        id="password"
-        name="password"
+        id="wachtwoord"
+        name="wachtwoord"
       />
-      <button type="submit">Log In</button>
+      <button type="submit">Aanmelden</button>
     </form>
   );
 };
