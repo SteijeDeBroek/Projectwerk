@@ -1,0 +1,7 @@
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.AssemblyInfoInputs.cache
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.AssemblyInfo.cs
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.csproj.CoreCompileInputs.cache
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.RazorAssemblyInfo.cache
+C:\Users\Stan\Documents\School\Projectwerk\Cookiemonster\obj\Debug\net7.0\Cookiemonster.RazorAssemblyInfo.cs
