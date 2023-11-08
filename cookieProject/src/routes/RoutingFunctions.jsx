@@ -1,17 +1,24 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 
-const LoggedIn = true; // TODO: Test if logged in
+const loginTest = (page, key) => {
+  const LoggedIn = true; // TODO: Test if logged in
 
-const IsValidLogin = (pageElement) => {
-  return LoggedIn ? pageElement : <LoginPage />; // FIXME: This should not return LoginPage, it should navigate to LoginPage instead
+  return LoggedIn ? (
+    <Route path={page.path} element={page.element} key={key} />
+  ) : (
+    <Route
+      path={page.path}
+      element={<Navigate replace to="/login" />}
+      key={key}
+    />
+  );
 };
 
 export const RouteTo = (page, key) => {
-  const pageElement = page.element;
-  const routePageElement = page.shouldLogin
-    ? IsValidLogin(pageElement)
-    : pageElement;
-
-  return <Route path={page.path} element={routePageElement} key={key} />;
+  return page.shouldLogin ? (
+    loginTest(page, key)
+  ) : (
+    <Route path={page.path} element={page.element} key={key} />
+  );
 };
