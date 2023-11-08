@@ -1,4 +1,5 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
@@ -9,6 +10,11 @@ import NotFoundPage from "../pages/NotFoundPage";
 export const pages = [
   {
     path: "/",
+    element: <Navigate replace to="/home" />,
+    shouldLogin: false,
+  },
+  {
+    path: "/home",
     element: <HomePage />,
     shouldLogin: false,
   },
