@@ -57,7 +57,9 @@ function UploadComponent() {
           name="file3"
           onChange={handleFile}
         />
-        <button>Upload</button>
+        <button className="border border-blue-300 rounded bg-blue-300">
+          Upload
+        </button>
       </form>
     </div>
   );

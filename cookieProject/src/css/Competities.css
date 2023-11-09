@@ -1,0 +1,5 @@
+.winnaars {
+    display: flex;
+    justify-content: center;
+    flex: 100%;
+}
