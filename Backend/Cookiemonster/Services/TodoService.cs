@@ -1,9 +1,10 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 
 
 namespace Cookiemonster.Services
 {
-    public class TodoService
+    public class TodoService : IDeletable
     {
         private readonly Repository<Todo> _todoRepository;
 

@@ -1,9 +1,9 @@
-﻿using Cookiemonster.Services;
+﻿using Cookiemonster.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Services
 {
-    public class Repository<T> where T : class
+    public class Repository<T> where T : class, IDeletable
     {
         private readonly AppDbContext _context;
         private DbSet<T> _dbSet;
@@ -14,9 +14,9 @@ namespace Cookiemonster.Services
             _dbSet = context.Set<T>();
         }
 
-        public T Get(int id)
+        public T Get(params int[] ids)
         {
-            return _dbSet.Find(id);
+            return _dbSet.Find(ids);
         }
 
         public List<T> GetAll()
@@ -38,13 +38,19 @@ namespace Cookiemonster.Services
             return entity;
         }
 
-        public bool Delete(int id)
+        public bool Delete(params int[] ids)
         {
-            var entity = _dbSet.Find(id);
+            var entity = _dbSet.Find(ids);
             if (entity == null)
                 return false;
 
-            _dbSet.Remove(entity);
+            if (entity.isDeletable)
+            {
+                _dbSet.Remove(entity);
+            } else
+            {
+                entity.Delete();
+            }
             _context.SaveChanges();
             return true;
         }

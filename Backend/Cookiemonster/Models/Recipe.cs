@@ -15,5 +15,6 @@
         public List<Vote> Votes { get; set; }
         public List<Todo> Todos { get; set; }
         public List<Image> Images { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

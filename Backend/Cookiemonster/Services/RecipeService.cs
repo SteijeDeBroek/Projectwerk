@@ -1,8 +1,9 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 
 namespace Cookiemonster.Services
 {
-    public class RecipeService
+    public class RecipeService : IDeletable
     {
         private readonly Repository<Recipe> _recipeRepository;
 
@@ -33,7 +34,12 @@ namespace Cookiemonster.Services
 
         public bool DeleteRecipe(int id)
         {
-            return _recipeRepository.Delete(id);
+            var entity = _recipeRepository.Get(id);
+            if (entity == null)
+                return false;
+
+            entity.isDeleted = true;
+            return true;
         }
     }
 }

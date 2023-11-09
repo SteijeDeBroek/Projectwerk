@@ -1,9 +1,10 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Services
 {
-    public class VoteService
+    public class VoteService : IDeletable
     {
         private readonly Repository<Vote> _voteRepository;
 
@@ -29,7 +30,12 @@ namespace Cookiemonster.Services
 
         public bool DeleteVote(int recipeId, int userId)
         {
-            return _voteRepository.Delete(recipeId, userId); // Aangepast om twee argumenten te accepteren
+            var entity = _voteRepository.Get(recipeId, userId);
+            if (entity == null)
+                return false;
+
+            entity.isDeleted = true;
+            return true;
         }
     }
 }

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Cookiemonster.props" />
+</Project>

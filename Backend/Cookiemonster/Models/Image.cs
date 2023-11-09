@@ -6,5 +6,6 @@
         public string URI { get; set; }
         public int RecipeId { get; set; }
         public Recipe Recipe { get; set; }
+        public bool isDeleted { get; set; }
     }
 }
