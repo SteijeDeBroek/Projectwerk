@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/Login.css";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
@@ -11,8 +12,11 @@ const LoginComponent = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="e-mail">E-mail</label>
+      <label className="" htmlFor="e-mail">
+        E-mail
+      </label>
       <input
+        className="border border-gray-400 rounded"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         type="email"
@@ -22,6 +26,7 @@ const LoginComponent = () => {
       />
       <label htmlFor="wachtwoord">Wachtwoord</label>
       <input
+        className="border border-gray-400 rounded"
         value={pass}
         onChange={(e) => setPass(e.target.value)}
         type="password"
@@ -29,7 +34,12 @@ const LoginComponent = () => {
         id="wachtwoord"
         name="wachtwoord"
       />
-      <button type="submit">Aanmelden</button>
+      <button
+        className="border border-blue-400 rounded  bg-blue-300"
+        type="submit"
+      >
+        Aanmelden
+      </button>
     </form>
   );
 };
