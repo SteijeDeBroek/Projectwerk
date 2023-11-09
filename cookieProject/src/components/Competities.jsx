@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Competities.css";
+import "../css/Competities.css"; /* Hij leest de css file niet? */
 
 const Competities = () => {
   return (
@@ -12,6 +12,7 @@ const Competities = () => {
               height="100px"
               width="120px"
               alt=""
+              className="flex justify-items-center"
             />
             <p>Naam Gerecht plaats 1</p>
           </div>
