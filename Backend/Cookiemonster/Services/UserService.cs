@@ -4,7 +4,7 @@ using Cookiemonster.Models;
 
 namespace Cookiemonster.Services
 {
-    public class UserService : IDeletable
+    public class UserService
     {
         private readonly Repository<User> _userRepository;
 
@@ -35,12 +35,7 @@ namespace Cookiemonster.Services
 
         public bool DeleteUser(int id)
         {
-            var entity = _userRepository.Get(id);
-            if (entity == null)
-                return false;
-
-            entity.isDeleted = true;
-            return true;
+            return _userRepository.Delete(id);
         }
     }
 }

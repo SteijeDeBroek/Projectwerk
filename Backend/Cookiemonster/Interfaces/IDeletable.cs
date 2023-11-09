@@ -3,7 +3,6 @@
     public interface IDeletable
     {
         public bool isDeletable { get; }
-
-        public bool Delete();
+        public bool isDeleted { get; set; }
     }
 }

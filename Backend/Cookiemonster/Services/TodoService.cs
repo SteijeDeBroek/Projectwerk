@@ -4,7 +4,7 @@ using Cookiemonster.Models;
 
 namespace Cookiemonster.Services
 {
-    public class TodoService : IDeletable
+    public class TodoService
     {
         private readonly Repository<Todo> _todoRepository;
 

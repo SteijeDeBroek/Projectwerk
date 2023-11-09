@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Services
 {
-    public class VoteService : IDeletable
+    public class VoteService
     {
         private readonly Repository<Vote> _voteRepository;
 
@@ -20,7 +20,7 @@ namespace Cookiemonster.Services
 
         public Vote GetVote(int recipeId, int userId)
         {
-            return _voteRepository.Get(recipeId, userId); // Aangepast om twee argumenten te accepteren
+            return _voteRepository.Get(recipeId, userId);
         }
 
         public List<Vote> GetAllVotes()
@@ -30,12 +30,7 @@ namespace Cookiemonster.Services
 
         public bool DeleteVote(int recipeId, int userId)
         {
-            var entity = _voteRepository.Get(recipeId, userId);
-            if (entity == null)
-                return false;
-
-            entity.isDeleted = true;
-            return true;
+            return _voteRepository.Delete(recipeId, userId);
         }
     }
 }

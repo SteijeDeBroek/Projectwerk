@@ -1,6 +1,8 @@
-﻿namespace Cookiemonster.Models
+﻿using Cookiemonster.Interfaces;
+
+namespace Cookiemonster.Models
 {
-    public class Recipe
+    public class Recipe : IDeletable
     {
         public int RecipeId { get; set; }
         public string Title { get; set; }
@@ -16,5 +18,6 @@
         public List<Todo> Todos { get; set; }
         public List<Image> Images { get; set; }
         public bool isDeleted { get; set; }
+        public bool isDeletable { get; } = false;
     }
 }

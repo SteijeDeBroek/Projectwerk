@@ -49,7 +49,7 @@ namespace Cookiemonster.Services
                 _dbSet.Remove(entity);
             } else
             {
-                entity.Delete();
+                entity.isDeleted = true;
             }
             _context.SaveChanges();
             return true;

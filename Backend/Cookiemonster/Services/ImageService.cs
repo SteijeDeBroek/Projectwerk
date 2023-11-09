@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Services
 {
-    public class ImageService : IDeletable
+    public class ImageService
     {
         private readonly Repository<Image> _imageRepository;
 
@@ -35,12 +35,7 @@ namespace Cookiemonster.Services
 
         public bool DeleteImage(int id)
         {
-            var entity = _imageRepository.Get(id);
-            if (entity == null)
-                return false;
-
-            entity.isDeleted = true;
-            return true;
+            return _imageRepository.Delete(id);
         }
     }
 }
