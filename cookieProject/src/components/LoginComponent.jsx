@@ -11,8 +11,11 @@ const LoginComponent = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label className="" htmlFor="e-mail">
+    <form
+      className="flex items-center justify-center p-10 "
+      onSubmit={handleSubmit}
+    >
+      <label className="p-5" htmlFor="e-mail">
         E-mail
       </label>
       <input
@@ -24,7 +27,9 @@ const LoginComponent = () => {
         id="e-mail"
         name="e-mail"
       />
-      <label htmlFor="wachtwoord">Wachtwoord</label>
+      <label className="p-5" htmlFor="wachtwoord">
+        Wachtwoord
+      </label>
       <input
         className="border border-gray-400 rounded"
         value={pass}
@@ -35,7 +40,7 @@ const LoginComponent = () => {
         name="wachtwoord"
       />
       <button
-        className="border border-blue-400 rounded  bg-blue-300"
+        className="border border-blue-400 rounded  bg-blue-300 "
         type="submit"
       >
         Aanmelden

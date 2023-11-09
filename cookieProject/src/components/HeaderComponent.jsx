@@ -18,7 +18,7 @@ const HeaderComponent = () => {
   return (
     <header>
       <nav aria-label="Global">
-        <ul className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+        <ul className="border border-blue-400 rounded p-5  bg-blue-300  mx-auto flex flex-1 max-w-7xl items-center justify-between p-6 lg:px-8">
           {pages.map((page) => {
             return generateLink(page);
           })}

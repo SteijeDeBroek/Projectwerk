@@ -1,7 +1,13 @@
 import React from "react";
+import HomeBanner from "../components/HomeBanner";
+import Competities from "../components/Competities";
 
 const HomePage = () => {
-  return <div>Home Test</div>;
+  return (
+    <>
+      <HomeBanner />,<Competities />
+    </>
+  );
 };
 
 export default HomePage;
