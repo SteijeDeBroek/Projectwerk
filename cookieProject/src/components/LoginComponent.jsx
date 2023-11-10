@@ -11,8 +11,9 @@ const LoginComponent = () => {
 
   return (
     <form
-      className="flex items-center justify-center p-10 "
+      className="flex items-center justify-center p-10 border border-blue-400 rounded  "
       onSubmit={handleSubmit}
+      style={{ margin: "50px" }}
     >
       <label className="p-5" htmlFor="e-mail">
         E-mail
@@ -39,7 +40,7 @@ const LoginComponent = () => {
         name="wachtwoord"
       />
       <button
-        className="border border-blue-400 rounded  bg-blue-300 "
+        className="border border-blue-400 rounded  bg-blue-300 hover:bg-blue-600 focus:bg-blue-600 "
         type="submit"
       >
         Aanmelden

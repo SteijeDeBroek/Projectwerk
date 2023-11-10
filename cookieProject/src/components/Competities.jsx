@@ -10,11 +10,11 @@ const Competities = () => {
             <img
               src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ro1FXXYtBQYAX-Oy3eX&_nc_ht=scontent-bru2-1.xx&oh=00_AfDYuTQDKDVZhM4A8yQ8q2On0gFMzH61-0FwHzhCMenSFg&oe=6552DB2F"
               height="100px"
-              width="120px"
+              width="150px"
               alt=""
-              className="flex justify-items-center"
+              className="flex justify-items-center hover:h-68 hover:w-44 cursor-pointer"
             />
-            <p>Naam Gerecht plaats 1</p>
+            <p className="font-sans font-semibold">Naam Gerecht plaats 1</p>
           </div>
         </div>
         <div id="winnaars" className="border border-black rounded">
@@ -23,8 +23,9 @@ const Competities = () => {
             height="100px"
             width="120px"
             alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
-          <p>Naam Gerecht plaats 2</p>
+          <p className="font-light">Naam Gerecht plaats 2</p>
         </div>
         <div id="winnaars" className="border border-black rounded">
           <img
@@ -32,8 +33,9 @@ const Competities = () => {
             height="100px"
             width="120px"
             alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
-          <p>Naam Gerecht plaats 3</p>
+          <p className="font-light">Naam Gerecht plaats 3</p>
         </div>
         <div id="winnaars" className="border border-black rounded">
           <img
@@ -41,8 +43,9 @@ const Competities = () => {
             height="100px"
             width="120px"
             alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
-          <p>Naam Gerecht plaats 4</p>
+          <p className=" font-extralight">Naam Gerecht plaats 4</p>
         </div>
       </div>
 
@@ -51,8 +54,19 @@ const Competities = () => {
           <img
             src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ro1FXXYtBQYAX-Oy3eX&_nc_ht=scontent-bru2-1.xx&oh=00_AfDYuTQDKDVZhM4A8yQ8q2On0gFMzH61-0FwHzhCMenSFg&oe=6552DB2F"
             height="100px"
+            width="150px"
+            alt=""
+            className="hover:h-68 hover:w-44 cursor-pointer"
+          />
+          <p className="font-sans font-semibold">Naam Gerecht</p>
+        </div>
+        <div id="winnaars" className="border border-black rounded">
+          <img
+            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ro1FXXYtBQYAX-Oy3eX&_nc_ht=scontent-bru2-1.xx&oh=00_AfDYuTQDKDVZhM4A8yQ8q2On0gFMzH61-0FwHzhCMenSFg&oe=6552DB2F"
+            height="100px"
             width="120px"
             alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
           <p>Naam Gerecht</p>
         </div>
@@ -62,6 +76,7 @@ const Competities = () => {
             height="100px"
             width="120px"
             alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
           <p>Naam Gerecht</p>
         </div>
@@ -71,15 +86,7 @@ const Competities = () => {
             height="100px"
             width="120px"
             alt=""
-          />
-          <p>Naam Gerecht</p>
-        </div>
-        <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ro1FXXYtBQYAX-Oy3eX&_nc_ht=scontent-bru2-1.xx&oh=00_AfDYuTQDKDVZhM4A8yQ8q2On0gFMzH61-0FwHzhCMenSFg&oe=6552DB2F"
-            height="100px"
-            width="120px"
-            alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
           <p>Naam Gerecht</p>
         </div>
@@ -89,8 +96,19 @@ const Competities = () => {
           <img
             src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ro1FXXYtBQYAX-Oy3eX&_nc_ht=scontent-bru2-1.xx&oh=00_AfDYuTQDKDVZhM4A8yQ8q2On0gFMzH61-0FwHzhCMenSFg&oe=6552DB2F"
             height="100px"
+            width="150px"
+            alt=""
+            className="hover:h-68 hover:w-44 cursor-pointer"
+          />
+          <p className="font-sans font-semibold">Naam Gerecht</p>
+        </div>
+        <div id="winnaars" className="border border-black rounded">
+          <img
+            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ro1FXXYtBQYAX-Oy3eX&_nc_ht=scontent-bru2-1.xx&oh=00_AfDYuTQDKDVZhM4A8yQ8q2On0gFMzH61-0FwHzhCMenSFg&oe=6552DB2F"
+            height="100px"
             width="120px"
             alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
           <p>Naam Gerecht</p>
         </div>
@@ -100,6 +118,7 @@ const Competities = () => {
             height="100px"
             width="120px"
             alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
           <p>Naam Gerecht</p>
         </div>
@@ -109,15 +128,7 @@ const Competities = () => {
             height="100px"
             width="120px"
             alt=""
-          />
-          <p>Naam Gerecht</p>
-        </div>
-        <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ro1FXXYtBQYAX-Oy3eX&_nc_ht=scontent-bru2-1.xx&oh=00_AfDYuTQDKDVZhM4A8yQ8q2On0gFMzH61-0FwHzhCMenSFg&oe=6552DB2F"
-            height="100px"
-            width="120px"
-            alt=""
+            className="hover:h-60 hover:w-36 cursor-pointer"
           />
           <p>Naam Gerecht</p>
         </div>
