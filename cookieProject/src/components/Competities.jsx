@@ -14,7 +14,9 @@ const Competities = () => {
               alt=""
               className="hover:h-68 hover:w-44 cursor-pointer"
             />
-            <p className="font-sans font-semibold">Naam Gerecht</p>
+            <p className="font-sans font-semibold text-clip">
+              Naam Gerecht 1 met lasagna
+            </p>
           </div>
         </div>
         <div id="winnaars" className="border border-black rounded">
