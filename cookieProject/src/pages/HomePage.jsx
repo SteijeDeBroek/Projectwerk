@@ -1,11 +1,11 @@
 import React from "react";
-import HomeBanner from "../components/HomeBanner";
-import Competities from "../components/Competities";
+import HomeBannerComponent from "../components/HomeBannerComponent";
+import CompetitiesComponent from "../components/CompetitiesComponent";
 
 const HomePage = () => {
   return (
     <>
-      <HomeBanner />,<Competities />
+      <HomeBannerComponent />,<CompetitiesComponent />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/Competities.css"; /* Hij leest de css file niet? */
 
-const Competities = () => {
+const CompetitiesComponent = () => {
   return (
     <div className="p-10">
       <div className="flex items-center justify-between p-10 m-5 border border-orange-400 bg-orange-300 rounded">
@@ -139,4 +139,4 @@ const Competities = () => {
   );
 };
 
-export default Competities;
+export default CompetitiesComponent;
