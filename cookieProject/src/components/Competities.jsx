@@ -6,15 +6,15 @@ const Competities = () => {
     <div className="p-10">
       <div className="flex items-center justify-between p-10 m-5 border border-orange-400 bg-orange-300 rounded">
         <div id="winnaars" className="border border-black rounded">
-          <div>
+          <div id="winnaars">
             <img
               src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
               height="100px"
               width="150px"
               alt=""
-              className="flex justify-items-center hover:h-68 hover:w-44 cursor-pointer"
+              className="hover:h-68 hover:w-44 cursor-pointer"
             />
-            <p className="font-sans font-semibold">Naam Gerecht plaats 1</p>
+            <p className="font-sans font-semibold">Naam Gerecht</p>
           </div>
         </div>
         <div id="winnaars" className="border border-black rounded">
@@ -25,7 +25,7 @@ const Competities = () => {
             alt=""
             className="hover:h-60 hover:w-36 cursor-pointer"
           />
-          <p className="font-light">Naam Gerecht plaats 2</p>
+          <p>Naam Gerecht</p>
         </div>
         <div id="winnaars" className="border border-black rounded">
           <img
@@ -35,7 +35,7 @@ const Competities = () => {
             alt=""
             className="hover:h-60 hover:w-36 cursor-pointer"
           />
-          <p className="font-light">Naam Gerecht plaats 3</p>
+          <p>Naam Gerecht</p>
         </div>
         <div id="winnaars" className="border border-black rounded">
           <img
@@ -45,7 +45,7 @@ const Competities = () => {
             alt=""
             className="hover:h-60 hover:w-36 cursor-pointer"
           />
-          <p className=" font-extralight">Naam Gerecht plaats 4</p>
+          <p>Naam Gerecht</p>
         </div>
       </div>
 
