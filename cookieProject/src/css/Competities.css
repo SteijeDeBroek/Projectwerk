@@ -3,3 +3,7 @@
     justify-content: center;
     flex: 100%;
 }
+.limit{
+    width: 150px;
+    word-wrap: break-word;
+}
