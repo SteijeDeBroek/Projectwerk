@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSwaggerGen();
+
+
 
 //Create an instance of IConfiguration and load the appsettings.json
 var configuration = new ConfigurationBuilder()
