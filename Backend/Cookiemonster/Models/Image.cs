@@ -16,6 +16,6 @@ namespace Cookiemonster.Models
         public virtual Recipe Recipe { get; set; } = null!;
 
         public bool isDeleted { get; set; }
-        public bool isDeletable { get; } = true;
+        public bool isDeletable { get; } = false;
     }
 }

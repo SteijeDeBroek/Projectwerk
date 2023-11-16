@@ -34,6 +34,6 @@ namespace Cookiemonster.Models
         public virtual ICollection<User> Users { get; set; } = new List<User>();
 
         public bool isDeleted { get; set; }
-        public bool isDeletable { get; } = true;
+        public bool isDeletable { get; } = false;
     }
 }

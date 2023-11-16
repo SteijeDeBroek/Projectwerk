@@ -22,6 +22,6 @@ namespace Cookiemonster.Models
         public virtual ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
 
         public bool isDeleted { get; set; }
-        public bool isDeletable { get; } = true;
+        public bool isDeletable { get; } = false;
     }
 }

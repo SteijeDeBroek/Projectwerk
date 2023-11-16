@@ -1,8 +1,9 @@
 
+using Cookiemonster.Interfaces;
 using Cookiemonster.Models;
 namespace Cookiemonster.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly Repository<Category> _categoryRepository;
 

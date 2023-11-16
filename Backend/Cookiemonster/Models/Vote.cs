@@ -20,6 +20,6 @@ namespace Cookiemonster.Models
         public virtual User User { get; set; } = null!;
 
         public bool isDeleted { get; set; }
-        public bool isDeletable { get; } = true;
+        public bool isDeletable { get; } = false;
     }
 }

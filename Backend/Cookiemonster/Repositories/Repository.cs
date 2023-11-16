@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Repositories
 {
-    public class Repository<T> where T : class, IDeletable
+    public class Repository<T> : IRepository<T> where T : class, IDeletable
     {
         private readonly AppDbContext _context;
         private DbSet<T> _dbSet;
