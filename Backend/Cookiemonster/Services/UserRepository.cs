@@ -1,14 +1,13 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Models;
 
 
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
-    public class UserService
+    public class UserRepository
     {
         private readonly Repository<User> _userRepository;
 
-        public UserService(Repository<User> userRepository)
+        public UserRepository(Repository<User> userRepository)
         {
             _userRepository = userRepository;
         }

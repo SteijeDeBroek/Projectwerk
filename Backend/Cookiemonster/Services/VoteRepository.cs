@@ -1,14 +1,13 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
-    public class VoteService
+    public class VoteRepository
     {
         private readonly Repository<Vote> _voteRepository;
 
-        public VoteService(Repository<Vote> voteRepository)
+        public VoteRepository(Repository<Vote> voteRepository)
         {
             _voteRepository = voteRepository;
         }

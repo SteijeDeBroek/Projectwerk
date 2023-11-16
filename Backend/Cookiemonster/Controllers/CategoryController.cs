@@ -1,5 +1,5 @@
 ﻿using Cookiemonster.Models;
-using Cookiemonster.Services;
+using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,11 +10,11 @@ namespace Cookiemonster.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly CategoryService _categoryService;
+        private readonly CategoryRepository _categoryRepository;
 
-        public CategoryController(CategoryService categoryService)
+        public CategoryController(CategoryRepository categoryRepository)
         {
-            _categoryService = categoryService;
+            _categoryRepository = categoryRepository;
         }
 
 
@@ -23,7 +23,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("categories")]
         public ActionResult<IEnumerable<Category>> Get()
         {
-            var categories = _categoryService.GetAllCategories();
+            var categories = _categoryRepository.GetAllCategories();
             return Ok(categories);
         }
 
@@ -31,7 +31,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("categoryById")]
         public ActionResult<IEnumerable<Category>> Get(int id)
         {
-            var category = _categoryService.GetCategory(id);
+            var category = _categoryRepository.GetCategory(id);
             return Ok(category);
         }
 
@@ -39,14 +39,14 @@ namespace Cookiemonster.Controllers
         [HttpPost("addCategory")]
         public ActionResult CreateCategory(Category category)
         {
-            _categoryService.CreateCategory(category);
+            _categoryRepository.CreateCategory(category);
             return Ok();
         }
 
         [HttpPatch("patchCategory")]
         public ActionResult PatchCategory(Category category)
         {
-            _categoryService.UpdateCategory(category);
+            _categoryRepository.UpdateCategory(category);
             return Ok();
         }
 
@@ -55,7 +55,7 @@ namespace Cookiemonster.Controllers
         [HttpDelete("deleteCategory")]
         public ActionResult DeleteCategory(int id)
         {
-            _categoryService.DeleteCategory(id);
+            _categoryRepository.DeleteCategory(id);
             return Ok();
         }
     }
