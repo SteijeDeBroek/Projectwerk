@@ -1,14 +1,21 @@
 ﻿using Cookiemonster.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace Cookiemonster.Models
 {
-    public class Image : IDeletable
+
+    public partial class Image : IDeletable
     {
         public int ImageId { get; set; }
-        public string URI { get; set; }
+
+        public string Uri { get; set; } = null!;
+
         public int RecipeId { get; set; }
-        public Recipe Recipe { get; set; }
+
+        public virtual Recipe Recipe { get; set; } = null!;
+
         public bool isDeleted { get; set; }
-        public bool isDeletable { get; } = false;
+        public bool isDeletable { get; } = true;
     }
 }
