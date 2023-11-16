@@ -6,7 +6,7 @@ const CompetitiesComponent = () => {
     <div className="pl-40">
       <div className="flex items-center justify-between h-96 p-10  border border-orange-400 bg-orange-300 rounded">
         <div id="winnaars" className="border border-black rounded">
-          <div id="winnaars">
+          <div id="winnaars" className="limit">
             <img
               src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
               height="100px"
