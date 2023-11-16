@@ -1,7 +1,7 @@
 ﻿using Cookiemonster.Interfaces;
 using Cookiemonster.Models;
 
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
     public class RecipeService
     {

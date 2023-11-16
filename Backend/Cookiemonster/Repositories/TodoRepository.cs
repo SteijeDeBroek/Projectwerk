@@ -2,13 +2,13 @@
 using Cookiemonster.Models;
 
 
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
-    public class TodoService
+    public class TodoRepository
     {
         private readonly Repository<Todo> _todoRepository;
 
-        public TodoService(Repository<Todo> todoRepository)
+        public TodoRepository(Repository<Todo> todoRepository)
         {
             _todoRepository = todoRepository;
         }

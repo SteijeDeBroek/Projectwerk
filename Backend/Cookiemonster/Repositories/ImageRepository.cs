@@ -2,7 +2,7 @@
 using Cookiemonster.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
     public class ImageService
     {

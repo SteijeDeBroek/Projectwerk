@@ -1,12 +1,12 @@
 ﻿using Cookiemonster.Interfaces;
 using Cookiemonster.Models;
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
-    public class CategoryService
+    public class CategoryRepository
     {
         private readonly Repository<Category> _categoryRepository;
 
-        public CategoryService(Repository<Category> categoryRepository)
+        public CategoryRepository(Repository<Category> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }

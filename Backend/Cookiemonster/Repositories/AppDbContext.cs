@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cookiemonster.Models;
 
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
     public class AppDbContext : DbContext
     {

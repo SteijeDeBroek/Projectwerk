@@ -1,7 +1,7 @@
 ﻿using Cookiemonster.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cookiemonster.Services
+namespace Cookiemonster.Repositories
 {
     public class Repository<T> where T : class, IDeletable
     {
