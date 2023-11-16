@@ -11,7 +11,7 @@ namespace Cookiemonster.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly CategoryRepository _categoryRepository;
-       
+
         public CategoryController(CategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;

@@ -1,5 +1,4 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Repositories

@@ -1,13 +1,12 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Models;
 
 namespace Cookiemonster.Repositories
 {
-    public class RecipeService
+    public class RecipeRepository
     {
         private readonly Repository<Recipe> _recipeRepository;
 
-        public RecipeService(Repository<Recipe> recipeRepository)
+        public RecipeRepository(Repository<Recipe> recipeRepository)
         {
             _recipeRepository = recipeRepository;
         }

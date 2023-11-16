@@ -1,5 +1,4 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Models;
 
 
 namespace Cookiemonster.Repositories

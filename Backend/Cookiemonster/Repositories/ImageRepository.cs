@@ -1,14 +1,13 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Repositories
 {
-    public class ImageService
+    public class ImageRepository
     {
         private readonly Repository<Image> _imageRepository;
 
-        public ImageService(Repository<Image> imageRepository)
+        public ImageRepository(Repository<Image> imageRepository)
         {
             _imageRepository = imageRepository;
         }
