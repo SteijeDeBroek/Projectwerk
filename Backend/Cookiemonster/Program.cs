@@ -5,7 +5,10 @@ using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using Cookiemonster.Interfaces;
 using Cookiemonster.Models;
-
+using System.Threading.RateLimiting;
+// HealthChecks-UI:
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +21,8 @@ builder.Services.AddScoped<IRepository<Recipe>, RecipeRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRazorPages();
-
+builder.Services.AddHealthChecks().AddCheck<SqlServerHealthCheck>("sql");
+// builder.Services.AddSingleton<IHealthCheck, SqlServerHealthCheck>();
 
 
 //Create an instance of IConfiguration and load the appsettings.json
@@ -26,11 +30,13 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json")
     .Build();
-   
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 });
+
 
 var app = builder.Build();
 
@@ -41,6 +47,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+// app.UseHealthChecksUI();
+// Ik wil voor /healthz json zien ipv "Healthy" (anders toon UI dat de check unhealthy is)
+app.MapHealthChecks("/healthz", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 // Configure the HTTP request pipeline.
 // if (!app.Environment.IsDevelopment())
 //{
