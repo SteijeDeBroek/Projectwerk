@@ -26,12 +26,11 @@ namespace Cookiemonster.Models
         public virtual Category Category { get; set; } = null!;
 
         public virtual ICollection<Image> Images { get; set; } = new List<Image>();
+        public virtual ICollection<Todo> Todos { get; set; } = new List<Todo>();
 
-        public virtual User User { get; set; } = null!;
+        public User User { get; set; } = null!;
 
         public virtual ICollection<Vote> Votes { get; set; } = new List<Vote>();
-
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
 
         public bool isDeleted { get; set; }
         public bool isDeletable { get; } = false;

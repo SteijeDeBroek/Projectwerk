@@ -1,26 +1,27 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace Cookiemonster.Controllers
 {
-    [Route("api/recipes")]
+    [Route("recipes")]
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly RecipeRepository _recipeRepository;
+        private readonly IRepository<Recipe> _recipeRepository;
 
-        public RecipeController(RecipeRepository recipeRepository)
+        public RecipeController(IRepository<Recipe> recipeRepository)
         {
             _recipeRepository = recipeRepository;
         }
 
         // GET: api/recipes
-        [HttpGet("getRecipes")]
+        [HttpGet]
         public ActionResult<IEnumerable<Recipe>> Get()
         {
-            var recipes = _recipeRepository.GetAllRecipes();
+            var recipes = _recipeRepository.GetAll();
             return Ok(recipes);
         }
 
@@ -28,7 +29,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("recipeId")]
         public ActionResult<Recipe> Get(int id)
         {
-            var recipe = _recipeRepository.GetRecipe(id);
+            var recipe = _recipeRepository.Get(id);
             if (recipe == null)
             {
                 return NotFound();
@@ -40,7 +41,7 @@ namespace Cookiemonster.Controllers
         [HttpPost("postRecipe")]
         public ActionResult CreateRecipe(Recipe recipe)
         {
-            _recipeRepository.CreateRecipe(recipe);
+            _recipeRepository.Create(recipe);
             return Ok();
         }
 
@@ -48,7 +49,7 @@ namespace Cookiemonster.Controllers
         [HttpPatch("patchRecipe")]
         public ActionResult PatchRecipe(Recipe recipe)
         {
-            _recipeRepository.UpdateRecipe(recipe);
+            _recipeRepository.Update(recipe);
             return Ok();
         }
 
@@ -56,7 +57,7 @@ namespace Cookiemonster.Controllers
         [HttpDelete("deleteRecipeById")]
         public ActionResult DeleteRecipe(int id)
         {
-            var deleted = _recipeRepository.DeleteRecipe(id);
+            var deleted = _recipeRepository.Delete(id);
             if (!deleted)
             {
                 return NotFound();
