@@ -21,7 +21,7 @@
             [HttpGet("getImages")]
             public ActionResult<IEnumerable<Image>> Get()
             {
-                var images = _imageRepository.GetAllImages();
+                var images = _imageRepository.GetAll();
                 return Ok(images);
             }
 
@@ -29,7 +29,7 @@
             [HttpGet("getImagesById")]
             public ActionResult<Image> Get(int id)
             {
-                var image = _imageRepository.GetImage(id);
+                var image = _imageRepository.Get(id);
                 if (image == null)
                 {
                     return NotFound();
@@ -41,7 +41,7 @@
             [HttpPost("postImages")]
             public ActionResult CreateImage(Image image)
             {
-                _imageRepository.CreateImage(image);
+                _imageRepository.Create(image);
                 return Ok();
             }
 
@@ -49,7 +49,7 @@
             [HttpPatch("patchImages")]
             public ActionResult PatchImage(Image image)
             {
-                _imageRepository.UpdateImage(image);
+                _imageRepository.Update(image);
                 return Ok();
             }
 
@@ -57,7 +57,7 @@
             [HttpDelete("deleteImageById")]
             public ActionResult DeleteImage(int id)
             {
-                var deleted = _imageRepository.DeleteImage(id);
+                var deleted = _imageRepository.Delete(id);
                 if (!deleted)
                 {
                     return NotFound();

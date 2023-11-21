@@ -20,7 +20,7 @@ namespace Cookiemonster.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Vote>> Get()
         {
-            var votes = _voteRepository.GetAllVotes();
+            var votes = _voteRepository.GetAll();
             return Ok(votes);
         }
 
@@ -28,7 +28,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("{recipeId}/{userId}")]
         public ActionResult<Vote> Get(int recipeId, int userId)
         {
-            var vote = _voteRepository.GetVote(recipeId, userId);
+            var vote = _voteRepository.Get(recipeId, userId);
             if (vote == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace Cookiemonster.Controllers
         [HttpPost]
         public ActionResult CreateVote(Vote vote)
         {
-            _voteRepository.CreateVote(vote);
+            _voteRepository.Create(vote);
             return Ok();
         }
 
@@ -48,7 +48,7 @@ namespace Cookiemonster.Controllers
         [HttpDelete("{recipeId}/{userId}")]
         public ActionResult DeleteVote(int recipeId, int userId)
         {
-            var deleted = _voteRepository.DeleteVote(recipeId, userId);
+            var deleted = _voteRepository.Delete(recipeId, userId);
             if (!deleted)
             {
                 return NotFound();

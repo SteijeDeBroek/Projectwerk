@@ -20,7 +20,7 @@ namespace Cookiemonster.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<User>> Get()
         {
-            var users = _userRepository.GetAllUsers();
+            var users = _userRepository.GetAll();
             return Ok(users);
         }
 
@@ -28,7 +28,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id)
         {
-            var user = _userRepository.GetUser(id);
+            var user = _userRepository.Get(id);
             if (user == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace Cookiemonster.Controllers
         [HttpPost]
         public ActionResult CreateUser(User user)
         {
-            _userRepository.CreateUser(user);
+            _userRepository.Create(user);
             return Ok();
         }
 
@@ -48,7 +48,7 @@ namespace Cookiemonster.Controllers
         [HttpPatch]
         public ActionResult PatchUser(User user)
         {
-            _userRepository.UpdateUser(user);
+            _userRepository.Update(user);
             return Ok();
         }
 
@@ -56,7 +56,7 @@ namespace Cookiemonster.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {
-            var deleted = _userRepository.DeleteUser(id);
+            var deleted = _userRepository.Delete(id);
             if (!deleted)
             {
                 return NotFound();

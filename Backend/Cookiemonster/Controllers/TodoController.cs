@@ -20,7 +20,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("getTodos")]
         public ActionResult<IEnumerable<Todo>> Get()
         {
-            var todos = _todoRepository.GetAllTodos();
+            var todos = _todoRepository.GetAll();
             return Ok(todos);
         }
 
@@ -28,7 +28,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("getUserAndCategoryById")]
         public ActionResult<Todo> Get(int userId, int recipeId)
         {
-            var todo = _todoRepository.GetTodo(userId, recipeId);
+            var todo = _todoRepository.Get(userId, recipeId);
             if (todo == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace Cookiemonster.Controllers
         [HttpPost("postTodos")]
         public ActionResult CreateTodo(Todo todo)
         {
-            _todoRepository.CreateTodo(todo);
+            _todoRepository.Create(todo);
             return Ok();
         }
 
@@ -48,7 +48,7 @@ namespace Cookiemonster.Controllers
         [HttpDelete("deleteByUserIdAndRecipeId")]
         public ActionResult DeleteTodo(int userId, int recipeId)
         {
-            var deleted = _todoRepository.DeleteTodo(userId, recipeId);
+            var deleted = _todoRepository.Delete(userId, recipeId);
             if (!deleted)
             {
                 return NotFound();

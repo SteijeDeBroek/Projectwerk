@@ -23,7 +23,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("categories")]
         public ActionResult<IEnumerable<Category>> Get()
         {
-            var categories = _categoryRepository.GetAllCategories();
+            var categories = _categoryRepository.Get();
             return Ok(categories);
         }
 
@@ -31,7 +31,7 @@ namespace Cookiemonster.Controllers
         [HttpGet("categoryById")]
         public ActionResult<IEnumerable<Category>> Get(int id)
         {
-            var category = _categoryRepository.GetCategory(id);
+            var category = _categoryRepository.Get(id);
             return Ok(category);
         }
 
@@ -39,14 +39,14 @@ namespace Cookiemonster.Controllers
         [HttpPost("addCategory")]
         public ActionResult CreateCategory(Category category)
         {
-            _categoryRepository.CreateCategory(category);
+            _categoryRepository.Create(category);
             return Ok();
         }
 
         [HttpPatch("patchCategory")]
         public ActionResult PatchCategory(Category category)
         {
-            _categoryRepository.UpdateCategory(category);
+            _categoryRepository.Update(category);
             return Ok();
         }
 
@@ -55,7 +55,7 @@ namespace Cookiemonster.Controllers
         [HttpDelete("deleteCategory")]
         public ActionResult DeleteCategory(int id)
         {
-            _categoryRepository.DeleteCategory(id);
+            _categoryRepository.Delete(id);
             return Ok();
         }
     }

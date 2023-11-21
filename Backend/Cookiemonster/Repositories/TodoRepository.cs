@@ -1,35 +1,10 @@
 ﻿using Cookiemonster.Models;
-
+using System.Collections.Generic;
 
 namespace Cookiemonster.Repositories
 {
-    public class TodoRepository
+    public class TodoRepository : Repository<Todo>
     {
-        private readonly Repository<Todo> _todoRepository;
-
-        public TodoRepository(Repository<Todo> todoRepository)
-        {
-            _todoRepository = todoRepository;
-        }
-
-        public Todo CreateTodo(Todo todo)
-        {
-            return _todoRepository.Create(todo);
-        }
-
-        public Todo GetTodo(int userId, int recipeId)
-        {
-            return _todoRepository.Get(userId, recipeId);
-        }
-
-        public List<Todo> GetAllTodos()
-        {
-            return _todoRepository.GetAll();
-        }
-
-        public bool DeleteTodo(int userId, int recipeId)
-        {
-            return _todoRepository.Delete(userId, recipeId);
-        }
+        public TodoRepository(AppDbContext context) : base(context) { }
     }
 }
