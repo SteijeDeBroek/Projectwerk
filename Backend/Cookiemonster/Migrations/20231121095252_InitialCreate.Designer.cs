@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cookiemonster.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231121084557_InitialCreate")]
+    [Migration("20231121095252_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -208,7 +208,7 @@ namespace Cookiemonster.Migrations
                     b.HasOne("Cookiemonster.Models.Recipe", "Recipe")
                         .WithMany("Images")
                         .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Recipe");
@@ -219,13 +219,13 @@ namespace Cookiemonster.Migrations
                     b.HasOne("Cookiemonster.Models.Category", "Category")
                         .WithMany("Recipes")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Cookiemonster.Models.User", "User")
                         .WithMany("Recipes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -238,13 +238,13 @@ namespace Cookiemonster.Migrations
                     b.HasOne("Cookiemonster.Models.Recipe", "Recipe")
                         .WithMany("Todos")
                         .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Cookiemonster.Models.User", "User")
                         .WithMany("Todos")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Recipe");
@@ -257,13 +257,13 @@ namespace Cookiemonster.Migrations
                     b.HasOne("Cookiemonster.Models.Recipe", "Recipe")
                         .WithMany("Votes")
                         .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Cookiemonster.Models.User", "User")
                         .WithMany("Votes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Recipe");
