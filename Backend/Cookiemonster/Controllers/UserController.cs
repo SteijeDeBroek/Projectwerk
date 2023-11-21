@@ -1,4 +1,5 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ namespace Cookiemonster.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserRepository _userRepository;
+        private readonly IRepository<User> _userRepository;
 
-        public UserController(UserRepository userRepository)
+        public UserController(IRepository<User> userRepository)
         {
             _userRepository = userRepository;
         }

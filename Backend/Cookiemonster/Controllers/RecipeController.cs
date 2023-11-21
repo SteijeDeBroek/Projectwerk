@@ -26,7 +26,7 @@ namespace Cookiemonster.Controllers
         }
 
         // GET: api/recipes/5
-        [HttpGet("recipeId")]
+        [HttpGet("{id}")]
         public ActionResult<Recipe> Get(int id)
         {
             var recipe = _recipeRepository.Get(id);
@@ -38,23 +38,33 @@ namespace Cookiemonster.Controllers
         }
 
         // POST: api/recipes
-        [HttpPost("postRecipe")]
+        [HttpPost]
         public ActionResult CreateRecipe(Recipe recipe)
         {
+            if (recipe == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _recipeRepository.Create(recipe);
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id = recipe.RecipeId }, recipe);
         }
 
-        // PATCH: api/recipes
-        [HttpPatch("patchRecipe")]
-        public ActionResult PatchRecipe(Recipe recipe)
+        // PATCH: api/recipes/5
+        [HttpPatch("{id}")]
+        public ActionResult PatchRecipe(int id, [FromBody] Recipe recipe)
         {
+            if (recipe == null || recipe.RecipeId != id || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _recipeRepository.Update(recipe);
-            return Ok();
+            return NoContent();
         }
 
         // DELETE: api/recipes/5
-        [HttpDelete("deleteRecipeById")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteRecipe(int id)
         {
             var deleted = _recipeRepository.Delete(id);
@@ -62,7 +72,8 @@ namespace Cookiemonster.Controllers
             {
                 return NotFound();
             }
-            return Ok();
+            return NoContent();
         }
     }
 }
+

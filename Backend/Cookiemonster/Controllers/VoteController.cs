@@ -1,4 +1,5 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,12 +10,13 @@ namespace Cookiemonster.Controllers
     [ApiController]
     public class VoteController : ControllerBase
     {
-        private readonly VoteRepository _voteRepository;
+        private readonly IRepository<Vote> _voteRepository;
 
-        public VoteController(VoteRepository voteRepository)
+        public VoteController(IRepository<Vote> voteRepository)
         {
             _voteRepository = voteRepository;
         }
+
 
         // GET: api/votes
         [HttpGet]

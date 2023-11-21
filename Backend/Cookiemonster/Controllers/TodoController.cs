@@ -1,4 +1,5 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,15 +10,15 @@ namespace Cookiemonster.Controllers
     [ApiController]
     public class TodoController : ControllerBase
     {
-        private readonly TodoRepository _todoRepository;
+        private readonly IRepository<Todo> _todoRepository;
 
-        public TodoController(TodoRepository todoRepository)
+        public TodoController(IRepository<Todo> todoRepository)
         {
             _todoRepository = todoRepository;
         }
 
         // GET: api/todos
-        [HttpGet("getTodos")]
+        [HttpGet]
         public ActionResult<IEnumerable<Todo>> Get()
         {
             var todos = _todoRepository.GetAll();
@@ -25,7 +26,7 @@ namespace Cookiemonster.Controllers
         }
 
         // GET: api/todos/{userId}/{recipeId}
-        [HttpGet("getUserAndCategoryById")]
+        [HttpGet("{id}")]
         public ActionResult<Todo> Get(int userId, int recipeId)
         {
             var todo = _todoRepository.Get(userId, recipeId);
@@ -37,7 +38,7 @@ namespace Cookiemonster.Controllers
         }
 
         // POST: api/todos
-        [HttpPost("postTodos")]
+        [HttpPost]
         public ActionResult CreateTodo(Todo todo)
         {
             _todoRepository.Create(todo);
@@ -45,7 +46,7 @@ namespace Cookiemonster.Controllers
         }
 
         // DELETE: api/todos/{userId}/{recipeId}
-        [HttpDelete("deleteByUserIdAndRecipeId")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteTodo(int userId, int recipeId)
         {
             var deleted = _todoRepository.Delete(userId, recipeId);

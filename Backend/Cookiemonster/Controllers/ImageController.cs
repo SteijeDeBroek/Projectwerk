@@ -1,5 +1,6 @@
 ﻿
-    using Cookiemonster.Models;
+using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
     using Cookiemonster.Repositories;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -8,17 +9,17 @@
     {
         [Route("api/images")]
         [ApiController]
-        public class ImageController : ControllerBase
+        public class ImageController : Controller
         {
-            private readonly ImageRepository _imageRepository;
+        private readonly IRepository<Image> _imageRepository;
 
-            public ImageController(ImageRepository imageRepository)
+        public ImageController(IRepository<Image> imageRepository)
             {
                 _imageRepository = imageRepository;
             }
 
             // GET: api/images
-            [HttpGet("getImages")]
+            [HttpGet]
             public ActionResult<IEnumerable<Image>> Get()
             {
                 var images = _imageRepository.GetAll();
@@ -26,7 +27,7 @@
             }
 
             // GET: api/images/5
-            [HttpGet("getImagesById")]
+            [HttpGet("{id}")]
             public ActionResult<Image> Get(int id)
             {
                 var image = _imageRepository.Get(id);
@@ -38,7 +39,7 @@
             }
 
             // POST: api/images
-            [HttpPost("postImages")]
+            [HttpPost]
             public ActionResult CreateImage(Image image)
             {
                 _imageRepository.Create(image);
@@ -46,7 +47,7 @@
             }
 
             // PATCH: api/images
-            [HttpPatch("patchImages")]
+            [HttpPatch]
             public ActionResult PatchImage(Image image)
             {
                 _imageRepository.Update(image);
@@ -54,7 +55,7 @@
             }
 
             // DELETE: api/images/5
-            [HttpDelete("deleteImageById")]
+            [HttpDelete("{id}")]
             public ActionResult DeleteImage(int id)
             {
                 var deleted = _imageRepository.Delete(id);

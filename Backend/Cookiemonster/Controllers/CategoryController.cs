@@ -1,4 +1,5 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace Cookiemonster.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly CategoryRepository _categoryRepository;
+        private readonly IRepository<Category> _categoryRepository;
 
-        public CategoryController(CategoryRepository categoryRepository)
+        public CategoryController(IRepository<Category> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
@@ -20,7 +21,7 @@ namespace Cookiemonster.Controllers
 
 
         // GET: api/<CategoryController>
-        [HttpGet("categories")]
+        [HttpGet]
         public ActionResult<IEnumerable<Category>> Get()
         {
             var categories = _categoryRepository.Get();
@@ -28,7 +29,7 @@ namespace Cookiemonster.Controllers
         }
 
         // GET api/<CategoryController>/5
-        [HttpGet("categoryById")]
+        [HttpGet("{id}")]
         public ActionResult<IEnumerable<Category>> Get(int id)
         {
             var category = _categoryRepository.Get(id);
@@ -36,14 +37,14 @@ namespace Cookiemonster.Controllers
         }
 
         // POST api/<CategoryController>
-        [HttpPost("addCategory")]
+        [HttpPost]
         public ActionResult CreateCategory(Category category)
         {
             _categoryRepository.Create(category);
             return Ok();
         }
 
-        [HttpPatch("patchCategory")]
+        [HttpPatch]
         public ActionResult PatchCategory(Category category)
         {
             _categoryRepository.Update(category);
@@ -52,7 +53,7 @@ namespace Cookiemonster.Controllers
 
 
         // DELETE api/<CategoryController>/5
-        [HttpDelete("deleteCategory")]
+        [HttpDelete("{id}")]
         public ActionResult DeleteCategory(int id)
         {
             _categoryRepository.Delete(id);
