@@ -31,7 +31,7 @@ namespace Cookiemonster.Repositories
                 .Property(r => r.Description)
                 .HasColumnName("Description");
             modelBuilder.Entity<Recipe>()
-                .HasMany(r => r.Votes)
+    //          .HasMany(r => r.Votes)
                 .WithOne(v => v.Recipe)
                 .HasForeignKey(r => r.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -41,12 +41,12 @@ namespace Cookiemonster.Repositories
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Recipe>()
-                .HasMany(r => r.Images)
+   //           .HasMany(r => r.Images)
                 .WithOne(i => i.Recipe)
                 .HasForeignKey(r => r.ImageId)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Recipe>()
-                .HasMany(r => r.Todos)
+   //           .HasMany(r => r.Todos)
                 .WithOne(t => t.Recipe)
                 .HasForeignKey(r => r.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -56,7 +56,7 @@ namespace Cookiemonster.Repositories
                 .HasName("Category");
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Recipes)
-                .WithOne(r => r.Category)
+   //           .WithOne(r => r.Category)
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -65,7 +65,7 @@ namespace Cookiemonster.Repositories
                 .HasName("Image");
             modelBuilder.Entity<Image>()
                 .HasOne(i => i.Recipe)
-                .WithMany(r => r.Images)
+    //          .WithMany(r => r.Images)
                 .HasForeignKey(i => i.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -88,7 +88,7 @@ namespace Cookiemonster.Repositories
                 .HasName("Todo");
             modelBuilder.Entity<Todo>()
                 .HasOne(t => t.Recipe)
-                .WithMany(r => r.Todos)
+       //       .WithMany(r => r.Todos)
                 .HasForeignKey(t => t.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Todo>()
@@ -107,7 +107,7 @@ namespace Cookiemonster.Repositories
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Vote>()
                 .HasOne(v => v.Recipe)
-                .WithMany(r => r.Votes)
+       //       .WithMany(r => r.Votes)
                 .HasForeignKey(v => v.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
