@@ -24,7 +24,7 @@ namespace Cookiemonster.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Category>> Get()
         {
-            var categories = _categoryRepository.Get();
+            var categories = _categoryRepository.GetAll();
             return Ok(categories);
         }
 
