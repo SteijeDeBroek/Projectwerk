@@ -14,9 +14,15 @@ namespace Cookiemonster.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public T Get(params int[] ids)
+        public T Get(int id1, int id2 = 0)
         {
-            return _dbSet.Find(ids);
+            if (id2 == 0)
+            {
+                return _dbSet.Find(id1);
+            } else
+            {
+                return _dbSet.Find(id1, id2);
+            }
         }
 
         public List<T> GetAll()
@@ -38,9 +44,17 @@ namespace Cookiemonster.Repositories
             return entity;
         }
 
-        public bool Delete(params int[] ids)
+        public bool Delete(int id1, int id2 = 0)
         {
-            var entity = _dbSet.Find(ids);
+            T? entity;
+            if (id2 == 0)
+            {
+                entity = _dbSet.Find(id1);
+            }
+            else
+            {
+                entity = _dbSet.Find(id1, id2);
+            }
             if (entity == null)
                 return false;
 
