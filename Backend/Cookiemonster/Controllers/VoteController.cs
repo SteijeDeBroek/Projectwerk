@@ -27,7 +27,7 @@ namespace Cookiemonster.Controllers
         }
 
         // GET: api/votes/{recipeId}/{userId}
-        [HttpGet("{recipeId}-{userId}")]
+        [HttpGet("{recipeId}/{userId}")]
         public ActionResult<Vote> Get(int recipeId, int userId)
         {
             var vote = _voteRepository.Get(recipeId, userId);
@@ -47,7 +47,7 @@ namespace Cookiemonster.Controllers
         }
 
         // DELETE: api/votes/{recipeId}/{userId}
-        [HttpDelete("{recipeId}-{userId}")]
+        [HttpDelete("{recipeId}/{userId}")]
         public ActionResult DeleteVote(int recipeId, int userId)
         {
             var deleted = _voteRepository.Delete(recipeId, userId);
