@@ -60,7 +60,7 @@ namespace Cookiemonster.Controllers
             }
 
             _recipeRepository.Update(recipe);
-            return NoContent();
+            return Ok();
         }
 
         // DELETE: api/recipes/5
@@ -72,7 +72,7 @@ namespace Cookiemonster.Controllers
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok();
         }
     }
 }

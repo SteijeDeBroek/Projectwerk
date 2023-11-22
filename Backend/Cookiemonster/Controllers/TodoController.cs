@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Cookiemonster.Controllers
 {
-    [Route("api/todos")]
+    [Route("todos")]
     [ApiController]
     public class TodoController : ControllerBase
     {
@@ -25,11 +25,11 @@ namespace Cookiemonster.Controllers
             return Ok(todos);
         }
 
-        // GET: api/todos/{userId}/{recipeId}
-        [HttpGet("{id}")]
-        public ActionResult<Todo> Get(int userId, int recipeId)
+        // GET: api/todos/5-4
+        [HttpGet("{recipeId}-{userId}")]
+        public ActionResult<Todo> Get(int recipeId, int userId)
         {
-            var todo = _todoRepository.Get(userId, recipeId);
+            var todo = _todoRepository.Get(recipeId, userId);
             if (todo == null)
             {
                 return NotFound();
@@ -41,15 +41,33 @@ namespace Cookiemonster.Controllers
         [HttpPost]
         public ActionResult CreateTodo(Todo todo)
         {
+            if (todo == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _todoRepository.Create(todo);
+            return CreatedAtAction(nameof(Get), new { id = (todo.RecipeId, todo.UserId) }, todo);
+        }
+
+        // PATCH: api/todos/5-4
+        [HttpPatch("{recipeId}-{userId}")]
+        public ActionResult PatchRecipe(int recipeId, int userId, [FromBody] Todo todo)
+        {
+            if (todo == null || todo.RecipeId != recipeId || todo.UserId != userId || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _todoRepository.Update(todo);
             return Ok();
         }
 
-        // DELETE: api/todos/{userId}/{recipeId}
-        [HttpDelete("{id}")]
-        public ActionResult DeleteTodo(int userId, int recipeId)
+        // DELETE: api/todos/5-4
+        [HttpDelete("{recipeId}-{userId}")]
+        public ActionResult DeleteTodo(int recipeId, int userId)
         {
-            var deleted = _todoRepository.Delete(userId, recipeId);
+            var deleted = _todoRepository.Delete(recipeId, userId);
             if (!deleted)
             {
                 return NotFound();

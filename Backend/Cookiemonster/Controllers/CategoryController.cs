@@ -1,13 +1,12 @@
 ﻿using Cookiemonster.Interfaces;
 using Cookiemonster.Models;
-using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Cookiemonster.Controllers
 {
-    [Route("api/categories")]
+    [Route("categories")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -20,7 +19,7 @@ namespace Cookiemonster.Controllers
 
 
 
-        // GET: api/<CategoryController>
+        // GET: api/categories
         [HttpGet]
         public ActionResult<IEnumerable<Category>> Get()
         {
@@ -28,35 +27,52 @@ namespace Cookiemonster.Controllers
             return Ok(categories);
         }
 
-        // GET api/<CategoryController>/5
+        // GET api/categories/5
         [HttpGet("{id}")]
         public ActionResult<IEnumerable<Category>> Get(int id)
         {
             var category = _categoryRepository.Get(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
             return Ok(category);
         }
 
-        // POST api/<CategoryController>
+        // POST api/categories
         [HttpPost]
         public ActionResult CreateCategory(Category category)
         {
+            if (category == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             _categoryRepository.Create(category);
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id = category.CategoryId }, category);
         }
 
-        [HttpPatch]
-        public ActionResult PatchCategory(Category category)
+        // PATCH: api/categories/5
+        [HttpPatch("{id}")]
+        public ActionResult PatchCategory(int id, [FromBody] Category category)
         {
+            if (category == null || category.CategoryId != id || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             _categoryRepository.Update(category);
             return Ok();
         }
 
 
-        // DELETE api/<CategoryController>/5
+        // DELETE api/categories/5
         [HttpDelete("{id}")]
         public ActionResult DeleteCategory(int id)
         {
-            _categoryRepository.Delete(id);
+            var deleted = _categoryRepository.Delete(id);
+            if (!deleted)
+            {
+                return NotFound();
+            }
             return Ok();
         }
     }

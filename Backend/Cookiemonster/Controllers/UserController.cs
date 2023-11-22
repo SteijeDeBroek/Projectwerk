@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Cookiemonster.Controllers
 {
-    [Route("api/users")]
+    [Route("users")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -41,14 +41,24 @@ namespace Cookiemonster.Controllers
         [HttpPost]
         public ActionResult CreateUser(User user)
         {
+            if (user == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _userRepository.Create(user);
-            return Ok();
+            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
         }
 
-        // PATCH: api/users
-        [HttpPatch]
-        public ActionResult PatchUser(User user)
+        // PATCH: api/users/5
+        [HttpPatch("{id}")]
+        public ActionResult PatchUser(int id, [FromBody] User user)
         {
+            if (user == null || user.UserId != id || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _userRepository.Update(user);
             return Ok();
         }
