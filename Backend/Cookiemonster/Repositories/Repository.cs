@@ -16,18 +16,24 @@ namespace Cookiemonster.Repositories
 
         public T Get(int id1, int id2 = 0)
         {
+            T? entity;
             if (id2 == 0)
             {
-                return _dbSet.Find(id1);
+                entity = _dbSet.Find(id1);
             } else
             {
-                return _dbSet.Find(id1, id2);
+                entity = _dbSet.Find(id1, id2);
             }
+            if (entity?.isDeleted == false)
+            {
+                return entity;
+            }
+            return null;
         }
 
         public List<T> GetAll()
         {
-            return _dbSet.ToList();
+            return _dbSet.Where(entity => entity.isDeleted == false).ToList();
         }
 
         public T Create(T entity)
@@ -39,9 +45,13 @@ namespace Cookiemonster.Repositories
 
         public T Update(T entity)
         {
-            _dbSet.Update(entity);
-            _context.SaveChanges();
-            return entity;
+            if (entity.isDeleted == false)
+            {
+                _dbSet.Update(entity);
+                _context.SaveChanges();
+                return entity;
+            }
+            return null;
         }
 
         public bool Delete(int id1, int id2 = 0)
@@ -55,7 +65,7 @@ namespace Cookiemonster.Repositories
             {
                 entity = _dbSet.Find(id1, id2);
             }
-            if (entity == null)
+            if (entity == null || entity.isDeleted == true)
                 return false;
 
             if (entity.isDeletable)
