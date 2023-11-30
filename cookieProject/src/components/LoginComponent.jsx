@@ -3,8 +3,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 const loginSchema = Yup.object().shape({
-  email: Yup.string().email().required().trim(),
-  password: Yup.string().required(),
+  email1: Yup.string().email().required().trim(),
+  password1: Yup.string().required().min(4),
+  email2: Yup.string().email().required().trim(),
+  password2: Yup.string().required().min(4),
 });
 
 const LoginComponent = () => {
@@ -25,7 +27,7 @@ const LoginComponent = () => {
 
   return (
     <>
-      <h2 className="flex items-center">Login</h2>
+      <h2 className="flex items-center">Login:</h2>
       <form
         className="flex items-center justify-center p-10 border border-blue-400 rounded  "
         onSubmit={handleSubmit}
@@ -69,7 +71,7 @@ const LoginComponent = () => {
           Aanmelden
         </button>
       </form>
-      <h2 className="flex items-center">Login</h2>
+      <h2 className="flex items-center">Registreer:</h2>
       <form
         className="flex items-center justify-center p-10 border border-blue-400 rounded  "
         onSubmit={handleSubmit}
