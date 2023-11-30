@@ -1,5 +1,7 @@
 import axios from "axios"
 
+//tijd ervoor en erna loggen (tip wim!)
+
 //definieer de functies
 //categories
 export const getCategories = async () => {
