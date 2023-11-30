@@ -4,6 +4,8 @@
 import React from "react";
 import { useState } from "react";
 import "../css/Upload.css";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 /*const YourComponent = () => {
   const [buttonText, setButtonText] = useState("Upload");
 
@@ -13,9 +15,25 @@ import "../css/Upload.css";
   };
 }; */
 
+//formik en yup hier alsook toepassen
+
+const uploadSchema = Yup.object().shape({
+  titel: Yup.string().trim().required().min(3).max(50),
+});
+
 function UploadComponent() {
   const [file, setFile] = useState();
-
+  const { values, handleSubmit, handleChange, errors, dirty, isValid } =
+    useFormik({
+      initialValues: {
+        titel: "",
+      },
+      onSubmit: (values) => {
+        console.log(values);
+        // post request API
+      },
+      validationSchema: uploadSchema,
+    });
   function handleFile(event) {
     setFile(event.target.files[0]);
     console.log(event.target.files[0]);
@@ -40,15 +58,19 @@ function UploadComponent() {
   return (
     <div className="upload-container">
       <h2 className="text font-serif font-bold text-xl">Upload Files</h2>
-      <form onSubmit={handleUpload}>
+      <form>
         <div className="">
           <input
             className="upload-input"
             type="text"
-            name="title"
+            name="titel"
+            value={values.titel}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
             placeholder="Voeg een titel toe"
             style={{ margin: "50px" }}
           />
+          {errors.titel ? <p>{errors.titel}</p> : null}
         </div>
         <div>
           <input
@@ -79,6 +101,7 @@ function UploadComponent() {
         </div>
 
         <button
+          disabled={!isValid || !dirty}
           style={{ margin: "50px" }}
           className="border border-blue-300 rounded bg-blue-300 p-3  hover:bg-blue-600 focus:bg-blue-600"
         >
