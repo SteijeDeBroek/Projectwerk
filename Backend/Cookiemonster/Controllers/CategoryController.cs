@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cookiemonster.Controllers
 {
-    [Route("categories")]
+    [Route("Categories")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace Cookiemonster.Controllers
 
 
         // GET: api/categories
-        [HttpGet]
+        [HttpGet("AllCategories")]
         public ActionResult<IEnumerable<Category>> Get()
         {
             var categories = _categoryRepository.GetAll();
@@ -28,7 +28,7 @@ namespace Cookiemonster.Controllers
         }
 
         // GET api/categories/5
-        [HttpGet("{id}")]
+        [HttpGet("CategoryById/{id}")]
         public ActionResult<IEnumerable<Category>> Get(int id)
         {
             var category = _categoryRepository.Get(id);
@@ -40,7 +40,7 @@ namespace Cookiemonster.Controllers
         }
 
         // POST api/categories
-        [HttpPost]
+        [HttpPost("Category")]
         public ActionResult CreateCategory(Category category)
         {
             if (category == null || !ModelState.IsValid)
@@ -52,7 +52,7 @@ namespace Cookiemonster.Controllers
         }
 
         // PATCH: api/categories/5
-        [HttpPatch("{id}")]
+        [HttpPatch("Category/{id}")]
         public ActionResult PatchCategory(int id, [FromBody] Category category)
         {
             if (category == null || category.CategoryId != id || !ModelState.IsValid)
@@ -65,7 +65,7 @@ namespace Cookiemonster.Controllers
 
 
         // DELETE api/categories/5
-        [HttpDelete("{id}")]
+        [HttpDelete("Category/{id}")]
         public ActionResult DeleteCategory(int id)
         {
             var deleted = _categoryRepository.Delete(id);

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Cookiemonster.Controllers
 {
-    [Route("users")]
+    [Route("Users")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace Cookiemonster.Controllers
         }
 
         // GET: api/users
-        [HttpGet]
+        [HttpGet("AllUsers")]
         public ActionResult<IEnumerable<User>> Get()
         {
             var users = _userRepository.GetAll();
@@ -26,7 +26,7 @@ namespace Cookiemonster.Controllers
         }
 
         // GET: api/users/5
-        [HttpGet("{id}")]
+        [HttpGet("UserById/{id}")]
         public ActionResult<User> Get(int id)
         {
             var user = _userRepository.Get(id);
@@ -38,7 +38,7 @@ namespace Cookiemonster.Controllers
         }
 
         // POST: api/users
-        [HttpPost]
+        [HttpPost("User")]
         public ActionResult CreateUser(User user)
         {
             if (user == null || !ModelState.IsValid)
@@ -51,7 +51,7 @@ namespace Cookiemonster.Controllers
         }
 
         // PATCH: api/users/5
-        [HttpPatch("{id}")]
+        [HttpPatch("User/{id}")]
         public ActionResult PatchUser(int id, [FromBody] User user)
         {
             if (user == null || user.UserId != id || !ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace Cookiemonster.Controllers
         }
 
         // DELETE: api/users/5
-        [HttpDelete("{id}")]
+        [HttpDelete("User/{id}")]
         public ActionResult DeleteUser(int id)
         {
             var deleted = _userRepository.Delete(id);
