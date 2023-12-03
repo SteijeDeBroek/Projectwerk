@@ -13,12 +13,19 @@ export const getCategories = async () => {
 };
 
 export const getLastThreeCategories = async () => {
+  console.time('getLastThreeCategories_TimerStart'); // Start de timer
+
   const resp = await axios.get(
     "https://localhost:7170/Categories/ThreeLastCategories"
   );
+
   const data = await resp.data;
+
+  console.timeEnd('getLastThreeCategories_TimerEnd'); // Stop de timer en toon de tijd in de console
+
   return data;
 };
+
 
 export const getCategoryById = async (id) => {
   const resp = await axios.get(
