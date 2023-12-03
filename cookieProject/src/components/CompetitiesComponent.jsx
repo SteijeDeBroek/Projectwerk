@@ -21,7 +21,7 @@ const CompetitiesComponent = () => {
     <div className="pl-40">
       <div className="flex items-center justify-between h-96 p-10  border border-orange-400 bg-orange-300 rounded">
         {competities.map((c) => {
-          return <h2 key={c.name}>{c.name}</h2>;
+          return <h2 key={c.name}>{c.name}</h2>; //toont effectief de name in de database!!! (krijgen enkel 1 naam te zien, nog fixen)
         })}
         <div id="winnaars" className="border border-black rounded">
           <div id="winnaars" className="limit">
