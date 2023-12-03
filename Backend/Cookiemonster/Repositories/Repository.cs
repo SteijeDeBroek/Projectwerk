@@ -1,5 +1,7 @@
 ﻿using Cookiemonster.Interfaces;
+using Cookiemonster.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace Cookiemonster.Repositories
 {
@@ -34,6 +36,16 @@ namespace Cookiemonster.Repositories
         public List<T> GetAll()
         {
             return _dbSet.Where(entity => entity.isDeleted == false).ToList();
+        }
+
+        public List<Category> GetThreeLast()
+        {
+            if(typeof(T).Equals(typeof(Category)))
+            {
+                DbSet<Category> newDbSet = _dbSet as DbSet<Category>;
+                return newDbSet.Where(entity => entity.isDeleted == false).OrderByDescending(entity => entity.StartDate).Take(3).ToList();
+            }
+            return null;
         }
 
         public T Create(T entity)

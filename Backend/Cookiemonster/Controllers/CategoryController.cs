@@ -1,5 +1,6 @@
 ﻿using Cookiemonster.Interfaces;
 using Cookiemonster.Models;
+using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,6 +28,13 @@ namespace Cookiemonster.Controllers
             return Ok(categories);
         }
 
+        [HttpGet("ThreeLastCategories")]
+        public ActionResult<IEnumerable<Category>> GetThreeLast()
+        {
+            var threeLastCategories = _categoryRepository.GetThreeLast();
+            return Ok(threeLastCategories);
+        }
+ 
         // GET api/categories/5
         [HttpGet("CategoryById/{id}")]
         public ActionResult<IEnumerable<Category>> Get(int id)
