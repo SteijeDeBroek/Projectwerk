@@ -12,6 +12,14 @@ export const getCategories = async () => {
   return data;
 };
 
+export const getLastThreeCategories = async () => {
+  const resp = await axios.get(
+    "https://localhost:7170/Categories/ThreeLastCategories"
+  );
+  const data = await resp.data;
+  return data;
+};
+
 export const getCategoryById = async (id) => {
   const resp = await axios.get(
     `https://localhost:7170/Categories/CategoryById/${id}`
@@ -50,6 +58,12 @@ export const getImages = async () => {
   return data;
 };
 
+export const getWinningImages = async () => {
+  const resp = await axios.get("https://localhost:7170/Images/WinningImages"); // images van gerechten met de meeste votes weergeven per category
+  const data = await resp.data;
+  return data;
+};
+
 export const getImageById = async (id) => {
   const resp = await axios.get(`https://localhost:7170/Images/ImageById/${id}`);
   const data = await resp.data;
@@ -77,6 +91,12 @@ export const postImages = async (post) => {
 //recipes
 export const getRecipes = async () => {
   const resp = await axios.get("https://localhost:7170/Recipes/AllRecipes");
+  const data = await resp.data;
+  return data;
+};
+
+export const getWinningRecipes = async () => {
+  const resp = await axios.get("https://localhost:7170/Recipes/WinningRecipes");
   const data = await resp.data;
   return data;
 };
@@ -147,6 +167,12 @@ export const getUsers = async () => {
   return data;
 };
 
+export const getWinningUsers = async () => {
+  const resp = await axios.get("https://localhost:7170/Users/WinningUsers");
+  const data = await resp.data;
+  return data;
+};
+
 export const getUsersById = async (id) => {
   const resp = await axios.get(`https://localhost:7170/Users/UserById/${id}`);
   const data = await resp.data;
@@ -201,3 +227,4 @@ export const postVotes = async (post) => {
   const resp = await axios.post("https://localhost:7170/Votes/Vote", post);
   return await resp.status;
 };
+
