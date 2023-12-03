@@ -1,5 +1,6 @@
 import React from "react";
 
+// if recipe has not been voted on, show here and add votes
 const votingComponent = () => {
   return (
     <>

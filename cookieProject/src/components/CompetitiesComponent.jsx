@@ -1,10 +1,28 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
 import "../css/Competities.css"; /* Hij leest de css file niet? */
+import { getLastThreeCategories } from "../API";
 
 const CompetitiesComponent = () => {
+  const [competities, setCompetities] = useState([]);
+  useEffect(() => {
+    const fetchCompetities = async () => {
+      try {
+        const response = await getLastThreeCategories();
+        setCompetities(response);
+      } catch (err) {
+        console.error("error:", err);
+      }
+    };
+    fetchCompetities();
+  }, []);
+
   return (
     <div className="pl-40">
       <div className="flex items-center justify-between h-96 p-10  border border-orange-400 bg-orange-300 rounded">
+        {competities.map((c) => {
+          return <h2 key={c.name}>{c.name}</h2>;
+        })}
         <div id="winnaars" className="border border-black rounded">
           <div id="winnaars" className="limit">
             <img
