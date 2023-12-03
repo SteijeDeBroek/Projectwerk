@@ -9,6 +9,21 @@ using Cookiemonster.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Voor REACT client toegevoegd:
+{
+    Console.WriteLine("Cors active");
+    // Adding CORS Policy
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowOrigin", builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+        });
+    });
+}
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -64,5 +79,7 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
+// For React client:
+app.UseCors("AllowOrigin");
 
 app.Run();
