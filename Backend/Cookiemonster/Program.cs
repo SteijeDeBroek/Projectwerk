@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using System.Text.Json;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -63,6 +65,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddRazorPages();
 
+
 // For JWT:
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // default scheme
     .AddJwtBearer(
@@ -95,13 +98,65 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json")
     .Build();
-   
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+
+
 });
 
+
+// na builder.Services.AddDbContext():
+builder.Services.AddHealthChecks().AddDbContextCheck<SisDbContext>();
+// AddCheck<DbContextHealthCheck<SisDbContext>>("SisDbContextHealthCheck");
+
+builder.Services.AddHealthChecksUI(setupSettings: setup =>
+{
+    setup.DisableDatabaseMigrations();
+    //setup.SetEvaluationTimeInSeconds(5); // Configures the UI to poll for health checks updates every 5 seconds
+    //setup.SetApiMaxActiveRequests(1); //Only one active request will be executed at a time. All the excedent requests will result in 429 (Too many requests)
+    setup.MaximumHistoryEntriesPerEndpoint(50); // Set the maximum history entries by endpoint that will be served by the UI api middleware
+    //setup.SetNotifyUnHealthyOneTimeUntilChange(); // You will only receive one failure notification until the status changes
+
+    setup.AddHealthCheckEndpoint("EFCore connection", "/working");
+
+}).AddInMemoryStorage();
+
+// Na app.UseHttpsRedirection(), voor app.UseSwaggerResponseCheck() en app.MapControllers():
+
+// to print json:
+var options = new HealthCheckOptions
+{
+    ResponseWriter = async (c, r) =>
+    {
+        c.Response.ContentType = "application/json";
+
+        var result = JsonSerializer.Serialize(new
+        {
+            status = r.Status.ToString(),
+            errors = r.Entries.Select(e => new { key = e.Key, value = e.Value.Status.ToString() })
+        });
+        await c.Response.WriteAsync(result);
+    }
+};
+
+
+
+
+
+
 var app = builder.Build();
+
+app.UseHealthChecks("/working", options);
+
+// url: /healthchecks-ui
+app.UseRouting().UseEndpoints(config =>
+{
+    config.MapHealthChecksUI();
+});
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
