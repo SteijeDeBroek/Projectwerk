@@ -2,7 +2,11 @@
 using Cookiemonster.Models;
 using Cookiemonster.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Cookiemonster.Controllers
 {
@@ -11,6 +15,7 @@ namespace Cookiemonster.Controllers
     public class UserController : ControllerBase
     {
         private readonly IRepository<User> _userRepository;
+        private readonly IConfiguration _configuration;
 
         public UserController(IRepository<User> userRepository)
         {
@@ -38,16 +43,45 @@ namespace Cookiemonster.Controllers
         }
 
         // POST: api/users
-        [HttpPost("User")]
-        public ActionResult CreateUser(User user)
+
+        [HttpPost]
+        public IActionResult CreateUser(User user)
         {
             if (user == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            _userRepository.Create(user);
+            else if (user.Username == "Admin" && user.Password == "AdminPassword") // gebruik hier bijvoorbeeld je databank om er paswoorden bcrypt-ed in op te slaan
+            {
+                var issuer = _configuration["Jwt:Issuer"];
+                var audience = _configuration["Jwt:Audience"];
+                var key = Encoding.ASCII.GetBytes
+                (_configuration["Jwt:PrivateKey"]);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                new Claim("Id", Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Password),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.Username),
+                new Claim(JwtRegisteredClaimNames.Jti,
+                Guid.NewGuid().ToString())
+            }),
+                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    Issuer = issuer,
+                    Audience = audience,
+                    SigningCredentials = new SigningCredentials
+                    (new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha512Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var jwtToken = tokenHandler.WriteToken(token);
+                var stringToken = tokenHandler.WriteToken(token);
+                return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
+            }
             return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
+
         }
 
         // PATCH: api/users/5
