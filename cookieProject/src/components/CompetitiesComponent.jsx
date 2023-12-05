@@ -1,10 +1,55 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import "../css/Competities.css"; /* Hij leest de css file niet? */
-import { getLastThreeCategories } from "../API";
+import {
+  getLastThreeCategories,
+  getWinningImages,
+  getWinningRecipes,
+  getWinningUsers,
+} from "../API";
 
 const CompetitiesComponent = () => {
   const [competities, setCompetities] = useState([]);
+  const [images, setImages] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await getWinningUsers();
+        setUsers(response);
+      } catch (err) {
+        console.error("error:", err);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await getWinningRecipes();
+        setRecipes(response);
+      } catch (err) {
+        console.error("error:", err);
+      }
+    };
+    fetchRecipes();
+  }, []);
+
+  useEffect(() => {
+    const fetchWinningImages = async () => {
+      try {
+        const response = await getWinningImages();
+        setImages(response);
+      } catch (err) {
+        console.error("error:", err);
+      }
+    };
+    fetchWinningImages();
+  }, []);
+
   useEffect(() => {
     const fetchCompetities = async () => {
       try {
