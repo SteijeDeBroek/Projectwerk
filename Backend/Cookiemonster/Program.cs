@@ -108,7 +108,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 // na builder.Services.AddDbContext():
-builder.Services.AddHealthChecks().AddDbContextCheck<SisDbContext>();
+builder.Services.AddHealthChecks().AddDbContextCheck<SisDbContext>();      // brad of ilya, kijk hier eens naar
 // AddCheck<DbContextHealthCheck<SisDbContext>>("SisDbContextHealthCheck");
 
 builder.Services.AddHealthChecksUI(setupSettings: setup =>
