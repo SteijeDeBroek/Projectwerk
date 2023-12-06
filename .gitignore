@@ -136,3 +136,4 @@ dist
 /Backend/Cookiemonster.Tests/bin
 /Backend/Cookiemonster.Tests/.vs
 /Backend/Cookiemonster.Tests/obj
+/.vs
