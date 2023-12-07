@@ -7,6 +7,7 @@ using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Cookiemonster.Infrastructure.Repositories;
+using Cookiemonster.API;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,7 @@ var builder = WebApplication.CreateBuilder(args);
     });
 }
 // Add services to the container.
-
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<DbContext, AppDbContext>();

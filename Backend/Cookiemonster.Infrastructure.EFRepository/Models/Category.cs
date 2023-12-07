@@ -12,7 +12,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
 
         public string Description { get; set; } = null!;
 
-        public string BannerUri { get; set; } = null!;
+        public byte[] BannerBlob { get; set; } = null!;
 
         public DateTime StartDate { get; set; }
 

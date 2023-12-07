@@ -7,7 +7,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
     {
         public int ImageId { get; set; }
 
-        public string Uri { get; set; } = null!;
+        public byte[] ImageBlob { get; set; } = null!;
 
         public int RecipeId { get; set; }
 

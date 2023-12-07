@@ -40,7 +40,7 @@ namespace Cookiemonster.API.Controllers
 
         // GET api/categories/5
         [HttpGet("CategoryById/{id}")]
-        public ActionResult<IEnumerable<CategoryDTO>> Get(int id)
+        public ActionResult<CategoryDTO> Get(int id)
         {
             var category = _categoryRepository.Get(id);
             if (category == null)
