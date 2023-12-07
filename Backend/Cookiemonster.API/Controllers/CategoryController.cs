@@ -25,14 +25,14 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/categories
         [HttpGet("AllCategories")]
-        public ActionResult<IEnumerable<Category>> Get()
+        public ActionResult<IEnumerable<CategoryDTO>> Get()
         {
             var categories = _categoryRepository.GetAll();
             return Ok(_mapper.Map<List<CategoryDTO>>(categories));
         }
 
         [HttpGet("ThreeLastCategories")]
-        public ActionResult<IEnumerable<Category>> GetThreeLast()
+        public ActionResult<IEnumerable<CategoryDTO>> GetThreeLast()
         {
             var threeLastCategories = _categoryRepository.GetThreeLast();
             return Ok(_mapper.Map<List<CategoryDTO>>(threeLastCategories));
@@ -40,37 +40,40 @@ namespace Cookiemonster.API.Controllers
 
         // GET api/categories/5
         [HttpGet("CategoryById/{id}")]
-        public ActionResult<IEnumerable<Category>> Get(int id)
+        public ActionResult<IEnumerable<CategoryDTO>> Get(int id)
         {
             var category = _categoryRepository.Get(id);
             if (category == null)
             {
                 return NotFound();
             }
-            return Ok(category);
+            return Ok(_mapper.Map<CategoryDTO>(category));
         }
 
         // POST api/categories
         [HttpPost("Category")]
-        public ActionResult CreateCategory(Category category)
+        public ActionResult CreateCategory(CategoryDTO category)
         {
             if (category == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _categoryRepository.Create(category);
-            return CreatedAtAction(nameof(Get), new { id = category.CategoryId }, category);
+            _categoryRepository.Create(_mapper.Map<Category>(category));
+            return CreatedAtAction(nameof(Get), category);
         }
 
-        // PATCH: api/categories/5
+        // PATCH: api/categories/5s
+        // Nog fixen hoe patch werkt
         [HttpPatch("Category/{id}")]
-        public ActionResult PatchCategory(int id, [FromBody] Category category)
+        public ActionResult PatchCategory(int id, [FromBody] CategoryDTO category)
         {
-            if (category == null || category.CategoryId != id || !ModelState.IsValid)
+            if (category == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _categoryRepository.Update(category);
+            Category mappedCategory = _mapper.Map<Category>(category);
+            mappedCategory.CategoryId = id;
+            _categoryRepository.Update(mappedCategory);
             return Ok();
         }
 
