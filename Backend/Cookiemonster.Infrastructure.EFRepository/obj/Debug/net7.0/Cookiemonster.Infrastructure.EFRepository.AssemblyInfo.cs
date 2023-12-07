@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cookiemonster.Infrastructure.EFRepository")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1238e13b5f194c291ddf2e504315d3d74d0f9c0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cookiemonster.Infrastructure.EFRepository")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cookiemonster.Infrastructure.EFRepository")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

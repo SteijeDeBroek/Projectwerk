@@ -16,3 +16,10 @@ C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.
 C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\refint\Cookiemonster.Infrastructure.EFRepository.dll
 C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.pdb
 C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\ref\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.deps.json
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.pdb
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\refint\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.pdb
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\ref\Cookiemonster.Infrastructure.EFRepository.dll

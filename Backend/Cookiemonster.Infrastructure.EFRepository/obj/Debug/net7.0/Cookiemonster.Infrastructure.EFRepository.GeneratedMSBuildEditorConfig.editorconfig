@@ -8,6 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Cookiemonster.Infrastructure.EFRepository
-build_property.ProjectDir = C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\

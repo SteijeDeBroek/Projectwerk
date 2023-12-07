@@ -21,3 +21,15 @@ C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure\
 C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\refint\Cookiemonster.Infrastructure.dll
 C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.pdb
 C:\Users\Stan\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\ref\Cookiemonster.Infrastructure.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\bin\Debug\net7.0\Cookiemonster.Infrastructure.deps.json
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\bin\Debug\net7.0\Cookiemonster.Infrastructure.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\bin\Debug\net7.0\Cookiemonster.Infrastructure.pdb
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\bin\Debug\net7.0\Cookiemonster.Domain.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\bin\Debug\net7.0\Cookiemonster.Domain.pdb
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.pdb
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.csproj.CopyComplete
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\refint\Cookiemonster.Infrastructure.dll
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.pdb
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\ref\Cookiemonster.Infrastructure.dll

@@ -32,10 +32,10 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpGet("ThreeLastCategories")]
-        public ActionResult<IEnumerable<CategoryDTO>> GetThreeLast()
+        public ActionResult<IQueryable<CategoryDTO>> GetThreeLast()
         {
             var threeLastCategories = _categoryRepository.GetThreeLast();
-            return Ok(_mapper.Map<List<CategoryDTO>>(threeLastCategories));
+            return Ok(_mapper.Map<IQueryable<CategoryDTO>>(threeLastCategories));
         }
 
         // GET api/categories/5
