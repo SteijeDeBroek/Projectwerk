@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cookiemonster.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fcb354f35402bd19f52ebb8d89c80c8c0bf64986")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cookiemonster.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cookiemonster.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

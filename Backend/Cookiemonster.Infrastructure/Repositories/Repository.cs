@@ -40,12 +40,14 @@ namespace Cookiemonster.Infrastructure.Repositories
             return _dbSet.Where(entity => entity.IsDeleted == false).ToList();
         }
 
-        public List<Category> GetThreeLast()
+        public IQueryable<Category> GetThreeLast()
         {
-            if (typeof(T).Equals(typeof(Category)))
+            if (typeof(T) == typeof(Category))
             {
                 DbSet<Category> newDbSet = _dbSet as DbSet<Category>;
-                return newDbSet.Where(entity => entity.IsDeleted == false).OrderByDescending(entity => entity.StartDate).Take(3).ToList();
+                return newDbSet.Where(entity => !entity.IsDeleted)
+                               .OrderByDescending(entity => entity.StartDate)
+                               .Take(3);
             }
             return null;
         }
