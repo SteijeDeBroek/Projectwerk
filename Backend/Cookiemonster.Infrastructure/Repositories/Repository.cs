@@ -95,5 +95,10 @@ namespace Cookiemonster.Infrastructure.Repositories
             _context.SaveChanges();
             return true;
         }
+
+        public IQueryable<T> Queryable()
+        {
+            return _dbSet.AsQueryable();  
+        }
     }
 }

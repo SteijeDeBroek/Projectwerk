@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq;
 using Cookiemonster.API.DTOs;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
@@ -34,8 +35,14 @@ namespace Cookiemonster.API.Controllers
         [HttpGet("ThreeLastCategories")]
         public ActionResult<IQueryable<CategoryDTO>> GetThreeLast()
         {
-            var threeLastCategories = _categoryRepository.GetThreeLast();
-            return Ok(_mapper.Map<IQueryable<CategoryDTO>>(threeLastCategories));
+            var queryable = _categoryRepository.Queryable();
+            var threeLastCategories = queryable
+            .Where(category => !category.IsDeleted)
+            .OrderByDescending(category => category.StartDate)
+            .Take(3);
+
+            var result = _mapper.Map<List<CategoryDTO>>(threeLastCategories);
+            return Ok(result);
         }
 
         // GET api/categories/5

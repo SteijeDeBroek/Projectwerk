@@ -23,3 +23,15 @@ C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Coo
 C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\refint\Cookiemonster.Infrastructure.EFRepository.dll
 C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.pdb
 C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\ref\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.deps.json
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\bin\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.pdb
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.csproj.AssemblyReference.cache
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.AssemblyInfoInputs.cache
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.AssemblyInfo.cs
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.csproj.CoreCompileInputs.cache
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\refint\Cookiemonster.Infrastructure.EFRepository.dll
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\Cookiemonster.Infrastructure.EFRepository.pdb
+C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.Infrastructure.EFRepository\obj\Debug\net7.0\ref\Cookiemonster.Infrastructure.EFRepository.dll

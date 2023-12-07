@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore.Design;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Cookiemonster.Infrastructure.EFRepository.Context;
