@@ -70,47 +70,73 @@ const CompetitiesComponent = () => {
         ))}
         <div id="winnaars" className="border border-black rounded">
           <div id="winnaars" className="limit">
+            {images.slice(0, 1).map((c) => (
+              <img
+                key={"foto" + c.ImageId}
+                src={c.Uri}
+                height="100px"
+                width="150px"
+                alt=""
+                className="hover:h-68 hover:w-44 cursor-pointer"
+              ></img>
+            ))}
+            {recipes.slice(0, 1).map((c) => (
+              <p key={c.name} className="font-sans font-semibold">
+                {c.name}
+              </p>
+            ))}
+          </div>
+        </div>
+        <div id="winnaars" className="border border-black rounded">
+          {images.slice(1, 2).map((c) => (
             <img
-              src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
+              key={"foto" + c.ImageId}
+              src={c.Uri}
               height="100px"
               width="150px"
               alt=""
               className="hover:h-68 hover:w-44 cursor-pointer"
-            />
-            <p className="font-sans font-semibold">
-              Naam Gerecht 1 met lasagna
+            ></img>
+          ))}
+          {recipes.slice(1, 2).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
             </p>
-          </div>
+          ))}
         </div>
         <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht 2</p>
+          {images.slice(2, 3).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(2, 3).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
         </div>
         <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht 3</p>
-        </div>
-        <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht 4</p>
+          {images.slice(3, 4).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(3, 4).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
         </div>
       </div>
 
@@ -119,44 +145,72 @@ const CompetitiesComponent = () => {
           <h2 key={c.name}>{c.name}</h2>
         ))}
         <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="150px"
-            alt=""
-            className="hover:h-68 hover:w-44 cursor-pointer"
-          />
-          <p className="font-sans font-semibold">Naam Gerecht</p>
+          {images.slice(4, 5).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(4, 5).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
         </div>
         <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht</p>
+          {images.slice(5, 6).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(5, 6).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
         </div>
         <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht</p>
+          {images.slice(6, 7).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(6, 7).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
         </div>
         <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht</p>
+          {images.slice(7, 8).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(7, 8).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
         </div>
       </div>
       <div className="flex items-center justify-between h-96 p-10 mt-5 border border-blue-400 bg-blue-200  rounded ">
@@ -164,45 +218,71 @@ const CompetitiesComponent = () => {
           <h2 key={c.name}>{c.name}</h2>
         ))}
         <div id="winnaars" className="border border-black rounded">
+          {images.slice(8, 9).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(8, 9).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
+        </div>
+        <div id="winnaars" className="border border-black rounded">
+          {images.slice(9, 10).map((c) => (
+            <img
+              key={"foto" + c.ImageId}
+              src={c.Uri}
+              height="100px"
+              width="150px"
+              alt=""
+              className="hover:h-68 hover:w-44 cursor-pointer"
+            ></img>
+          ))}
+          {recipes.slice(9, 10).map((c) => (
+            <p key={c.name} className="font-sans font-semibold">
+              {c.name}
+            </p>
+          ))}
+        </div>
+        {images.slice(10, 11).map((c) => (
           <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
+            key={"foto" + c.ImageId}
+            src={c.Uri}
             height="100px"
             width="150px"
             alt=""
             className="hover:h-68 hover:w-44 cursor-pointer"
-          />
-          <p className="font-sans font-semibold">Naam Gerecht</p>
-        </div>
-        <div id="winnaars" className="border border-black rounded">
+          ></img>
+        ))}
+        {recipes.slice(10, 11).map((c) => (
+          <p key={c.name} className="font-sans font-semibold">
+            {c.name}
+          </p>
+        ))}
+      </div>
+      <div id="winnaars" className="border border-black rounded">
+        {images.slice(11, 12).map((c) => (
           <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
+            key={"foto" + c.ImageId}
+            src={c.Uri}
             height="100px"
-            width="120px"
+            width="150px"
             alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht</p>
-        </div>
-        <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht</p>
-        </div>
-        <div id="winnaars" className="border border-black rounded">
-          <img
-            src="https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/260417119_4675057169268479_4379047456459630175_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iKU7FLYcby8AX-9x4ip&_nc_ht=scontent-bru2-1.xx&oh=00_AfBuYa6GThfN067epjVJKK7OvIgNdEzhSLVbRQYZ3lTzjQ&oe=6558C9EF"
-            height="100px"
-            width="120px"
-            alt=""
-            className="hover:h-60 hover:w-36 cursor-pointer"
-          />
-          <p>Naam Gerecht</p>
-        </div>
+            className="hover:h-68 hover:w-44 cursor-pointer"
+          ></img>
+        ))}
+        {recipes.slice(11, 12).map((c) => (
+          <p key={c.name} className="font-sans font-semibold">
+            {c.name}
+          </p>
+        ))}
       </div>
     </div>
   );
