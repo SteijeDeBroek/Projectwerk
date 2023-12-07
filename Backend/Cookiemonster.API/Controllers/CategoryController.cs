@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
-using Cookiemonster.Repositories;
+using Cookiemonster.API.DTOs;
+using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,14 +13,14 @@ namespace Cookiemonster.API.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly IRepository<Category> _categoryRepository;
-        private readonly IMapper _mapper:
+        private readonly IMapper _mapper;
 
         public CategoryController(IRepository<Category> categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
-
+        
 
 
         // GET: api/categories
@@ -35,7 +35,7 @@ namespace Cookiemonster.API.Controllers
         public ActionResult<IEnumerable<Category>> GetThreeLast()
         {
             var threeLastCategories = _categoryRepository.GetThreeLast();
-            return Ok(threeLastCategories);
+            return Ok(_mapper.Map<List<CategoryDTO>>(threeLastCategories));
         }
 
         // GET api/categories/5

@@ -22,4 +22,10 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cookiemonster.Domain\Cookiemonster.Domain.csproj" />
+    <ProjectReference Include="..\Cookiemonster.Infrastructure.EFRepository\Cookiemonster.Infrastructure.EFRepository.csproj" />
+    <ProjectReference Include="..\Cookiemonster.Infrastructure\Cookiemonster.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using Cookiemonster.Models;
+﻿using Cookiemonster.Infrastructure.EFRepository.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
 
 namespace Cookiemonster.Domain.Interfaces
 {

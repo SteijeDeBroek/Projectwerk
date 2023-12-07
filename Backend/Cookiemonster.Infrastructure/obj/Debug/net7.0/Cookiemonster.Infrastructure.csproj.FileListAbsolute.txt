@@ -1,0 +1,5 @@
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.AssemblyInfo.cs
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.Infrastructure\obj\Debug\net7.0\Cookiemonster.Infrastructure.csproj.CoreCompileInputs.cache

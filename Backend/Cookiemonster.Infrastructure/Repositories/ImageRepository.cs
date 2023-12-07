@@ -1,5 +1,5 @@
-﻿using Cookiemonster.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Cookiemonster.Infrastructure.EFRepository.Context;
+using Cookiemonster.Infrastructure.EFRepository.Models;
 
 
 namespace Cookiemonster.Infrastructure.Repositories

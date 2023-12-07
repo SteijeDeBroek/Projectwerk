@@ -1,15 +1,12 @@
-using Cookiemonster.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
-using Microsoft.AspNetCore.Server.IIS;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Cookiemonster.Infrastructure.EFRepository.Context;
+using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
+using Cookiemonster.Infrastructure.Repositories;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);

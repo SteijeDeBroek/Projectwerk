@@ -1,7 +1,4 @@
 ﻿using Cookiemonster.Infrastructure.EFRepository.Interfaces;
-using Cookiemonster.Interfaces;
-using System;
-using System.Collections.Generic;
 
 
 namespace Cookiemonster.Infrastructure.EFRepository.Models

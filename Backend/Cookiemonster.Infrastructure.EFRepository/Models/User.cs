@@ -1,8 +1,4 @@
 ﻿using Cookiemonster.Infrastructure.EFRepository.Interfaces;
-using Cookiemonster.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Cookiemonster.Infrastructure.EFRepository.Models
 {

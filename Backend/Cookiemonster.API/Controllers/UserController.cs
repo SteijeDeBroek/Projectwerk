@@ -1,9 +1,8 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
-using Cookiemonster.Repositories;
+﻿using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

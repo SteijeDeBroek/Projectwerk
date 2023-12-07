@@ -1,12 +1,12 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cookiemonster.API.Controllers
 {
     [Route("images")]
     [ApiController]
-    public class ImageController : Controller
+    public class ImageController : ControllerBase
     {
         private readonly IRepository<Image> _imageRepository;
 

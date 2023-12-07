@@ -1,8 +1,6 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
-using Cookiemonster.Repositories;
+﻿using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace Cookiemonster.API.Controllers
 {

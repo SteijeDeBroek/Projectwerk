@@ -1,7 +1,8 @@
-﻿using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
+﻿using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Context;
+using Cookiemonster.Infrastructure.EFRepository.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
 
 namespace Cookiemonster.Infrastructure.Repositories
 {
@@ -27,7 +28,7 @@ namespace Cookiemonster.Infrastructure.Repositories
             {
                 entity = _dbSet.Find(id1, id2);
             }
-            if (entity?.isDeleted == false)
+            if (entity?.IsDeleted == false)
             {
                 return entity;
             }
@@ -36,7 +37,7 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public List<T> GetAll()
         {
-            return _dbSet.Where(entity => entity.isDeleted == false).ToList();
+            return _dbSet.Where(entity => entity.IsDeleted == false).ToList();
         }
 
         public List<Category> GetThreeLast()
@@ -44,7 +45,7 @@ namespace Cookiemonster.Infrastructure.Repositories
             if (typeof(T).Equals(typeof(Category)))
             {
                 DbSet<Category> newDbSet = _dbSet as DbSet<Category>;
-                return newDbSet.Where(entity => entity.isDeleted == false).OrderByDescending(entity => entity.StartDate).Take(3).ToList();
+                return newDbSet.Where(entity => entity.IsDeleted == false).OrderByDescending(entity => entity.StartDate).Take(3).ToList();
             }
             return null;
         }
@@ -58,7 +59,7 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public T Update(T entity)
         {
-            if (entity.isDeleted == false)
+            if (entity.IsDeleted == false)
             {
                 _dbSet.Update(entity);
                 _context.SaveChanges();
@@ -78,16 +79,16 @@ namespace Cookiemonster.Infrastructure.Repositories
             {
                 entity = _dbSet.Find(id1, id2);
             }
-            if (entity == null || entity.isDeleted == true)
+            if (entity == null || entity.IsDeleted == true)
                 return false;
 
-            if (entity.isDeletable)
+            if (entity.IsDeletable)
             {
                 _dbSet.Remove(entity);
             }
             else
             {
-                entity.isDeleted = true;
+                entity.IsDeleted = true;
             }
             _context.SaveChanges();
             return true;

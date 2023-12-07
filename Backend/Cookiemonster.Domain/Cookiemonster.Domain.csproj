@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cookiemonster.Infrastructure.EFRepository\Cookiemonster.Infrastructure.EFRepository.csproj" />
+  </ItemGroup>
+
 </Project>
