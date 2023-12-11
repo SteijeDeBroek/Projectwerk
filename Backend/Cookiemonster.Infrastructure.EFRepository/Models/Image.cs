@@ -1,4 +1,5 @@
 ﻿using Cookiemonster.Infrastructure.EFRepository.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cookiemonster.Infrastructure.EFRepository.Models
 {
@@ -7,6 +8,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
     {
         public int ImageId { get; set; }
 
+        [NotMapped]
         public string Base64Image
         {
             get

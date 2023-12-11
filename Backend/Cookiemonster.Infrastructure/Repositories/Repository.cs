@@ -17,7 +17,7 @@ namespace Cookiemonster.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public T Get(int id1, int id2 = 0)
+        public T? Get(int id1, int id2 = 0)
         {
             T? entity;
             if (id2 == 0)
@@ -59,7 +59,7 @@ namespace Cookiemonster.Infrastructure.Repositories
             return entity;
         }
 
-        public T Update(T entity)
+        public T? Update(T entity)
         {
             if (entity.IsDeleted == false)
             {

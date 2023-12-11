@@ -1,6 +1,6 @@
-﻿namespace Cookiemonster.API.DTOs
+﻿namespace Cookiemonster.API.DTOPosts
 {
-    public class VoteDTO
+    public class VoteDTOPost
     {
         public bool Vote1 { get; set; }
 

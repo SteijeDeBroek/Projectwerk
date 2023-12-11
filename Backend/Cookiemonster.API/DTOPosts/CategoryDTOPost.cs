@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cookiemonster.API.DTOs
+namespace Cookiemonster.API.DTOPosts
 {
-    public class CategoryDTO
+    public class CategoryDTOPost
     {
         [MaxLength(500)]
         public string Name { get; set; } = string.Empty;

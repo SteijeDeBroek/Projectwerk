@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using System.Linq;
-using Cookiemonster.API.DTOs;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
+using Cookiemonster.API.DTOGets;
+using Cookiemonster.API.DTOPosts;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +14,10 @@ namespace Cookiemonster.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly IRepository<Category> _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public CategoryController(IRepository<Category> categoryRepository, IMapper mapper)
+        public CategoryController(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
@@ -26,53 +27,58 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/categories
         [HttpGet("AllCategories")]
-        public ActionResult<IEnumerable<CategoryDTO>> Get()
+        public ActionResult<IEnumerable<CategoryDTOGet>> Get()
         {
             var categories = _categoryRepository.GetAll();
-            return Ok(_mapper.Map<List<CategoryDTO>>(categories));
+            return Ok(_mapper.Map<List<CategoryDTOGet>>(categories));
+        }
+
+        [HttpGet("GetWinningRecipe/{id}")]
+        public ActionResult<RecipeDTOGet> GetWinningRecipe(int id)
+        {
+            Recipe? winningRecipe = _categoryRepository.GetWinningRecipe(id);
+            if (winningRecipe == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<RecipeDTOGet>(winningRecipe));
         }
 
         [HttpGet("MostRecentCategories")]
-        public ActionResult<IEnumerable<CategoryDTO>> GetMostRecent(int amount)
+        public ActionResult<IEnumerable<CategoryDTOGet>> GetMostRecent(int amount)
         {
-            var queryable = _categoryRepository.Queryable();
-            var mostRecentCategories = queryable
-            .Where(category => !category.IsDeleted && category.EndDate > DateTime.Now)
-            .OrderByDescending(category => category.StartDate)
-            .Take(amount);
-
-            var result = _mapper.Map<List<CategoryDTO>>(mostRecentCategories);
-            return Ok(result);
+            var mostRecentCategories = _categoryRepository.GetMostRecent(amount);
+            return Ok(_mapper.Map<List<CategoryDTOGet>>(mostRecentCategories));
         }
 
         // GET api/categories/5
         [HttpGet("CategoryById/{id}")]
-        public ActionResult<CategoryDTO> Get(int id)
+        public ActionResult<CategoryDTOGet> Get(int id)
         {
             var category = _categoryRepository.Get(id);
             if (category == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<CategoryDTO>(category));
+            return Ok(_mapper.Map<CategoryDTOGet>(category));
         }
 
         // POST api/categories
         [HttpPost("Category")]
-        public ActionResult CreateCategory(CategoryDTO category)
+        public ActionResult CreateCategory(CategoryDTOPost category)
         {
             if (category == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _categoryRepository.Create(_mapper.Map<Category>(category));
-            return CreatedAtAction(nameof(Get), category);
+            var createdCategory = _categoryRepository.Create(_mapper.Map<Category>(category));
+            return CreatedAtAction(nameof(Get), _mapper.Map<CategoryDTOGet>(createdCategory));
         }
 
         // PATCH: api/categories/5s
         // Nog fixen hoe patch werkt
         [HttpPatch("Category/{id}")]
-        public ActionResult PatchCategory(int id, [FromBody] CategoryDTO category)
+        public ActionResult PatchCategory(int id, [FromBody] CategoryDTOPost category)
         {
             if (category == null || !ModelState.IsValid)
             {

@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cookiemonster.API.DTOs
+namespace Cookiemonster.API.DTOGets
 {
-    public class UserDTO
+    public class UserDTOGet
     {
+        public int UserId { get; set; }
+
         [MaxLength(100)]
         public string Username { get; set; } = string.Empty;
         [MaxLength(50)]

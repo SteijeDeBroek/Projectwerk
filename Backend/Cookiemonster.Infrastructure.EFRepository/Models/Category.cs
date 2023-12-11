@@ -1,4 +1,5 @@
 ﻿using Cookiemonster.Infrastructure.EFRepository.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cookiemonster.Infrastructure.EFRepository.Models
 {
@@ -12,6 +13,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
 
         public string Description { get; set; } = null!;
 
+        [NotMapped]
         public string Base64Banner
         {
             get

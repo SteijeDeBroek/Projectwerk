@@ -1,7 +1,9 @@
-﻿namespace Cookiemonster.API.DTOs
+﻿namespace Cookiemonster.API.DTOGets
 {
-    public class ImageDTO
+    public class ImageDTOGet
     {
+        public int ImageId { get; set; }
+
         public string Base64Image { get; set; } = string.Empty;
 
         public int RecipeId { get; set; }

@@ -37,7 +37,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IRepository<Recipe>, RecipeRepository>();
-builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
 builder.Services.AddScoped<IRepository<Todo>, TodoRepository>();
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
