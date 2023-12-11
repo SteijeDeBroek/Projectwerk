@@ -129,10 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Custom
-/Backend/Cookiemonster/obj
-/Backend/Cookiemonster/.vs
-/Backend/Cookiemonster/bin
-/Backend/Cookiemonster.Tests/bin
-/Backend/Cookiemonster.Tests/.vs
-/Backend/Cookiemonster.Tests/obj
+# C# and Visual Studio
+**/.vs/
+Backend/**/bin/
+Backend/**/obj/
