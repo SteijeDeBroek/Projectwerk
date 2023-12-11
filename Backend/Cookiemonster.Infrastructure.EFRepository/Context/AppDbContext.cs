@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Cookiemonster.Infrastructure.EFRepository.Models;
+﻿using Cookiemonster.Infrastructure.EFRepository.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Cookiemonster.Infrastructure.EFRepository.Context
@@ -26,9 +26,6 @@ namespace Cookiemonster.Infrastructure.EFRepository.Context
                 .HasKey(r => r.RecipeId)
                 .HasName("Recipe");
             modelBuilder.Entity<Recipe>()
-                .Property(r => r.Description)
-                .HasColumnName("Description");
-            modelBuilder.Entity<Recipe>()
                 .HasMany(r => r.Votes)
                 .WithOne(v => v.Recipe)
                 .HasForeignKey(r => r.RecipeId)
@@ -48,6 +45,8 @@ namespace Cookiemonster.Infrastructure.EFRepository.Context
                 .WithOne(t => t.Recipe)
                 .HasForeignKey(r => r.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Recipe>()
+                .Property<DateTime>("CreationDate");
 
             modelBuilder.Entity<Category>()
                 .HasKey(c => c.CategoryId)
@@ -109,6 +108,20 @@ namespace Cookiemonster.Infrastructure.EFRepository.Context
                 .HasForeignKey(v => v.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker
+            .Entries()
+            .Where(e =>
+            e.State == EntityState.Added && e.GetType() == typeof(Recipe));
+            foreach (var entityEntry in entries)
+            {
+                entityEntry.Property("CreationDate").CurrentValue = DateTime.Now;
+            }
+            return base.SaveChanges();
+        }
+
 
     }
 }

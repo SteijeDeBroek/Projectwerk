@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -18,10 +19,10 @@ namespace Cookiemonster.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BannerUri = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BannerBlob = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,7 +38,7 @@ namespace Cookiemonster.Migrations
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<byte>(type: "tinyint", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,10 +55,10 @@ namespace Cookiemonster.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalUpvotes = table.Column<int>(type: "int", nullable: false),
                     TotalDownvotes = table.Column<int>(type: "int", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,9 +83,9 @@ namespace Cookiemonster.Migrations
                 {
                     ImageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Uri = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageBlob = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     RecipeId = table.Column<int>(type: "int", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,7 +104,7 @@ namespace Cookiemonster.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RecipeId = table.Column<int>(type: "int", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,7 +131,7 @@ namespace Cookiemonster.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Vote1 = table.Column<bool>(type: "bit", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,5 +1,4 @@
 ﻿using Cookiemonster.Infrastructure.EFRepository.Interfaces;
-using Cookiemonster.Infrastructure.EFRepository.Models;
 
 namespace Cookiemonster.Domain.Interfaces
 {
@@ -14,7 +13,7 @@ namespace Cookiemonster.Domain.Interfaces
 
         public bool Delete(int id1, int id2 = 0);
 
-        IQueryable<T> Queryable();
+        public IQueryable<T> Queryable();
 
 
     }

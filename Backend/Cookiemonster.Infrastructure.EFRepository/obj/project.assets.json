@@ -596,25 +596,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\waltn\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\bradv\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
+      "projectUniqueName": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
       "projectName": "Cookiemonster.Infrastructure.EFRepository",
-      "projectPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
-      "packagesPath": "C:\\Users\\waltn\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\obj\\",
+      "projectPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
+      "packagesPath": "C:\\Users\\bradv\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\waltn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\bradv\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -666,7 +664,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -34,3 +34,5 @@ C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.API\obj\Debug\
 C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.API\obj\Debug\net7.0\ref\Cookiemonster.API.dll
 C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.API\bin\Debug\net7.0\Cookiemonster.API.runtimeconfig.json
 C:\Users\waltn\Documents\GitHub\Projectwerk\Backend\Cookiemonster.API\obj\Debug\net7.0\Cookiemonster.API.genruntimeconfig.cache
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.API\bin\Debug\net7.0\Cookiemonster.API.runtimeconfig.json
+C:\Users\bradv\OneDrive\Bureaublad\2023-2024\Projectwerk\Projectwerk\Backend\Cookiemonster.API\obj\Debug\net7.0\Cookiemonster.API.genruntimeconfig.cache

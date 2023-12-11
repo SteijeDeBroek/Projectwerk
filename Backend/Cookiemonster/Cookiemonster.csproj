@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Cookiemonster.API\Cookiemonster.API.csproj" />
     <ProjectReference Include="..\Cookiemonster.Domain\Cookiemonster.Domain.csproj" />
     <ProjectReference Include="..\Cookiemonster.Infrastructure.EFRepository\Cookiemonster.Infrastructure.EFRepository.csproj" />

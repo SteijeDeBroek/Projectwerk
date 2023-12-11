@@ -7,6 +7,19 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
     {
         public int ImageId { get; set; }
 
+        public string Base64Image
+        {
+            get
+            {
+                return Convert.ToBase64String(ImageBlob);
+
+            }
+            set
+            {
+                ImageBlob = Convert.FromBase64String(value);
+            }
+        }
+
         public byte[] ImageBlob { get; set; } = null!;
 
         public int RecipeId { get; set; }

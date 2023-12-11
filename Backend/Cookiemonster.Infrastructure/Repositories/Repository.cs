@@ -9,7 +9,7 @@ namespace Cookiemonster.Infrastructure.Repositories
     public class Repository<T> : IRepository<T> where T : class, IDeletable
     {
         private readonly AppDbContext _context;
-        private DbSet<T> _dbSet;
+        private readonly DbSet<T> _dbSet;
 
         public Repository(AppDbContext context)
         {
@@ -40,7 +40,7 @@ namespace Cookiemonster.Infrastructure.Repositories
             return _dbSet.Where(entity => entity.IsDeleted == false).ToList();
         }
 
-        public IQueryable<Category> GetThreeLast()
+        /*public IQueryable<Category> GetThreeLast()
         {
             if (typeof(T) == typeof(Category))
             {
@@ -50,7 +50,7 @@ namespace Cookiemonster.Infrastructure.Repositories
                                .Take(3);
             }
             return null;
-        }
+        }*/
 
         public T Create(T entity)
         {
@@ -98,7 +98,7 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public IQueryable<T> Queryable()
         {
-            return _dbSet.AsQueryable();  
+            return _dbSet.AsQueryable();
         }
     }
 }

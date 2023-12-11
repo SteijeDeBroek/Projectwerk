@@ -97,7 +97,7 @@ var configuration = new ConfigurationBuilder()
    
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Cookiemonster"));
 });
 
 var app = builder.Build();

@@ -32,16 +32,16 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<List<CategoryDTO>>(categories));
         }
 
-        [HttpGet("ThreeLastCategories")]
-        public ActionResult<IQueryable<CategoryDTO>> GetThreeLast()
+        [HttpGet("MostRecentCategories")]
+        public ActionResult<IEnumerable<CategoryDTO>> GetMostRecent(int amount)
         {
             var queryable = _categoryRepository.Queryable();
-            var threeLastCategories = queryable
-            .Where(category => !category.IsDeleted)
+            var mostRecentCategories = queryable
+            .Where(category => !category.IsDeleted && category.EndDate > DateTime.Now)
             .OrderByDescending(category => category.StartDate)
-            .Take(3);
+            .Take(amount);
 
-            var result = _mapper.Map<List<CategoryDTO>>(threeLastCategories);
+            var result = _mapper.Map<List<CategoryDTO>>(mostRecentCategories);
             return Ok(result);
         }
 
@@ -77,6 +77,11 @@ namespace Cookiemonster.API.Controllers
             if (category == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            var previousCategory = _categoryRepository.Get(id);
+            if (previousCategory == null)
+            {
+                return NotFound();
             }
             Category mappedCategory = _mapper.Map<Category>(category);
             mappedCategory.CategoryId = id;
