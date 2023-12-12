@@ -4,7 +4,7 @@
 namespace Cookiemonster.Infrastructure.EFRepository.Models
 {
 
-    public partial class RecipeDTOPost : IDeletable
+    public partial class Recipe : IDeletable
     {
         public int RecipeId { get; set; }
 

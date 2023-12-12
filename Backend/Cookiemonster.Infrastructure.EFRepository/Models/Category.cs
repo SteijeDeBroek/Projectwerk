@@ -33,7 +33,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
 
         public DateTime EndDate { get; set; }
 
-        public virtual ICollection<RecipeDTOPost> Recipes { get; set; } = new List<RecipeDTOPost>();
+        public virtual ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
 
         public bool IsDeleted { get; set; }
         public bool IsDeletable { get; } = false;

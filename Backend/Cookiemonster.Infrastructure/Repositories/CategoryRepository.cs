@@ -10,7 +10,7 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public CategoryRepository(AppDbContext context) : base(context) { _context = context; }
 
-        public IQueryable<RecipeDTOPost> GetAllRecipes(int id)
+        public IQueryable<Recipe> GetAllRecipes(int id)
         {
             return _context.Recipes.Where(r => !r.IsDeleted && r.CategoryId == id);
         }
@@ -22,7 +22,7 @@ namespace Cookiemonster.Infrastructure.Repositories
             .Take(amount);
         }
 
-        public RecipeDTOPost? GetWinningRecipe(int id) {
+        public Recipe? GetWinningRecipe(int id) {
             return GetAllRecipes(id)?.ToList().MaxBy(r => r.TotalUpvotes);
         }
 

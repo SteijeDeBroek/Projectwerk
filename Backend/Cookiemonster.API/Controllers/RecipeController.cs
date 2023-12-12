@@ -11,10 +11,10 @@ namespace Cookiemonster.API.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly IRepository<Infrastructure.EFRepository.Models.RecipeDTOPost> _recipeRepository;
+        private readonly IRepository<Recipe> _recipeRepository;
         private readonly IMapper _mapper;
 
-        public RecipeController(IRepository<Infrastructure.EFRepository.Models.RecipeDTOPost> recipeRepository, IMapper mapper)
+        public RecipeController(IRepository<Recipe> recipeRepository, IMapper mapper)
         {
             _recipeRepository = recipeRepository;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/recipes/5
         [HttpGet("RecipeById/{id}")]
-        public ActionResult<DTOGets.RecipeDTOGet> Get(int id)
+        public ActionResult<RecipeDTOGet> Get(int id)
         {
             var recipe = _recipeRepository.Get(id);
             if (recipe == null)
@@ -42,20 +42,20 @@ namespace Cookiemonster.API.Controllers
 
         // POST: api/recipes
         [HttpPost("Recipe")]
-        public ActionResult CreateRecipe(DTOPosts.RecipeDTOPost recipe)
+        public ActionResult CreateRecipe(RecipeDTOPost recipe)
         {
             if (recipe == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var createdRecipe = _recipeRepository.Create(_mapper.Map<Infrastructure.EFRepository.Models.RecipeDTOPost>(recipe));
+            var createdRecipe = _recipeRepository.Create(_mapper.Map<Recipe>(recipe));
             return CreatedAtAction(nameof(Get), _mapper.Map<RecipeDTOGet>(createdRecipe));
         }
 
         // PATCH: api/recipes/5
         [HttpPatch("Recipe/{id}")]
-        public ActionResult PatchRecipe(int id, [FromBody] DTOPosts.RecipeDTOPost recipe)
+        public ActionResult PatchRecipe(int id, [FromBody] RecipeDTOPost recipe)
         {
             if (recipe == null || !ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace Cookiemonster.API.Controllers
                 return NotFound();
             }
 
-            Infrastructure.EFRepository.Models.RecipeDTOPost mappedRecipe = _mapper.Map<Infrastructure.EFRepository.Models.RecipeDTOPost>(recipe);
+            Recipe mappedRecipe = _mapper.Map<Recipe>(recipe);
             mappedRecipe.RecipeId = id;
             _recipeRepository.Update(mappedRecipe);
             return Ok();

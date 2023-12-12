@@ -14,7 +14,7 @@ namespace Cookiemonster.API
             // GETMapping
             CreateMap<Category, CategoryDTOGet>();
             CreateMap<Image, ImageDTOGet>();
-            CreateMap<Infrastructure.EFRepository.Models.RecipeDTOPost, RecipeDTOGet>();
+            CreateMap<Infrastructure.EFRepository.Models.Recipe, RecipeDTOGet>();
             CreateMap<Todo, TodoDTOGet>();
             CreateMap<User, UserDTOGet>();
             CreateMap<Vote, VoteDTOGet>();
@@ -22,7 +22,7 @@ namespace Cookiemonster.API
             // POSTMapping
             CreateMap<CategoryDTOPost, Category>();
             CreateMap<ImageDTOPost, Image>();
-            CreateMap<DTOPosts.RecipeDTOPost, Infrastructure.EFRepository.Models.RecipeDTOPost>();
+            CreateMap<DTOPosts.RecipeDTOPost, Infrastructure.EFRepository.Models.Recipe>();
             CreateMap<TodoDTOPost, Todo>();
             CreateMap<UserDTOPost, User>();
             CreateMap<VoteDTOPost, Vote>();
