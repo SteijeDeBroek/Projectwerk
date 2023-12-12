@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj": {}
+    "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj": {
+    "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj",
+        "projectUniqueName": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj",
         "projectName": "Cookiemonster.API",
-        "projectPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj",
-        "packagesPath": "C:\\Users\\bradv\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.API\\obj\\",
+        "projectPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.API\\Cookiemonster.API.csproj",
+        "packagesPath": "C:\\Users\\waltn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\bradv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\waltn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,11 +33,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj": {
-                "projectPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj"
+              "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj": {
+                "projectPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj"
               },
-              "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj": {
-                "projectPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj"
+              "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj": {
+                "projectPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj"
               }
             }
           }
@@ -90,24 +91,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj": {
+    "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj",
         "projectName": "Cookiemonster.Domain",
-        "projectPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj",
-        "packagesPath": "C:\\Users\\bradv\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Domain\\obj\\",
+        "projectPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Domain\\Cookiemonster.Domain.csproj",
+        "packagesPath": "C:\\Users\\waltn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\bradv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\waltn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -122,8 +124,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj": {
-                "projectPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj"
+              "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj": {
+                "projectPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj"
               }
             }
           }
@@ -153,24 +155,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj": {
+    "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
+        "projectUniqueName": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
         "projectName": "Cookiemonster.Infrastructure.EFRepository",
-        "projectPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
-        "packagesPath": "C:\\Users\\bradv\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bradv\\OneDrive\\Bureaublad\\2023-2024\\Projectwerk\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\obj\\",
+        "projectPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\Cookiemonster.Infrastructure.EFRepository.csproj",
+        "packagesPath": "C:\\Users\\waltn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\waltn\\Documents\\GitHub\\Projectwerk\\Backend\\Cookiemonster.Infrastructure.EFRepository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\bradv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\waltn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -222,7 +225,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

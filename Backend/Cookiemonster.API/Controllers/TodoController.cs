@@ -1,26 +1,31 @@
-﻿using Cookiemonster.Domain.Interfaces;
+﻿using AutoMapper;
+using Cookiemonster.API.DTOGets;
+using Cookiemonster.API.DTOPosts;
+using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cookiemonster.API.Controllers
 {
-    [Route("todos")]
+    [Route("Todos")]
     [ApiController]
     public class TodoController : ControllerBase
     {
         private readonly IRepository<Todo> _todoRepository;
+        private readonly IMapper _mapper;
 
-        public TodoController(IRepository<Todo> todoRepository)
+        public TodoController(IRepository<Todo> todoRepository, IMapper mapper)
         {
             _todoRepository = todoRepository;
+            _mapper = mapper;
         }
 
         // GET: api/todos
         [HttpGet]
-        public ActionResult<IEnumerable<Todo>> Get()
+        public ActionResult<IEnumerable<TodoDTOGet>> Get()
         {
             var todos = _todoRepository.GetAll();
-            return Ok(todos);
+            return Ok(_mapper.Map<List<TodoDTOGet>>(todos));
         }
 
         // GET: api/todos/5-4
@@ -32,32 +37,41 @@ namespace Cookiemonster.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(todo);
+            return Ok(_mapper.Map<TodoDTOGet>(todo));
         }
 
         // POST: api/todos
         [HttpPost]
-        public ActionResult CreateTodo(Todo todo)
+        public ActionResult CreateTodo(TodoDTOPost todo)
         {
             if (todo == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _todoRepository.Create(todo);
-            return CreatedAtAction(nameof(Get), new { id = (todo.RecipeId, todo.UserId) }, todo);
+            var createdTodo = _todoRepository.Create(_mapper.Map<Todo>(todo));
+            return CreatedAtAction(nameof(Get), _mapper.Map<TodoDTOGet>(createdTodo));
         }
 
         // PATCH: api/todos/5-4
         [HttpPatch("{recipeId}-{userId}")]
-        public ActionResult PatchRecipe(int recipeId, int userId, [FromBody] Todo todo)
+        public ActionResult PatchRecipe(int recipeId, int userId, [FromBody] TodoDTOPost todo)
         {
-            if (todo == null || todo.RecipeId != recipeId || todo.UserId != userId || !ModelState.IsValid)
+            if (todo == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var previousTodo = _todoRepository.Get(recipeId,userId);
 
-            _todoRepository.Update(todo);
+            if (previousTodo == null)
+            {
+                return NotFound();
+            }
+            Todo mappedTodo = _mapper.Map<Todo>(todo);
+            mappedTodo.RecipeId = recipeId;
+            mappedTodo.UserId = userId;
+
+            _todoRepository.Update(mappedTodo);
             return Ok();
         }
 

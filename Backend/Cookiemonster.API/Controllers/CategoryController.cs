@@ -36,7 +36,7 @@ namespace Cookiemonster.API.Controllers
         [HttpGet("GetWinningRecipe/{id}")]
         public ActionResult<RecipeDTOGet> GetWinningRecipe(int id)
         {
-            Recipe? winningRecipe = _categoryRepository.GetWinningRecipe(id);
+            Infrastructure.EFRepository.Models.RecipeDTOPost? winningRecipe = _categoryRepository.GetWinningRecipe(id);
             if (winningRecipe == null)
             {
                 return NotFound();
@@ -73,6 +73,8 @@ namespace Cookiemonster.API.Controllers
             }
             var createdCategory = _categoryRepository.Create(_mapper.Map<Category>(category));
             return CreatedAtAction(nameof(Get), _mapper.Map<CategoryDTOGet>(createdCategory));
+
+          
         }
 
         // PATCH: api/categories/5s

@@ -3,6 +3,7 @@ using Cookiemonster.API.DTOGets;
 using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 
+
 namespace Cookiemonster.API
 {
     public class MappingConfig : Profile
@@ -13,7 +14,7 @@ namespace Cookiemonster.API
             // GETMapping
             CreateMap<Category, CategoryDTOGet>();
             CreateMap<Image, ImageDTOGet>();
-            CreateMap<Recipe, RecipeDTOGet>();
+            CreateMap<Infrastructure.EFRepository.Models.RecipeDTOPost, RecipeDTOGet>();
             CreateMap<Todo, TodoDTOGet>();
             CreateMap<User, UserDTOGet>();
             CreateMap<Vote, VoteDTOGet>();
@@ -21,7 +22,7 @@ namespace Cookiemonster.API
             // POSTMapping
             CreateMap<CategoryDTOPost, Category>();
             CreateMap<ImageDTOPost, Image>();
-            CreateMap<RecipeDTOPost, Recipe>();
+            CreateMap<DTOPosts.RecipeDTOPost, Infrastructure.EFRepository.Models.RecipeDTOPost>();
             CreateMap<TodoDTOPost, Todo>();
             CreateMap<UserDTOPost, User>();
             CreateMap<VoteDTOPost, Vote>();

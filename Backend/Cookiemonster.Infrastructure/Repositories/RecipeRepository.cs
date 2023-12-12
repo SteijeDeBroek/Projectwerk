@@ -3,7 +3,7 @@ using Cookiemonster.Infrastructure.EFRepository.Models;
 
 namespace Cookiemonster.Infrastructure.Repositories
 {
-    public class RecipeRepository : Repository<Recipe>
+    public class RecipeRepository : Repository<RecipeDTOPost>
     {
         public RecipeRepository(AppDbContext context) : base(context) { }
     }

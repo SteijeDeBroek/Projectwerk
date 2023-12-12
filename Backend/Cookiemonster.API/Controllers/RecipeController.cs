@@ -1,68 +1,80 @@
-﻿using Cookiemonster.Domain.Interfaces;
+﻿using AutoMapper;
+using Cookiemonster.API.DTOGets;
+using Cookiemonster.API.DTOPosts;
+using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cookiemonster.API.Controllers
 {
-    [Route("recipes")]
+    [Route("Recipes")]
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly IRepository<Recipe> _recipeRepository;
+        private readonly IRepository<Infrastructure.EFRepository.Models.RecipeDTOPost> _recipeRepository;
+        private readonly IMapper _mapper;
 
-        public RecipeController(IRepository<Recipe> recipeRepository)
+        public RecipeController(IRepository<Infrastructure.EFRepository.Models.RecipeDTOPost> recipeRepository, IMapper mapper)
         {
             _recipeRepository = recipeRepository;
+            _mapper = mapper;
         }
 
         // GET: api/recipes
-        [HttpGet]
-        public ActionResult<IEnumerable<Recipe>> Get()
+        [HttpGet("AllRecipes")]
+        public ActionResult<IEnumerable<RecipeDTOGet>> Get()
         {
             var recipes = _recipeRepository.GetAll();
-            return Ok(recipes);
+            return Ok(_mapper.Map<List<RecipeDTOGet>>(recipes));
         }
 
         // GET: api/recipes/5
-        [HttpGet("{id}")]
-        public ActionResult<Recipe> Get(int id)
+        [HttpGet("RecipeById/{id}")]
+        public ActionResult<DTOGets.RecipeDTOGet> Get(int id)
         {
             var recipe = _recipeRepository.Get(id);
             if (recipe == null)
             {
                 return NotFound();
             }
-            return Ok(recipe);
+            return Ok(_mapper.Map<RecipeDTOGet>(recipe));
         }
 
         // POST: api/recipes
-        [HttpPost]
-        public ActionResult CreateRecipe(Recipe recipe)
+        [HttpPost("Recipe")]
+        public ActionResult CreateRecipe(DTOPosts.RecipeDTOPost recipe)
         {
             if (recipe == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _recipeRepository.Create(recipe);
-            return CreatedAtAction(nameof(Get), new { id = recipe.RecipeId }, recipe);
+            var createdRecipe = _recipeRepository.Create(_mapper.Map<Infrastructure.EFRepository.Models.RecipeDTOPost>(recipe));
+            return CreatedAtAction(nameof(Get), _mapper.Map<RecipeDTOGet>(createdRecipe));
         }
 
         // PATCH: api/recipes/5
-        [HttpPatch("{id}")]
-        public ActionResult PatchRecipe(int id, [FromBody] Recipe recipe)
+        [HttpPatch("Recipe/{id}")]
+        public ActionResult PatchRecipe(int id, [FromBody] DTOPosts.RecipeDTOPost recipe)
         {
-            if (recipe == null || recipe.RecipeId != id || !ModelState.IsValid)
+            if (recipe == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var previousRecipe = _recipeRepository.Get(id);
+            if (previousRecipe == null)
+            {
+                return NotFound();
+            }
 
-            _recipeRepository.Update(recipe);
+            Infrastructure.EFRepository.Models.RecipeDTOPost mappedRecipe = _mapper.Map<Infrastructure.EFRepository.Models.RecipeDTOPost>(recipe);
+            mappedRecipe.RecipeId = id;
+            _recipeRepository.Update(mappedRecipe);
             return Ok();
         }
 
         // DELETE: api/recipes/5
-        [HttpDelete("{id}")]
+        [HttpDelete("Recipe/{id}")]
         public ActionResult DeleteRecipe(int id)
         {
             var deleted = _recipeRepository.Delete(id);

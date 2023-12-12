@@ -13,7 +13,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
 
         public byte Role { get; set; }
 
-        public virtual ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
+        public virtual ICollection<RecipeDTOPost> Recipes { get; set; } = new List<RecipeDTOPost>();
 
         public virtual ICollection<Vote> Votes { get; set; } = new List<Vote>();
         public virtual ICollection<Todo> Todos { get; set; } = new List<Todo>();

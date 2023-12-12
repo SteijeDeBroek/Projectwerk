@@ -26,7 +26,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Models
 
         public int RecipeId { get; set; }
 
-        public Recipe Recipe { get; set; } = null!;
+        public RecipeDTOPost Recipe { get; set; } = null!;
 
         public bool IsDeleted { get; set; }
         public bool IsDeletable { get; } = false;

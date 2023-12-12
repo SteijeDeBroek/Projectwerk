@@ -1,4 +1,7 @@
-﻿using Cookiemonster.Domain.Interfaces;
+﻿using AutoMapper;
+using Cookiemonster.API.DTOGets;
+using Cookiemonster.API.DTOPosts;
+using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,36 +18,38 @@ namespace Cookiemonster.API.Controllers
     {
         private readonly IRepository<User> _userRepository;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public UserController(IRepository<User> userRepository)
+        public UserController(IRepository<User> userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         // GET: api/users
         [HttpGet("AllUsers")]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<UserDTOGet>> Get()
         {
             var users = _userRepository.GetAll();
-            return Ok(users);
+            return Ok(_mapper.Map<List<UserDTOGet>>(users));
         }
 
         // GET: api/users/5
         [HttpGet("UserById/{id}")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<UserDTOGet> Get(int id)
         {
             var user = _userRepository.Get(id);
             if (user == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(_mapper.Map<UserDTOGet>(user));
         }
 
         // POST: api/users
 
         [HttpPost]
-        public IActionResult CreateUser(User user)
+        public IActionResult CreateUser(UserDTOPost user)
         {
             if (user == null || !ModelState.IsValid)
             {
@@ -52,6 +57,7 @@ namespace Cookiemonster.API.Controllers
             }
             else if (user.Username == "Admin" && user.Password == "AdminPassword") // gebruik hier bijvoorbeeld je databank om er paswoorden bcrypt-ed in op te slaan
             {
+                var createdUser = _userRepository.Create(_mapper.Map<User>(user));
                 var issuer = _configuration["Jwt:Issuer"];
                 var audience = _configuration["Jwt:Audience"];
                 var key = Encoding.ASCII.GetBytes
@@ -61,8 +67,8 @@ namespace Cookiemonster.API.Controllers
                     Subject = new ClaimsIdentity(new[]
                     {
                 new Claim("Id", Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Password),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.Username),
+                new Claim(JwtRegisteredClaimNames.Sub, createdUser.Password),
+                new Claim(JwtRegisteredClaimNames.GivenName, createdUser.Username),
                 new Claim(JwtRegisteredClaimNames.Jti,
                 Guid.NewGuid().ToString())
             }),
@@ -77,22 +83,33 @@ namespace Cookiemonster.API.Controllers
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var jwtToken = tokenHandler.WriteToken(token);
                 var stringToken = tokenHandler.WriteToken(token);
-                return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
+                
+                return CreatedAtAction(nameof(Get), _mapper.Map<UserDTOGet>(createdUser));
+            } else
+            {
+                var createdUser = _userRepository.Create(_mapper.Map<User>(user));
+                return CreatedAtAction(nameof(Get), _mapper.Map<UserDTOGet>(createdUser));
             }
-            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
+           
 
         }
 
         // PATCH: api/users/5
         [HttpPatch("User/{id}")]
-        public ActionResult PatchUser(int id, [FromBody] User user)
+        public ActionResult PatchUser(int id, [FromBody] UserDTOPost user)
         {
-            if (user == null || user.UserId != id || !ModelState.IsValid)
+            if (user == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            _userRepository.Update(user);
+           var previousUser = _userRepository.Get(id);
+            if (previousUser == null)
+            {
+                return NotFound();
+            }
+            User mappedUser = _mapper.Map<User>(user);
+            mappedUser.UserId = id;
+            _userRepository.Update(mappedUser);
             return Ok();
         }
 

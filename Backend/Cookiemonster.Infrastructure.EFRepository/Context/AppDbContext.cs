@@ -8,7 +8,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Context
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeDTOPost> Recipes { get; set; }
         public DbSet<Todo> Todos { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Vote> Votes { get; set; }
@@ -22,30 +22,30 @@ namespace Cookiemonster.Infrastructure.EFRepository.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<RecipeDTOPost>()
                 .HasKey(r => r.RecipeId)
                 .HasName("Recipe");
-            modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<RecipeDTOPost>()
                 .HasMany(r => r.Votes)
                 .WithOne(v => v.Recipe)
                 .HasForeignKey(r => r.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<RecipeDTOPost>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.Recipes)
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<RecipeDTOPost>()
                 .HasMany(r => r.Images)
                 .WithOne(i => i.Recipe)
                 .HasForeignKey(r => r.ImageId)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<RecipeDTOPost>()
                 .HasMany(r => r.Todos)
                 .WithOne(t => t.Recipe)
                 .HasForeignKey(r => r.RecipeId)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Recipe>()
+            modelBuilder.Entity<RecipeDTOPost>()
                 .Property<DateTime>("CreationDate");
 
             modelBuilder.Entity<Category>()
@@ -114,7 +114,7 @@ namespace Cookiemonster.Infrastructure.EFRepository.Context
             var entries = ChangeTracker
             .Entries()
             .Where(e =>
-            e.State == EntityState.Added && e.GetType() == typeof(Recipe));
+            e.State == EntityState.Added && e.GetType() == typeof(RecipeDTOPost));
             foreach (var entityEntry in entries)
             {
                 entityEntry.Property("CreationDate").CurrentValue = DateTime.Now;

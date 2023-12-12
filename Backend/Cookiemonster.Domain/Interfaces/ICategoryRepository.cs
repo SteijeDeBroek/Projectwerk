@@ -9,8 +9,8 @@ namespace Cookiemonster.Domain.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        public IQueryable<Recipe> GetAllRecipes(int id);
+        public IQueryable<RecipeDTOPost> GetAllRecipes(int id);
         public IQueryable<Category> GetMostRecent(int amount);
-        public Recipe? GetWinningRecipe(int id);
+        public RecipeDTOPost? GetWinningRecipe(int id);
     }
 }

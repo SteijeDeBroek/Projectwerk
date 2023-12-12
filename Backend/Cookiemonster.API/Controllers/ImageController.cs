@@ -1,63 +1,77 @@
-﻿using Cookiemonster.Domain.Interfaces;
+﻿using AutoMapper;
+using Cookiemonster.API.DTOGets;
+using Cookiemonster.API.DTOPosts;
+using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cookiemonster.API.Controllers
 {
-    [Route("images")]
+    [Route("Images")]
     [ApiController]
     public class ImageController : ControllerBase
     {
         private readonly IRepository<Image> _imageRepository;
+        private readonly IMapper _mapper;
 
-        public ImageController(IRepository<Image> imageRepository)
+        public ImageController(IRepository<Image> imageRepository, IMapper mapper)
         {
             _imageRepository = imageRepository;
+            _mapper = mapper;
         }
 
         // GET: api/images
-        [HttpGet]
-        public ActionResult<IEnumerable<Image>> Get()
+        [HttpGet("AllImages")]
+        public ActionResult<IEnumerable<ImageDTOGet>> Get()
         {
             var images = _imageRepository.GetAll();
-            return Ok(images);
+            return Ok(_mapper.Map<List<ImageDTOGet>>(images));
         }
 
+
         // GET: api/images/5
-        [HttpGet("{id}")]
-        public ActionResult<Image> Get(int id)
+        [HttpGet("Images/{id}")]
+        public ActionResult<ImageDTOGet> Get(int id)
         {
             var image = _imageRepository.Get(id);
             if (image == null)
             {
                 return NotFound();
             }
-            return Ok(image);
+            return Ok(_mapper.Map<ImageDTOGet>(image));
         }
 
         // POST: api/images
-        [HttpPost]
-        public ActionResult CreateImage(Image image)
+        [HttpPost("Image")]
+        public ActionResult CreateImage(ImageDTOPost image)
         {
             if (image == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _imageRepository.Create(image);
-            return Ok();
+            var createdImage = _imageRepository.Create(_mapper.Map<Image>(image));
+            return CreatedAtAction(nameof(Get), _mapper.Map<ImageDTOGet>(createdImage));
         }
-
         // PATCH: api/images/5
-        [HttpPatch("{id}")]
-        public ActionResult PatchImage(int id, [FromBody] Image image)
+        [HttpPatch("Recipe/{id}")]
+        public ActionResult PatchImage(int id, [FromBody] ImageDTOPost image)
         {
-            if (image == null || image.ImageId != id || !ModelState.IsValid)
+            if (image == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _imageRepository.Update(image);
+            var previousImage = _imageRepository.Get(id);
+            if (previousImage == null)
+            {
+                return NotFound();
+            }
+
+            Image mappedImage = _mapper.Map<Image>(image);
+            mappedImage.ImageId = id;
+
+            _imageRepository.Update(mappedImage);
             return Ok();
         }
 
