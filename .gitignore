@@ -130,10 +130,6 @@ dist
 .pnp.*
 
 # Custom
-/Backend/Cookiemonster/obj
-/Backend/Cookiemonster/.vs
-/Backend/Cookiemonster/bin
-/Backend/Cookiemonster.Tests/bin
-/Backend/Cookiemonster.Tests/.vs
-/Backend/Cookiemonster.Tests/obj
-/.vs
+**/.vs/*
+Backend/**/bin/*
+Backend/**/obj/*
