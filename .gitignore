@@ -129,7 +129,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# C# and Visual Studio
-**/.vs/
-Backend/**/bin/
-Backend/**/obj/
+# Custom
+**/.vs/*
+Backend/**/bin/*
+Backend/**/obj/*

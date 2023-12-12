@@ -180,6 +180,12 @@ export const getWinningUsers = async () => {
   return data;
 };
 
+export const getUsersThatAlreadyVoted = async () => {
+  const resp = await axios.get("https://localhost:7170/Users/AlreadyVoted");
+  const data = await resp.data;
+  return data;
+};
+
 export const getUsersById = async (id) => {
   const resp = await axios.get(`https://localhost:7170/Users/UserById/${id}`);
   const data = await resp.data;
