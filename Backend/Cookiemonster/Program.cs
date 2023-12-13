@@ -4,16 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore.Design;
 using System.Text;
 using Microsoft.OpenApi.Models;
-<<<<<<< HEAD
 using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Cookiemonster.Infrastructure.Repositories;
 using Cookiemonster.API;
-=======
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using System.Text.Json;
->>>>>>> b65a191911e96878c529f94eb2f5005b1950469e
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -103,18 +98,12 @@ var configuration = new ConfigurationBuilder()
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-<<<<<<< HEAD
     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Cookiemonster"));
-=======
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-
-
->>>>>>> b65a191911e96878c529f94eb2f5005b1950469e
 });
 
 
 // na builder.Services.AddDbContext():
-builder.Services.AddHealthChecks().AddDbContextCheck<SisDbContext>();      // brad of ilya, kijk hier eens naar
+//builder.Services.AddHealthChecks().AddDbContextCheck<SisDbContext>();      // brad of ilya, kijk hier eens naar
 // AddCheck<DbContextHealthCheck<SisDbContext>>("SisDbContextHealthCheck");
 
 builder.Services.AddHealthChecksUI(setupSettings: setup =>
@@ -130,7 +119,7 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
 }).AddInMemoryStorage();
 
 // Na app.UseHttpsRedirection(), voor app.UseSwaggerResponseCheck() en app.MapControllers():
-
+/*
 // to print json:
 var options = new HealthCheckOptions
 {
@@ -147,12 +136,14 @@ var options = new HealthCheckOptions
     }
 };
 
-
+*/
 
 
 
 
 var app = builder.Build();
+
+/*
 
 app.UseHealthChecks("/working", options);
 
@@ -162,7 +153,7 @@ app.UseRouting().UseEndpoints(config =>
     config.MapHealthChecksUI();
 });
 
-
+*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
