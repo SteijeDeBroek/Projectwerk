@@ -7,6 +7,7 @@ import {
   getWinningRecipes,
   getWinningUsers,
   getImageById,
+  getCategories,
 } from "../api";
 import CompetitiesBoxComponent from "./CompetitiesBoxComponent";
 
@@ -93,8 +94,20 @@ const CompetitiesComponent = () => {
   useEffect(() => {
     const fetchCompetities = async () => {
       try {
-        const response = await mostRecentCategories(5);
-        setCompetities(response);
+        const competitionsResponse = await getCategories();
+        setCompetities(competitionsResponse);
+
+        // Initialiseer een lege array voor de recepten
+        let allRecipes = [];
+
+        // Loop door de competitiedata en haal voor elke competitie de bijbehorende recepten op
+        for (const competition of competitionsResponse) {
+          const winningRecipesResponse = await getWinningRecipes(
+            competition.categoryId
+          );
+          allRecipes = [...allRecipes, ...winningRecipesResponse];
+        }
+        setRecipes(allRecipes);
       } catch (err) {
         console.error("error:", err);
       }
@@ -108,12 +121,9 @@ const CompetitiesComponent = () => {
         setRecipes();
         return (
           <CompetitiesBoxComponent
+            key={c.id}
             competitie={c}
-            images={recipes.map((r) => {
-              setImage(r.imageId);
-              return image;
-            })}
-            recipes={recipes}
+            images={recipes.map((r) => r.imageId)}
             borderColor={borderColors[index]}
             backgroundColor={backgroundColors[index]}
           />
