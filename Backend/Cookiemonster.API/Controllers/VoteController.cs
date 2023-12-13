@@ -77,7 +77,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // DELETE: api/votes/5-4
-        [HttpDelete("Recipe/{recipeId}-{userId}")]
+        [HttpDelete("Vote/{recipeId}-{userId}")]
         public ActionResult DeleteVote(int recipeId, int userId)
         {
             var deleted = _voteRepository.Delete(recipeId, userId);
