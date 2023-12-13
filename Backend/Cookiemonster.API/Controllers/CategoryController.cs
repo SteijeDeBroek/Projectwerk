@@ -36,7 +36,7 @@ namespace Cookiemonster.API.Controllers
         [HttpGet("GetWinningRecipe/{id}")]
         public ActionResult<RecipeDTOGet> GetWinningRecipe(int id)
         {
-            Infrastructure.EFRepository.Models.Recipe? winningRecipe = _categoryRepository.GetWinningRecipe(id);
+            Recipe? winningRecipe = _categoryRepository.GetWinningRecipe(id);
             if (winningRecipe == null)
             {
                 return NotFound();

@@ -22,27 +22,27 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/todos
         [HttpGet]
-        public ActionResult<IEnumerable<TodoDTOGet>> Get()
+        public ActionResult<IEnumerable<TodoDTO>> Get()
         {
             var todos = _todoRepository.GetAll();
-            return Ok(_mapper.Map<List<TodoDTOGet>>(todos));
+            return Ok(_mapper.Map<List<TodoDTO>>(todos));
         }
 
         // GET: api/todos/5-4
         [HttpGet("{recipeId}-{userId}")]
-        public ActionResult<Todo> Get(int recipeId, int userId)
+        public ActionResult<TodoDTO> Get(int recipeId, int userId)
         {
             var todo = _todoRepository.Get(recipeId, userId);
             if (todo == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<TodoDTOGet>(todo));
+            return Ok(_mapper.Map<TodoDTO>(todo));
         }
 
         // POST: api/todos
         [HttpPost]
-        public ActionResult CreateTodo(TodoDTOPost todo)
+        public ActionResult CreateTodo(TodoDTO todo)
         {
             if (todo == null || !ModelState.IsValid)
             {
@@ -50,12 +50,12 @@ namespace Cookiemonster.API.Controllers
             }
 
             var createdTodo = _todoRepository.Create(_mapper.Map<Todo>(todo));
-            return CreatedAtAction(nameof(Get), _mapper.Map<TodoDTOGet>(createdTodo));
+            return CreatedAtAction(nameof(Get), todo);
         }
 
         // PATCH: api/todos/5-4
-        [HttpPatch("{recipeId}-{userId}")]
-        public ActionResult PatchRecipe(int recipeId, int userId, [FromBody] TodoDTOPost todo)
+        /*[HttpPatch("{recipeId}-{userId}")]
+        public ActionResult PatchTodo(int recipeId, int userId, [FromBody] TodoDTOPost todo)
         {
             if (todo == null || !ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace Cookiemonster.API.Controllers
 
             _todoRepository.Update(mappedTodo);
             return Ok();
-        }
+        }*/
 
         // DELETE: api/todos/5-4
         [HttpDelete("{recipeId}-{userId}")]

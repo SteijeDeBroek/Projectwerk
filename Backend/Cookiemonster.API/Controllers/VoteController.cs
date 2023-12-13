@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cookiemonster.API.DTOGets;
+using Cookiemonster.API.DTOPatches;
 using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
@@ -23,27 +24,27 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/votes
         [HttpGet]
-        public ActionResult<IEnumerable<VoteDTOGet>> Get()
+        public ActionResult<IEnumerable<VoteDTO>> Get()
         {
             var votes = _voteRepository.GetAll();
-            return Ok(_mapper.Map<List<VoteDTOGet>>(votes));
+            return Ok(_mapper.Map<List<VoteDTO>>(votes));
         }
 
         // GET: api/votes/5-4
         [HttpGet("{recipeId}-{userId}")]
-        public ActionResult<VoteDTOGet> Get(int recipeId, int userId)
+        public ActionResult<VoteDTO> Get(int recipeId, int userId)
         {
             var vote = _voteRepository.Get(recipeId, userId);
             if (vote == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<CategoryDTOGet>(vote));
+            return Ok(_mapper.Map<VoteDTO>(vote));
         }
 
         // POST: api/votes
         [HttpPost]
-        public ActionResult CreateVote(VoteDTOPost vote)
+        public ActionResult CreateVote(VoteDTO vote)
         {
             if (vote == null || !ModelState.IsValid)
             {
@@ -51,12 +52,12 @@ namespace Cookiemonster.API.Controllers
             }
 
             var createdVote = _voteRepository.Create(_mapper.Map<Vote>(vote));
-            return CreatedAtAction(nameof(Get), _mapper.Map<VoteDTOGet>(createdVote));
+            return CreatedAtAction(nameof(Get), vote);
         }
 
         // PATCH: api/votes/5-4
         [HttpPatch("{recipeId}-{userId}")]
-        public ActionResult PatchRecipe(int recipeId, int userId, [FromBody] VoteDTOPost vote)
+        public ActionResult PatchVote(int recipeId, int userId, [FromBody] VoteDTOPatch vote)
         {
             if (vote == null || !ModelState.IsValid)
             {

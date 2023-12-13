@@ -14,18 +14,16 @@ namespace Cookiemonster.API
             // GETMapping
             CreateMap<Category, CategoryDTOGet>();
             CreateMap<Image, ImageDTOGet>();
-            CreateMap<Infrastructure.EFRepository.Models.Recipe, RecipeDTOGet>();
-            CreateMap<Todo, TodoDTOGet>();
+            CreateMap<Recipe, RecipeDTOGet>();
+            CreateMap<Todo, TodoDTO>().ReverseMap();
             CreateMap<User, UserDTOGet>();
-            CreateMap<Vote, VoteDTOGet>();
+            CreateMap<Vote, VoteDTO>().ReverseMap();
 
             // POSTMapping
             CreateMap<CategoryDTOPost, Category>();
             CreateMap<ImageDTOPost, Image>();
-            CreateMap<DTOPosts.RecipeDTOPost, Infrastructure.EFRepository.Models.Recipe>();
-            CreateMap<TodoDTOPost, Todo>();
+            CreateMap<RecipeDTOPost, Recipe>();
             CreateMap<UserDTOPost, User>();
-            CreateMap<VoteDTOPost, Vote>();
         }
 
     }
