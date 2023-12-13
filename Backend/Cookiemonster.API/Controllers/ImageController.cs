@@ -30,7 +30,7 @@ namespace Cookiemonster.API.Controllers
 
 
         // GET: api/images/5
-        [HttpGet("Images/{id}")]
+        [HttpGet("ImageById/{id}")]
         public ActionResult<ImageDTOGet> Get(int id)
         {
             var image = _imageRepository.Get(id);
@@ -54,7 +54,7 @@ namespace Cookiemonster.API.Controllers
             return CreatedAtAction(nameof(Get), _mapper.Map<ImageDTOGet>(createdImage));
         }
         // PATCH: api/images/5
-        [HttpPatch("Recipe/{id}")]
+        [HttpPatch("Image/{id}")]
         public ActionResult PatchImage(int id, [FromBody] ImageDTOPost image)
         {
             if (image == null || !ModelState.IsValid)
@@ -76,7 +76,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // DELETE: api/images/5
-        [HttpDelete("{id}")]
+        [HttpDelete("Image/{id}")]
         public ActionResult DeleteImage(int id)
         {
             var deleted = _imageRepository.Delete(id);

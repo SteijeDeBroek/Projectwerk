@@ -21,7 +21,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // GET: api/todos
-        [HttpGet]
+        [HttpGet("AllTodos")]
         public ActionResult<IEnumerable<TodoDTO>> Get()
         {
             var todos = _todoRepository.GetAll();
@@ -29,7 +29,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // GET: api/todos/5-4
-        [HttpGet("{recipeId}-{userId}")]
+        [HttpGet("TodoById/{recipeId}-{userId}")]
         public ActionResult<TodoDTO> Get(int recipeId, int userId)
         {
             var todo = _todoRepository.Get(recipeId, userId);
@@ -41,7 +41,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // POST: api/todos
-        [HttpPost]
+        [HttpPost("Todo")]
         public ActionResult CreateTodo(TodoDTO todo)
         {
             if (todo == null || !ModelState.IsValid)
@@ -54,7 +54,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // PATCH: api/todos/5-4
-        /*[HttpPatch("{recipeId}-{userId}")]
+        /*[HttpPatch("Todo/{recipeId}-{userId}")]
         public ActionResult PatchTodo(int recipeId, int userId, [FromBody] TodoDTOPost todo)
         {
             if (todo == null || !ModelState.IsValid)
@@ -76,7 +76,7 @@ namespace Cookiemonster.API.Controllers
         }*/
 
         // DELETE: api/todos/5-4
-        [HttpDelete("{recipeId}-{userId}")]
+        [HttpDelete("Todo/{recipeId}-{userId}")]
         public ActionResult DeleteTodo(int recipeId, int userId)
         {
             var deleted = _todoRepository.Delete(recipeId, userId);
