@@ -48,7 +48,7 @@ namespace Cookiemonster.API.Controllers
 
         // POST: api/users
 
-        [HttpPost]
+        [HttpPost("User")]
         public IActionResult CreateUser(UserDTOPost user)
         {
             if (user == null || !ModelState.IsValid)

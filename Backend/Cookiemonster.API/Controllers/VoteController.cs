@@ -22,7 +22,7 @@ namespace Cookiemonster.API.Controllers
 
 
         // GET: api/votes
-        [HttpGet]
+        [HttpGet("AllVotes")]
         public ActionResult<IEnumerable<VoteDTOGet>> Get()
         {
             var votes = _voteRepository.GetAll();
@@ -30,7 +30,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // GET: api/votes/5-4
-        [HttpGet("{recipeId}-{userId}")]
+        [HttpGet("RecipeById/{recipeId}-{userId}")]
         public ActionResult<VoteDTOGet> Get(int recipeId, int userId)
         {
             var vote = _voteRepository.Get(recipeId, userId);
@@ -42,7 +42,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // POST: api/votes
-        [HttpPost]
+        [HttpPost("Recipe")]
         public ActionResult CreateVote(VoteDTOPost vote)
         {
             if (vote == null || !ModelState.IsValid)
@@ -55,7 +55,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // PATCH: api/votes/5-4
-        [HttpPatch("{recipeId}-{userId}")]
+        [HttpPatch("Recipe/{recipeId}-{userId}")]
         public ActionResult PatchRecipe(int recipeId, int userId, [FromBody] VoteDTOPost vote)
         {
             if (vote == null || !ModelState.IsValid)
@@ -76,7 +76,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // DELETE: api/votes/5-4
-        [HttpDelete("{recipeId}-{userId}")]
+        [HttpDelete("Recipe/{recipeId}-{userId}")]
         public ActionResult DeleteVote(int recipeId, int userId)
         {
             var deleted = _voteRepository.Delete(recipeId, userId);
