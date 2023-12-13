@@ -44,6 +44,20 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<RecipeDTOGet>(winningRecipe));
         }
 
+
+        [HttpGet("GetSortedWinningRecipes/{id}-{amount}")]
+        public ActionResult<IEnumerable<RecipeDTOGet>> GetSortedWinningRecipes(int id, int amount)
+        {
+            var winningRecipes = _categoryRepository.GetSortedWinningRecipes(id, amount).ToList();
+
+            if (winningRecipes == null || winningRecipes.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(winningRecipes.Select(recipe => _mapper.Map<RecipeDTOGet>(recipe)));
+        }
+
         [HttpGet("MostRecentCategories")]
         public ActionResult<IEnumerable<CategoryDTOGet>> GetMostRecent(int amount)
         {

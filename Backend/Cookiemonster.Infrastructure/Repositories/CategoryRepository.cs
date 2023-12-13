@@ -1,6 +1,7 @@
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Infrastructure.EFRepository.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Infrastructure.Repositories
 {
@@ -24,6 +25,13 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public Recipe? GetWinningRecipe(int id) {
             return GetAllRecipes(id)?.ToList().MaxBy(r => r.TotalUpvotes);
+        }
+
+        public IQueryable<Recipe> GetSortedWinningRecipes(int id, int amount)
+        {
+            return GetAllRecipes(id)
+                .OrderByDescending(r => r.TotalUpvotes)
+                .Take(amount);
         }
 
     }

@@ -11,6 +11,7 @@ namespace Cookiemonster.Domain.Interfaces
     {
         public IQueryable<Recipe> GetAllRecipes(int id);
         public IQueryable<Category> GetMostRecent(int amount);
-        public Recipe? GetWinningRecipe(int id);
+        public Recipe? GetWinningRecipe(int amount);
+        public IQueryable<Recipe> GetSortedWinningRecipes(int id, int amount);
     }
 }
