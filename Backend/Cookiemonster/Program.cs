@@ -1,17 +1,14 @@
-using Cookiemonster.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using Cookiemonster.Interfaces;
-using Cookiemonster.Models;
-using Microsoft.AspNetCore.Server.IIS;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore.Design;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using System.Text.Json;
+using Cookiemonster.Infrastructure.EFRepository.Context;
+using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Models;
+using Cookiemonster.Infrastructure.Repositories;
+using Cookiemonster.API;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -35,12 +32,12 @@ var builder = WebApplication.CreateBuilder(args);
     });
 }
 // Add services to the container.
-
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IRepository<Recipe>, RecipeRepository>();
-builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
 builder.Services.AddScoped<IRepository<Todo>, TodoRepository>();
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
@@ -101,14 +98,12 @@ var configuration = new ConfigurationBuilder()
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-
-
+    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Cookiemonster"));
 });
 
 
 // na builder.Services.AddDbContext():
-builder.Services.AddHealthChecks().AddDbContextCheck<SisDbContext>();      // brad of ilya, kijk hier eens naar
+//builder.Services.AddHealthChecks().AddDbContextCheck<SisDbContext>();      // brad of ilya, kijk hier eens naar
 // AddCheck<DbContextHealthCheck<SisDbContext>>("SisDbContextHealthCheck");
 
 builder.Services.AddHealthChecksUI(setupSettings: setup =>
@@ -124,7 +119,7 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
 }).AddInMemoryStorage();
 
 // Na app.UseHttpsRedirection(), voor app.UseSwaggerResponseCheck() en app.MapControllers():
-
+/*
 // to print json:
 var options = new HealthCheckOptions
 {
@@ -141,12 +136,14 @@ var options = new HealthCheckOptions
     }
 };
 
-
+*/
 
 
 
 
 var app = builder.Build();
+
+/*
 
 app.UseHealthChecks("/working", options);
 
@@ -156,7 +153,7 @@ app.UseRouting().UseEndpoints(config =>
     config.MapHealthChecksUI();
 });
 
-
+*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
