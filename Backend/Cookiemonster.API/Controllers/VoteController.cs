@@ -30,7 +30,7 @@ namespace Cookiemonster.API.Controllers
         }
 
         // GET: api/votes/5-4
-        [HttpGet("RecipeById/{recipeId}-{userId}")]
+        [HttpGet("VoteById/{recipeId}-{userId}")]
         public ActionResult<VoteDTOGet> Get(int recipeId, int userId)
         {
             var vote = _voteRepository.Get(recipeId, userId);

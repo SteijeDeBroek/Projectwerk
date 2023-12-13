@@ -4,7 +4,7 @@ import axios from "axios";
 const baseURL = "https://localhost:7170/";
 
 //definieer de functies
-//categories
+// categories 
 export const getCategories = async () => {
   const resp = await axios.get(baseURL + "Categories/AllCategories");
   const data = await resp.data;
@@ -12,14 +12,13 @@ export const getCategories = async () => {
 };
 
 export const getLastThreeCategories = async () => {
-  console.time("getLastThreeCategories_TimerStart"); // Start de timer
+  console.time("getLastThreeCategories_TimerStart");
 
-  const resp = await axios.get(baseURL + "Categories/ThreeLastCategories");
+  const resp = await axios.get(baseURL + "Categories/MostRecentCategories");
 
   const data = await resp.data;
 
-  console.timeEnd("getLastThreeCategories_TimerEnd"); // Stop de timer en toon de tijd in de console
-
+  console.timeEnd("getLastThreeCategories_TimerEnd");
   return data;
 };
 
@@ -29,8 +28,8 @@ export const getCategoryById = async (id) => {
   return data;
 };
 
-export const patchCategories = async (id, put) => {
-  const resp = await axios.patch(baseURL + `Categories/Category/${id}`, put);
+export const patchCategories = async (id, patch) => {
+  const resp = await axios.patch(baseURL + `Categories/Category/${id}`, patch);
   return await resp.status;
 };
 
@@ -119,19 +118,19 @@ export const getTodos = async () => {
   return data;
 };
 
-export const getTodoById = async (id) => {
-  const resp = await axios.get(baseURL + `Todos/TodoById/${id}`);
+export const getTodoById = async (recipeId,UserId) => {
+  const resp = await axios.get(baseURL + `Todos/TodoById/${recipeId}-${UserId}`);
   const data = await resp.data;
   return data;
 };
 
-export const patchTodos = async (id, put) => {
-  const resp = await axios.patch(baseURL + `Todos/Todo/${id}`, put);
+export const patchTodos = async (recipeId,UserId, put) => {
+  const resp = await axios.patch(baseURL + `Todos/Todo/${recipeId}-${UserId}`, put);
   return await resp.status;
 };
 
-export const deleteTodos = async (id) => {
-  const resp = await axios.delete(baseURL + `Todos/Todo/${id}`);
+export const deleteTodos = async (recipeId,UserId) => {
+  const resp = await axios.delete(baseURL + `Todos/Todo/${recipeId}-${UserId}`);
   return await resp.status;
 };
 
@@ -187,8 +186,8 @@ export const getVotes = async () => {
   return data;
 };
 
-export const getVoteById = async (id) => {
-  const resp = await axios.get(baseURL + `Votes/VoteById/${id}`);
+export const getVoteById = async (RecipeId,UserId) => {
+  const resp = await axios.get(baseURL + `Votes/VoteById/${RecipeId}-${UserId}`);
   const data = await resp.data;
   return data;
 };

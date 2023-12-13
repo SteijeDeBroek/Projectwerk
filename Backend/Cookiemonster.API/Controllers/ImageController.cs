@@ -30,7 +30,7 @@ namespace Cookiemonster.API.Controllers
 
 
         // GET: api/images/5
-        [HttpGet("Images/{id}")]
+        [HttpGet("ImageById/{id}")]
         public ActionResult<ImageDTOGet> Get(int id)
         {
             var image = _imageRepository.Get(id);
