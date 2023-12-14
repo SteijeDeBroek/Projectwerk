@@ -23,13 +23,18 @@ namespace Cookiemonster.Infrastructure.Repositories
             .Take(amount);
         }
 
-        public Recipe? GetWinningRecipe(int id) {
-            return GetAllRecipes(id)?.ToList().MaxBy(r => r.TotalUpvotes);
+        public List<int> GetSortedWinningImages(Recipe winningRecipe)
+        {
+            return _context.Images.Where(i => !i.IsDeleted && i.RecipeId  == winningRecipe.RecipeId).Select(i => i.ImageId).ToList();
         }
 
-        public IQueryable<Recipe> GetSortedWinningRecipes(int id, int amount)
+        /*public Recipe? GetWinningRecipe(int id) {
+            return GetAllRecipes(id)?.ToList().MaxBy(r => r.TotalUpvotes);
+        }*/
+
+        public IQueryable<Recipe>? GetSortedWinningRecipes(int id, int amount)
         {
-            return GetAllRecipes(id)
+            return GetAllRecipes(id)?
                 .OrderByDescending(r => r.TotalUpvotes)
                 .Take(amount);
         }
