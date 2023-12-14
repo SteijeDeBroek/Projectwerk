@@ -1,43 +1,13 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import "../css/Competities.css"; /* Hij leest de css file niet? */
-import {
-  mostRecentCategories,
-  // getWinningRecipes,
-  getWinningUsers,
-  getImageById,
-  getCategories,
-  manualCategories,
-  getSortedWinningRecipes,
-} from "../api";
+import "../css/Competities.css";
+import { manualCategories, getSortedWinningRecipes } from "../api";
 import CompetitiesBoxComponent from "./CompetitiesBoxComponent";
-
-const images = [
-  {
-    recipeId: 1,
-    images: [
-      {
-        imageId: 1,
-        base64Image: "base64Image",
-      },
-    ],
-  },
-  {
-    recipeId: 2,
-    images: [
-      {
-        imageId: 2,
-        base64Image: "base64Image",
-      },
-    ],
-  },
-];
 
 const CompetitiesComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [competities, setCompetities] = useState([]);
-  const [images, setImages] = useState([]);
   const [recipes, setRecipes] = useState([]);
 
   const borderColors = [
@@ -66,42 +36,6 @@ const CompetitiesComponent = () => {
     "bg-yellow-300",
   ];
 
-  // useEffect(() => {
-  //   const fetchRecipes = async (id) => {
-  //     try {
-  //       const response = await getWinningRecipes(id);
-  //       setRecipes(response);
-  //     } catch (err) {
-  //       console.error("error:", err);
-  //     }
-  //   };
-  //   fetchRecipes();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchWinningImages = async () => {
-  //     try {
-  //       const response = await getWinningImages();
-  //       setImages(response);
-  //     } catch (err) {
-  //       console.error("error:", err);
-  //     }
-  //   };
-  //   fetchWinningImages();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchImage = async (id) => {
-  //     try {
-  //       const response = await getImageById(id);
-  //       setImage(response);
-  //     } catch (err) {
-  //       console.error("error:", err);
-  //     }
-  //   };
-  //   fetchImage();
-  // }, []);
-
   useEffect(() => {
     const fetchCompetities = async () => {
       try {
@@ -120,8 +54,6 @@ const CompetitiesComponent = () => {
         }
         setRecipes(allRecipes);
 
-        console.log("allRecipes", allRecipes);
-
         setIsLoading(false);
       } catch (err) {
         console.error("error:", err);
@@ -134,41 +66,14 @@ const CompetitiesComponent = () => {
     return <div>Loading...</div>;
   }
 
-  // Old code
-
-  // const generateCompetities = () => {
-  //   let allCompetities = [];
-  //   // console.log(JSON.stringify(competities));
-  //   for (let i = 0; i < competities.length; i++) {
-  //     allCompetities.push(
-  //       <div>
-  //         <p>Category Id: {competities[i].categoryId}</p>
-  //         <h2>Category name: {competities[i].name}</h2>
-  //         <p>Recipes:</p>
-  //         <ul>
-  //           {recipes[i].map((r) => (
-  //             <li key={r.recipeId}>{r.title}</li>
-  //           ))}
-  //         </ul>
-  //         <br />
-  //       </div>
-  //     );
-  //   }
-  //   return allCompetities;
-  // };
-
   return (
     <div className="pl-40">
       <p className="text-4xl font-bold text-gray-800">Competities</p>
-      {/* {generateCompetities().map((c, index) => (
-        <div key={index}>{c}</div>
-      ))} */}
       {competities.map((c, index) => {
         return (
           <CompetitiesBoxComponent
-            key={c.id}
+            key={"Category" + c.categoryId}
             competitie={c}
-            images={images[index]}
             recipes={recipes[index]}
             borderColor={borderColors[index]}
             backgroundColor={backgroundColors[index]}
