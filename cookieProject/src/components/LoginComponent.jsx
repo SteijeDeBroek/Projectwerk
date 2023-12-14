@@ -25,7 +25,7 @@ const LoginComponent = () => {
           const hashedPassword = bcrypt.hashSync(values.password2, 13);
           console.log(hashedPassword);
           // Now you can send the hashed password to the server for registration
-          const response = await fetch("API-CALL", {
+          const response = await fetch("(invoegen API-Call)", {
             method: "POST",
             body: JSON.stringify({
               email: values.email2,
