@@ -71,7 +71,8 @@ namespace Cookiemonster.API.Controllers
             Image mappedImage = _mapper.Map<Image>(image);
             mappedImage.ImageId = id;
 
-            _imageRepository.Update(mappedImage);
+            _imageRepository.Update(mappedImage, x => x.ImageId);
+
             return Ok();
         }
 

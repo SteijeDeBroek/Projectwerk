@@ -63,16 +63,19 @@ namespace Cookiemonster.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var previousVote = _voteRepository.Get(recipeId, userId);
             if (previousVote == null)
             {
                 return NotFound();
             }
+
             Vote mappedVote = _mapper.Map<Vote>(vote);
             mappedVote.RecipeId = recipeId;
             mappedVote.UserId = userId;
 
-            _voteRepository.Update(mappedVote);
+            _voteRepository.Update(mappedVote, x => new { x.RecipeId, x.UserId });
+
             return Ok();
         }
 

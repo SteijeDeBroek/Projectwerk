@@ -59,16 +59,30 @@ namespace Cookiemonster.Infrastructure.Repositories
             return entity;
         }
 
-        public T? Update(T entity)
+        public T? Update(T entity, Func<T, object> keySelector)
         {
             if (entity.IsDeleted == false)
             {
-                _dbSet.Update(entity);
+                // Get the primary key value
+                var keyValue = keySelector(entity);
+
+                // Check if the entity is already being tracked
+                var existingEntity = _dbSet.Find(keyValue);
+
+                if (existingEntity == null)
+                {
+                    // If not tracked, attach and set the state to Modified
+                    _dbSet.Attach(entity);
+                    _context.Entry(entity).State = EntityState.Modified;
+                }
+
                 _context.SaveChanges();
                 return entity;
             }
+
             return null;
         }
+
 
         public bool Delete(int id1, int id2 = 0)
         {

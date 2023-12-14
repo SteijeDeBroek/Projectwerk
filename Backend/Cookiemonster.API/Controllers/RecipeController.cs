@@ -61,6 +61,7 @@ namespace Cookiemonster.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var previousRecipe = _recipeRepository.Get(id);
             if (previousRecipe == null)
             {
@@ -69,7 +70,9 @@ namespace Cookiemonster.API.Controllers
 
             Recipe mappedRecipe = _mapper.Map<Recipe>(recipe);
             mappedRecipe.RecipeId = id;
-            _recipeRepository.Update(mappedRecipe);
+
+            _recipeRepository.Update(mappedRecipe, x => x.RecipeId);
+
             return Ok();
         }
 
