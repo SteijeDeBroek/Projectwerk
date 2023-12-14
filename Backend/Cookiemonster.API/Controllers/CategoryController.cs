@@ -100,14 +100,18 @@ namespace Cookiemonster.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var previousCategory = _categoryRepository.Get(id);
             if (previousCategory == null)
             {
                 return NotFound();
             }
+
             Category mappedCategory = _mapper.Map<Category>(category);
             mappedCategory.CategoryId = id;
-            _categoryRepository.Update(mappedCategory);
+
+            _categoryRepository.Update(mappedCategory, x => x.CategoryId);
+
             return Ok();
         }
 
