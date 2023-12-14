@@ -102,14 +102,18 @@ namespace Cookiemonster.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-           var previousUser = _userRepository.Get(id);
+
+            var previousUser = _userRepository.Get(id);
             if (previousUser == null)
             {
                 return NotFound();
             }
+
             User mappedUser = _mapper.Map<User>(user);
             mappedUser.UserId = id;
-            _userRepository.Update(mappedUser);
+
+            _userRepository.Update(mappedUser, x => x.UserId);
+
             return Ok();
         }
 

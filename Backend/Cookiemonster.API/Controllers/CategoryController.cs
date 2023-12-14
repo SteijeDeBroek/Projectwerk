@@ -33,7 +33,7 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<List<CategoryDTOGet>>(categories));
         }
 
-        [HttpGet("GetWinningRecipe/{id}")]
+        /*[HttpGet("GetWinningRecipe/{id}")]
         public ActionResult<RecipeDTOGet> GetWinningRecipe(int id)
         {
             Recipe? winningRecipe = _categoryRepository.GetWinningRecipe(id);
@@ -42,20 +42,26 @@ namespace Cookiemonster.API.Controllers
                 return NotFound();
             }
             return Ok(_mapper.Map<RecipeDTOGet>(winningRecipe));
-        }
+        }*/
 
 
         [HttpGet("GetSortedWinningRecipes/{id}-{amount}")]
         public ActionResult<IEnumerable<RecipeDTOGet>> GetSortedWinningRecipes(int id, int amount)
         {
-            var winningRecipes = _categoryRepository.GetSortedWinningRecipes(id, amount).ToList();
+            var winningRecipes = _categoryRepository.GetSortedWinningRecipes(id, amount)?.ToList();
 
-            if (winningRecipes == null || winningRecipes.Count == 0)
+            if (winningRecipes == null)
             {
                 return NotFound();
             }
 
-            return Ok(winningRecipes.Select(recipe => _mapper.Map<RecipeDTOGet>(recipe)));
+            var mappedRecipes = _mapper.Map<List<RecipeDTOGet>>(winningRecipes);
+
+            for(int i = 0; i < mappedRecipes.Count; i++) {
+                mappedRecipes[i].ImageIds = _categoryRepository.GetSortedWinningImages(winningRecipes[i]);
+            }
+
+            return Ok(mappedRecipes);
         }
 
         [HttpGet("MostRecentCategories")]
@@ -100,14 +106,18 @@ namespace Cookiemonster.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var previousCategory = _categoryRepository.Get(id);
             if (previousCategory == null)
             {
                 return NotFound();
             }
+
             Category mappedCategory = _mapper.Map<Category>(category);
             mappedCategory.CategoryId = id;
-            _categoryRepository.Update(mappedCategory);
+
+            _categoryRepository.Update(mappedCategory, x => x.CategoryId);
+
             return Ok();
         }
 

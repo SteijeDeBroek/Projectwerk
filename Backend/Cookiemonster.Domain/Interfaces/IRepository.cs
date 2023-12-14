@@ -8,7 +8,8 @@ namespace Cookiemonster.Domain.Interfaces
 
         public List<T> GetAll();
         public T Create(T entity);
-        public T? Update(T entity);
+        public T? Update(T entity, Func<T, object> keySelector);
+
 
 
         public bool Delete(int id1, int id2 = 0);

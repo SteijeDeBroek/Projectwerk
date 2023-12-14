@@ -20,5 +20,7 @@ namespace Cookiemonster.API.DTOGets
         public int CategoryId { get; set; }
 
         public int UserId { get; set; }
+
+        public List<int>? ImageIds { get; set; }
     }
 }
