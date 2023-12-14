@@ -53,7 +53,7 @@ export const getImages = async () => {
 };
 
 export const getWinningImages = async () => {
-  const resp = await axios.get(baseURL + "Images/WinningImages"); // images van gerechten met de meeste votes weergeven per category
+  const resp = await axios.get(baseURL + "Images/WinningImages");
   const data = await resp.data;
   return data;
 };
@@ -86,8 +86,10 @@ export const getRecipes = async () => {
   return data;
 };
 
-export const getWinningRecipes = async () => {
-  const resp = await axios.get(baseURL + "Recipes/WinningRecipes");
+export const getSortedWinningRecipes = async (id, amount = 4) => {
+  const resp = await axios.get(
+    baseURL + `categories/getSortedWinningRecipes/${id}-${amount}`
+  );
   const data = await resp.data;
   return data;
 };
@@ -214,4 +216,18 @@ export const deleteVotes = async (id) => {
 export const postVotes = async (post) => {
   const resp = await axios.post(baseURL + "Votes/Vote", post);
   return await resp.status;
+};
+
+// TESTING
+
+export const manualCategories = async () => {
+  let data = [];
+  const categories = [3, 6, 7];
+  for (let i = 0; i < 3; i++) {
+    const resp = await axios.get(
+      baseURL + `Categories/CategoryById/${categories[i]}`
+    );
+    data.push(resp.data);
+  }
+  return data;
 };

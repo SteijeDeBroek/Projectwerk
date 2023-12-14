@@ -4,18 +4,41 @@ import React, { useEffect, useState } from "react";
 import "../css/Competities.css"; /* Hij leest de css file niet? */
 import {
   mostRecentCategories,
-  getWinningRecipes,
+  // getWinningRecipes,
   getWinningUsers,
   getImageById,
   getCategories,
+  manualCategories,
+  getSortedWinningRecipes,
 } from "../api";
 import CompetitiesBoxComponent from "./CompetitiesBoxComponent";
 
+const images = [
+  {
+    recipeId: 1,
+    images: [
+      {
+        imageId: 1,
+        base64Image: "base64Image",
+      },
+    ],
+  },
+  {
+    recipeId: 2,
+    images: [
+      {
+        imageId: 2,
+        base64Image: "base64Image",
+      },
+    ],
+  },
+];
+
 const CompetitiesComponent = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [competities, setCompetities] = useState([]);
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  const [users, setUsers] = useState([]);
 
   const borderColors = [
     "border-green-400",
@@ -43,29 +66,17 @@ const CompetitiesComponent = () => {
     "bg-yellow-300",
   ];
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getWinningUsers();
-        setUsers(response);
-      } catch (err) {
-        console.error("error:", err);
-      }
-    };
-    fetchUsers();
-  }, []);
-
-  useEffect(() => {
-    const fetchRecipes = async (id) => {
-      try {
-        const response = await getWinningRecipes(id);
-        setRecipes(response);
-      } catch (err) {
-        console.error("error:", err);
-      }
-    };
-    fetchRecipes();
-  }, []);
+  // useEffect(() => {
+  //   const fetchRecipes = async (id) => {
+  //     try {
+  //       const response = await getWinningRecipes(id);
+  //       setRecipes(response);
+  //     } catch (err) {
+  //       console.error("error:", err);
+  //     }
+  //   };
+  //   fetchRecipes();
+  // }, []);
 
   // useEffect(() => {
   //   const fetchWinningImages = async () => {
@@ -79,22 +90,22 @@ const CompetitiesComponent = () => {
   //   fetchWinningImages();
   // }, []);
 
-  useEffect(() => {
-    const fetchImage = async (id) => {
-      try {
-        const response = await getImageById(id);
-        setImage(response);
-      } catch (err) {
-        console.error("error:", err);
-      }
-    };
-    fetchImage();
-  }, []);
+  // useEffect(() => {
+  //   const fetchImage = async (id) => {
+  //     try {
+  //       const response = await getImageById(id);
+  //       setImage(response);
+  //     } catch (err) {
+  //       console.error("error:", err);
+  //     }
+  //   };
+  //   fetchImage();
+  // }, []);
 
   useEffect(() => {
     const fetchCompetities = async () => {
       try {
-        const competitionsResponse = await getCategories();
+        const competitionsResponse = await manualCategories();
         setCompetities(competitionsResponse);
 
         // Initialiseer een lege array voor de recepten
@@ -102,55 +113,68 @@ const CompetitiesComponent = () => {
 
         // Loop door de competitiedata en haal voor elke competitie de bijbehorende recepten op
         for (const competition of competitionsResponse) {
-          const winningRecipesResponse = await getWinningRecipes(
+          const winningRecipesResponse = await getSortedWinningRecipes(
             competition.categoryId
           );
-          allRecipes = [...allRecipes, ...winningRecipesResponse];
+          allRecipes.push(winningRecipesResponse);
         }
         setRecipes(allRecipes);
+
+        console.log("allRecipes", allRecipes);
+
+        setIsLoading(false);
       } catch (err) {
         console.error("error:", err);
       }
     };
     fetchCompetities();
-  }, []);
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Old code
+
+  // const generateCompetities = () => {
+  //   let allCompetities = [];
+  //   // console.log(JSON.stringify(competities));
+  //   for (let i = 0; i < competities.length; i++) {
+  //     allCompetities.push(
+  //       <div>
+  //         <p>Category Id: {competities[i].categoryId}</p>
+  //         <h2>Category name: {competities[i].name}</h2>
+  //         <p>Recipes:</p>
+  //         <ul>
+  //           {recipes[i].map((r) => (
+  //             <li key={r.recipeId}>{r.title}</li>
+  //           ))}
+  //         </ul>
+  //         <br />
+  //       </div>
+  //     );
+  //   }
+  //   return allCompetities;
+  // };
 
   return (
     <div className="pl-40">
+      <p className="text-4xl font-bold text-gray-800">Competities</p>
+      {/* {generateCompetities().map((c, index) => (
+        <div key={index}>{c}</div>
+      ))} */}
       {competities.map((c, index) => {
-        setRecipes();
         return (
           <CompetitiesBoxComponent
             key={c.id}
             competitie={c}
-            images={recipes.map((r) => r.imageId)}
+            images={images[index]}
+            recipes={recipes[index]}
             borderColor={borderColors[index]}
             backgroundColor={backgroundColors[index]}
           />
         );
       })}
-
-      {/* <CompetitiesBoxComponent
-        competitie={competities[0]}
-        images={images.slice(0, 4)}
-        recipes={recipes.slice(0, 4)}
-        borderColor="border-orange-400"
-        backgroundColor="bg-orange-300"
-      />
-      <CompetitiesBoxComponent
-        competitie={competities[1]}
-        images={images.slice(4, 8)}
-        recipes={recipes.slice(4, 8)}
-        borderColor="border-green-400"
-        backgroundColor="bg-green-300"
-      />
-      <CompetitiesBoxComponent
-        competitie={competities[2]}
-        images={images.slice(8, 12)}
-        recipes={recipes.slice(8, 12)}
-        borderColor="border-blue-400"
-        backgroundColor="bg-blue-300"
-      /> */}
     </div>
   );
 };
