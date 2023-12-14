@@ -1,6 +1,7 @@
 import React from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import bcrypt from "bcryptjs";
 
 const loginSchema = Yup.object().shape({
   email1: Yup.string().email().required().trim(),
@@ -18,9 +19,30 @@ const LoginComponent = () => {
         email2: "",
         password2: "",
       },
-      onSubmit: (values) => {
-        console.log(values);
-        // post request API
+      onSubmit: async (values) => {
+        try {
+          // Hash the password using bcrypt on the client side
+          const hashedPassword = bcrypt.hashSync(values.password2, 13);
+          console.log(hashedPassword);
+          // Now you can send the hashed password to the server for registration
+          const response = await fetch("API-CALL", {
+            method: "POST",
+            body: JSON.stringify({
+              email: values.email2,
+              password: hashedPassword,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            console.log("User registered successfully");
+          } else {
+            console.error("Registration failed:", result.error);
+          }
+        } catch (error) {
+          console.error("API call failed:", error);
+        }
       },
       validationSchema: loginSchema,
     });
