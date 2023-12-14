@@ -118,7 +118,7 @@ const CompetitiesComponent = () => {
   return (
     <div className="pl-40">
       {competities.map((c, index) => {
-        setRecipes();
+        setRecipes((c) => c.recipeId);
         return (
           <CompetitiesBoxComponent
             key={c.id}
