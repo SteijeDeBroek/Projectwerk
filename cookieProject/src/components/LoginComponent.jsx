@@ -21,11 +21,12 @@ const LoginComponent = () => {
       },
       onSubmit: async (values) => {
         try {
-          // Hash the password using bcrypt on the client side
+          // Hash the password
           const hashedPassword = bcrypt.hashSync(values.password2, 13);
           console.log(hashedPassword);
-          // Now you can send the hashed password to the server for registration
+          // hashed gegevens doorsturen
           const response = await fetch("(invoegen API-Call)", {
+            // samen kijken welke API call hiervoor zorgt dat gegevens juist worden ingevoegd
             method: "POST",
             body: JSON.stringify({
               email: values.email2,

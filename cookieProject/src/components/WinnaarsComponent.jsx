@@ -6,17 +6,15 @@ class WinnaarsComponent extends Component {
     super(props);
     this.state = {
       image: null,
-      isLoading: true, // Added loading state
+      isLoading: true,
     };
   }
 
   componentDidMount() {
     const imageId = this.props.recipe.imageIds[0];
 
-    // Fetch image data using the promise
     getImageById(imageId)
       .then((imageData) => {
-        // Update state with the fetched image data and set isLoading to false
         this.setState({
           image: imageData,
           isLoading: false,
@@ -24,7 +22,6 @@ class WinnaarsComponent extends Component {
       })
       .catch((error) => {
         console.error("Error fetching image:", error);
-        // Set isLoading to false in case of an error
         this.setState({
           isLoading: false,
         });
@@ -38,23 +35,31 @@ class WinnaarsComponent extends Component {
       return <div>Loading...</div>;
     }
 
+    const imageStyle = {
+      backgroundImage: `url(data:image/jpg;base64,${this.state.image.base64Image})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      height: "200px",
+      width: "250px",
+      display: "flex",
+      flexDirection: "column", // Stack items vertically
+      justifyContent: "flex-end", // Align items to the bottom
+    };
+
     return (
       <div
         id="winnaars"
         className="border border-black rounded"
         key={"Winnaar" + this.props.recipe.recipeId}
+        style={imageStyle}
       >
-        <img
-          key={"Image" + this.props.recipe.imageIds[0]}
-          src={`data:image/jpg;base64,${this.state.image.base64Image}`}
-          height="100px"
-          width="150px"
-          alt="base64Image"
-          className="hover:h-68 hover:w-44 cursor-pointer"
-        ></img>
         <p
           key={"Recipe" + this.props.recipe.recipeId}
-          className="font-sans font-semibold"
+          className="font-sans font-semibold text-white"
+          style={{
+            fontFamily: "Arial",
+            textShadow: "1px 1px 2px black", // Aanpassing hier voor de text-shadow
+          }}
         >
           {this.props.recipe.title}
         </p>
