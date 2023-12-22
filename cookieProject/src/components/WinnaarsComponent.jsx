@@ -39,29 +39,26 @@ class WinnaarsComponent extends Component {
       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.9)), url(data:image/jpg;base64,${this.state.image.base64Image})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
-      height: "200px",
-      width: "250px",
+      height: this.props.position == 0 ? "250px" : "200px",
+      width: this.props.position == 0 ? "300px" : "250px",
       padding: "10px",
       display: "flex",
       flexDirection: "column", // Stack items vertically
       justifyContent: "flex-end", // Align items to the bottom
-      // border: "1px solid transparent",
-      // borderRadius: "25px",
     };
 
     return (
       <div
         id="winnaars"
-        className="border border-gray-300 rounded-2xl shadow-lg hover:shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:border-gray-600"
+        className={`border ${this.props.borderColor} rounded-2xl hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:border-white`}
         key={"Winnaar" + this.props.recipe.recipeId}
         style={imageStyle}
       >
         <p
           key={"Recipe" + this.props.recipe.recipeId}
-          className="font-sans font-semibold text-white"
+          className="font-sans font-semibold text-white capitalize"
           style={{
-            fontFamily: "Arial",
-            textShadow: "1px 1px 2px black", // Aanpassing hier voor de text-shadow
+            fontFamily: "Roboto",
           }}
         >
           {this.props.recipe.title}
