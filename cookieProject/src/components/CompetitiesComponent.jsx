@@ -1,3 +1,4 @@
+"border-yellow-400",
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -21,7 +22,6 @@ const CompetitiesComponent = () => {
     "border-orange-400",
     "border-amber-400",
     "border-lime-400",
-    "border-yellow-400",
   ];
 
   const backgroundColors = [
@@ -74,19 +74,23 @@ const CompetitiesComponent = () => {
   }
 
   return (
-    <div className="pl-40">
+    <div className="px-4 lg:px-10 space-y-5">
+      {" "}
       <p className="text-4xl font-bold text-gray-800">Competities</p>
-      {competities.map((c, index) => {
-        return (
-          <CompetitiesBoxComponent
-            key={"Category" + c.categoryId}
-            competitie={c}
-            recipes={recipes[index]}
-            borderColor={borderColors[index]}
-            backgroundColor={backgroundColors[index]}
-          />
-        );
-      })}
+      <div className="space-y-5">
+        {" "}
+        {competities.map((c, index) => {
+          return (
+            <CompetitiesBoxComponent
+              key={"Category" + c.categoryId}
+              competitie={c}
+              recipes={recipes[index]}
+              borderColor={borderColors[index]}
+              backgroundColor={backgroundColors[index]}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
