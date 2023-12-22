@@ -11,10 +11,19 @@ using Cookiemonster.Infrastructure.Repositories;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Cookiemonster.API;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Serilog;
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+builder.Host.UseSerilog((ctx, lc) => lc
+    .ReadFrom.Configuration(ctx.Configuration)
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console());
 
 
 

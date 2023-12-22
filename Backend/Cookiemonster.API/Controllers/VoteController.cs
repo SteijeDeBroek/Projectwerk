@@ -21,10 +21,9 @@ namespace Cookiemonster.API.Controllers
             _mapper = mapper;
         }
 
-
         // GET: api/votes
         [HttpGet("AllVotes")]
-        public ActionResult<IEnumerable<VoteDTO>> Get()
+        public ActionResult<IEnumerable<VoteDTO>> GetAllVotes()
         {
             var votes = _voteRepository.GetAll();
             return Ok(_mapper.Map<List<VoteDTO>>(votes));
@@ -32,7 +31,7 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/votes/5-4
         [HttpGet("VoteById/{recipeId}-{userId}")]
-        public ActionResult<VoteDTO> Get(int recipeId, int userId)
+        public ActionResult<VoteDTO> GetVoteById(int recipeId, int userId)
         {
             var vote = _voteRepository.Get(recipeId, userId);
             if (vote == null)
@@ -52,14 +51,13 @@ namespace Cookiemonster.API.Controllers
             }
 
             var createdVote = _voteRepository.Create(_mapper.Map<Vote>(vote));
-            return CreatedAtAction(nameof(Get), vote);
+            return CreatedAtAction(nameof(GetVoteById), new { recipeId = createdVote.RecipeId, userId = createdVote.UserId }, vote);
         }
 
-        // PATCH: api/votes/5-4
-        [HttpPatch("Vote/{recipeId}-{userId}")]
+        /*[HttpPatch("Vote/{recipeId}-{userId}")]
         public ActionResult PatchVote(int recipeId, int userId, [FromBody] VoteDTOPatch vote)
         {
-            if (vote == null || !ModelState.IsValid)
+            if (vote == null or !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
@@ -78,6 +76,7 @@ namespace Cookiemonster.API.Controllers
 
             return Ok();
         }
+        */
 
         // DELETE: api/votes/5-4
         [HttpDelete("Vote/{recipeId}-{userId}")]
