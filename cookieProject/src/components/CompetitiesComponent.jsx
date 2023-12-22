@@ -7,6 +7,7 @@ import CompetitiesBoxComponent from "./CompetitiesBoxComponent";
 
 const CompetitiesComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [competities, setCompetities] = useState([]);
   const [recipes, setRecipes] = useState([]);
 
@@ -56,7 +57,9 @@ const CompetitiesComponent = () => {
 
         setIsLoading(false);
       } catch (err) {
-        console.error("error:", err);
+        console.error("Error fetching competities:", err);
+        setError(err);
+        setIsLoading(false);
       }
     };
     fetchCompetities();
@@ -64,6 +67,10 @@ const CompetitiesComponent = () => {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   return (

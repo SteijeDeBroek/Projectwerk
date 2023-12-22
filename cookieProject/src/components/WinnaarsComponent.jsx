@@ -7,6 +7,7 @@ class WinnaarsComponent extends Component {
     this.state = {
       image: null,
       isLoading: true,
+      error: null,
     };
   }
 
@@ -24,6 +25,7 @@ class WinnaarsComponent extends Component {
         console.error("Error fetching image:", error);
         this.setState({
           isLoading: false,
+          error: error,
         });
       });
   }
@@ -35,6 +37,10 @@ class WinnaarsComponent extends Component {
       return <div>Loading...</div>;
     }
 
+    if (this.state.error) {
+      return <div>Error: {this.state.error.message}</div>;
+    }
+
     const imageStyle = {
       backgroundImage: `url(data:image/jpg;base64,${this.state.image.base64Image})`,
       backgroundSize: "cover",
@@ -42,8 +48,8 @@ class WinnaarsComponent extends Component {
       height: "200px",
       width: "250px",
       display: "flex",
-      flexDirection: "column", // Stack items vertically
-      justifyContent: "flex-end", // Align items to the bottom
+      flexDirection: "column",
+      justifyContent: "flex-end",
     };
 
     return (
@@ -58,7 +64,7 @@ class WinnaarsComponent extends Component {
           className="font-sans font-semibold text-white"
           style={{
             fontFamily: "Arial",
-            textShadow: "1px 1px 2px black", // Aanpassing hier voor de text-shadow
+            textShadow: "1px 1px 2px black",
           }}
         >
           {this.props.recipe.title}
