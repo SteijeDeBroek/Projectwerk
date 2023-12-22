@@ -175,6 +175,7 @@ var healthCheckOptions = new HealthCheckOptions
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseMiddleware<IPWhitelistMiddleware>();
     app.Logger.LogDebug("Development mode");
     app.MapSwagger();
     app.UseSwaggerUI();
@@ -198,6 +199,9 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHealthChecks("/healthz", healthCheckOptions);
     endpoints.MapHealthChecksUI();
 });
+
+
+
 
 app.UseAuthentication(); // for JWT
 app.UseAuthorization();
