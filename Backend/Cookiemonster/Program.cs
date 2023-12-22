@@ -33,14 +33,15 @@ builder.Host.UseSerilog((ctx, lc) => lc
     // Adding CORS Policy
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowOrigin", builder =>
-        {
-            builder.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
-        });
-    });
+        options.AddPolicy(name: MyAllowSpecificOrigins,
+                          policy =>
+                          {
+                              policy.WithOrigins("https://localhost:*")
+                                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod();
+                          });
+    })
 }
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(MappingConfig));
@@ -202,7 +203,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("/healthz", healthCheckOptions);
