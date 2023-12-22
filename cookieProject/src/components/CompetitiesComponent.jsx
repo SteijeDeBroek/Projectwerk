@@ -1,4 +1,3 @@
-"border-yellow-400",
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
@@ -22,6 +21,7 @@ const CompetitiesComponent = () => {
     "border-orange-400",
     "border-amber-400",
     "border-lime-400",
+    "border-yellow-400",
   ];
 
   const backgroundColors = [

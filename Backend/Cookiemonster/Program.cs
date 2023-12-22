@@ -36,10 +36,11 @@ builder.Host.UseSerilog((ctx, lc) => lc
         options.AddPolicy(name: MyAllowSpecificOrigins,
                           policy =>
                           {
-                              policy.WithOrigins("https://localhost:*")
-                                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                              policy.WithOrigins("http://localhost:8000") // Add the client's origin
                                     .AllowAnyHeader()
-                                    .AllowAnyMethod();
+                                    .AllowAnyMethod()
+                                    .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+
                           });
     });
 }
@@ -203,6 +204,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("/healthz", healthCheckOptions);
@@ -213,12 +218,10 @@ app.UseEndpoints(endpoints =>
 
 
 app.UseAuthentication(); // for JWT
-app.UseAuthorization();
 
 
 app.MapRazorPages();
 app.MapControllers();
 // For React client:
-app.UseCors("AllowOrigin");
 
 app.Run();
