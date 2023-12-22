@@ -41,7 +41,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
                                     .AllowAnyHeader()
                                     .AllowAnyMethod();
                           });
-    })
+    });
 }
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(MappingConfig));
