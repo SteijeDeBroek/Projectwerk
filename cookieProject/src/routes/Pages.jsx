@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
 
 import HomePage from "../pages/HomePage";
@@ -6,6 +5,7 @@ import LoginPage from "../pages/LoginPage";
 import UploadPage from "../pages/UploadPage";
 import VotePage from "../pages/VotePage";
 import NotFoundPage from "../pages/NotFoundPage";
+import RegisterPage from "../pages/RegisterPage";
 
 export const pages = [
   {
@@ -24,6 +24,12 @@ export const pages = [
     headerLabel: "Login",
     path: "/login",
     element: <LoginPage />,
+    shouldLogin: false,
+  },
+  {
+    headerLabel: null,
+    path: "/register",
+    element: <RegisterPage />,
     shouldLogin: false,
   },
   {
