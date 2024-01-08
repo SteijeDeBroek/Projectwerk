@@ -130,6 +130,7 @@ dist
 .pnp.*
 
 # Custom
-**/.vs/*
-Backend/**/bin/*
-Backend/**/obj/*
+**/.vs
+Backend/**/bin
+Backend/**/obj
+**/Logs

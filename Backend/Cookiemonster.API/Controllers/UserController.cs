@@ -5,6 +5,7 @@ using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -19,114 +20,98 @@ namespace Cookiemonster.API.Controllers
         private readonly IRepository<User> _userRepository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IRepository<User> userRepository, IMapper mapper)
+        public UserController(IRepository<User> userRepository, IConfiguration configuration, IMapper mapper, ILogger<UserController> logger)
         {
             _userRepository = userRepository;
+            _configuration = configuration;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET: api/users
         [HttpGet("AllUsers")]
-        public ActionResult<IEnumerable<UserDTOGet>> Get()
+        public ActionResult<IEnumerable<UserDTOGet>> GetAllUsers()
         {
+            _logger.LogInformation("User GetAllUsers called");
             var users = _userRepository.GetAll();
             return Ok(_mapper.Map<List<UserDTOGet>>(users));
         }
 
         // GET: api/users/5
         [HttpGet("UserById/{id}")]
-        public ActionResult<UserDTOGet> Get(int id)
+        public ActionResult<UserDTOGet> GetUserById(int id)
         {
+            _logger.LogInformation($"User GetUserById called for ID: {id}");
             var user = _userRepository.Get(id);
             if (user == null)
             {
+                _logger.LogWarning($"User with ID {id} not found");
                 return NotFound();
             }
             return Ok(_mapper.Map<UserDTOGet>(user));
         }
 
         // POST: api/users
-
         [HttpPost("User")]
-        public IActionResult CreateUser(UserDTOPost user)
+        public IActionResult CreateUser(UserDTOPost userDto)
         {
-            if (user == null || !ModelState.IsValid)
+            if (userDto == null || !ModelState.IsValid)
             {
+                _logger.LogWarning("Invalid user creation attempt");
                 return BadRequest(ModelState);
             }
-            else if (user.Username == "Admin" && user.Password == "AdminPassword") // gebruik hier bijvoorbeeld je databank om er paswoorden bcrypt-ed in op te slaan
-            {
-                var createdUser = _userRepository.Create(_mapper.Map<User>(user));
-                var issuer = _configuration["Jwt:Issuer"];
-                var audience = _configuration["Jwt:Audience"];
-                var key = Encoding.ASCII.GetBytes
-                (_configuration["Jwt:PrivateKey"]);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                new Claim("Id", Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, createdUser.Password),
-                new Claim(JwtRegisteredClaimNames.GivenName, createdUser.Username),
-                new Claim(JwtRegisteredClaimNames.Jti,
-                Guid.NewGuid().ToString())
-            }),
-                    Expires = DateTime.UtcNow.AddMinutes(5),
-                    Issuer = issuer,
-                    Audience = audience,
-                    SigningCredentials = new SigningCredentials
-                    (new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha512Signature)
-                };
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var jwtToken = tokenHandler.WriteToken(token);
-                var stringToken = tokenHandler.WriteToken(token);
-                
-                return CreatedAtAction(nameof(Get), _mapper.Map<UserDTOGet>(createdUser));
-            } else
-            {
-                var createdUser = _userRepository.Create(_mapper.Map<User>(user));
-                return CreatedAtAction(nameof(Get), _mapper.Map<UserDTOGet>(createdUser));
-            }
-           
 
+            var createdUser = _userRepository.Create(_mapper.Map<User>(userDto));
+            _logger.LogInformation($"User created with ID: {createdUser.UserId}");
+
+            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.UserId }, _mapper.Map<UserDTOGet>(createdUser));
         }
 
-        // PATCH: api/users/5
-        [HttpPatch("User/{id}")]
-        public ActionResult PatchUser(int id, [FromBody] UserDTOPost user)
+        /*[HttpPatch("User/{id}")]
+        public IActionResult UpdateUser(int id, [FromBody] UserDTOPost userDto)
         {
-            if (user == null || !ModelState.IsValid)
+            _logger.LogInformation($"User UpdateUser called for ID: {id}");
+
+            if (userDto == null || !ModelState.IsValid)
             {
+                _logger.LogWarning("Invalid user update attempt");
                 return BadRequest(ModelState);
             }
 
-            var previousUser = _userRepository.Get(id);
-            if (previousUser == null)
+            var userToUpdate = _userRepository.Get(id);
+            if (userToUpdate == null)
             {
+                _logger.LogWarning($"User with ID {id} not found for update");
                 return NotFound();
             }
 
-            User mappedUser = _mapper.Map<User>(user);
-            mappedUser.UserId = id;
+            _mapper.Map(userDto, userToUpdate);
+            _userRepository.Update(userToUpdate);
 
-            _userRepository.Update(mappedUser, x => x.UserId);
+            _logger.LogInformation($"User with ID: {id} updated");
 
-            return Ok();
+            return NoContent();
         }
+        */
 
         // DELETE: api/users/5
         [HttpDelete("User/{id}")]
-        public ActionResult DeleteUser(int id)
+        public IActionResult DeleteUser(int id)
         {
-            var deleted = _userRepository.Delete(id);
-            if (!deleted)
+            _logger.LogInformation($"User DeleteUser called for ID: {id}");
+
+            var success = _userRepository.Delete(id);
+            if (!success)
             {
+                _logger.LogWarning($"User with ID {id} not found for deletion");
                 return NotFound();
             }
-            return Ok();
+
+            _logger.LogInformation($"User with ID: {id} deleted");
+
+            return NoContent();
         }
     }
 }

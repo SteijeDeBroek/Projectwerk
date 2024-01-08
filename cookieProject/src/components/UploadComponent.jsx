@@ -57,7 +57,9 @@ function UploadComponent() {
 
   return (
     <div className="upload-container">
-      <h2 className="text font-serif font-bold text-xl">Upload Files</h2>
+      <h2 className="text font-serif font-bold text-xl">
+        Upload jouw gerecht!
+      </h2>
       <form>
         <div className="">
           <input

@@ -8,11 +8,22 @@ using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Cookiemonster.Infrastructure.Repositories;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Cookiemonster.API;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Serilog;
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+builder.Host.UseSerilog((ctx, lc) => lc
+    .ReadFrom.Configuration(ctx.Configuration)
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console());
 
 
 
@@ -22,13 +33,15 @@ var builder = WebApplication.CreateBuilder(args);
     // Adding CORS Policy
     builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowOrigin", builder =>
-        {
-            builder.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
-        });
+        options.AddPolicy(name: MyAllowSpecificOrigins,
+                          policy =>
+                          {
+                              policy.WithOrigins("http://localhost:8000") // Add the client's origin
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod()
+                                    .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+
+                          });
     });
 }
 // Add services to the container.
@@ -61,6 +74,17 @@ builder.Services.AddSwaggerGen(c =>
     ////////////////////////////////////////////////
 });
 builder.Services.AddRazorPages();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AppDbContext>();
+
+builder.Services.AddHealthChecksUI(setupSettings: setup =>
+{
+    setup.DisableDatabaseMigrations();
+    setup.MaximumHistoryEntriesPerEndpoint(50);
+    setup.AddHealthCheckEndpoint("EFCore connection", "/healthz");
+}).AddInMemoryStorage();
+
+
 
 
 // For JWT:
@@ -143,21 +167,26 @@ var options = new HealthCheckOptions
 
 var app = builder.Build();
 
-/*
-
-app.UseHealthChecks("/working", options);
-
-// url: /healthchecks-ui
-app.UseRouting().UseEndpoints(config =>
+// Configureer de Health Check response format
+var healthCheckOptions = new HealthCheckOptions
 {
-    config.MapHealthChecksUI();
-});
-
-*/
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+        var result = System.Text.Json.JsonSerializer.Serialize(
+            new
+            {
+                status = report.Status.ToString(),
+                checks = report.Entries.Select(e => new { name = e.Key, status = e.Value.Status.ToString(), exception = e.Value.Exception?.Message, duration = e.Value.Duration })
+            });
+        await context.Response.WriteAsync(result);
+    }
+};
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseMiddleware<IPWhitelistMiddleware>();
     app.Logger.LogDebug("Development mode");
     app.MapSwagger();
     app.UseSwaggerUI();
@@ -175,14 +204,24 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHealthChecks("/healthz", healthCheckOptions);
+    endpoints.MapHealthChecksUI();
+});
+
+
+
 
 app.UseAuthentication(); // for JWT
-app.UseAuthorization();
 
 
 app.MapRazorPages();
 app.MapControllers();
 // For React client:
-app.UseCors("AllowOrigin");
 
 app.Run();

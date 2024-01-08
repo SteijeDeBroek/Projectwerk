@@ -4,6 +4,7 @@ using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging; 
 
 namespace Cookiemonster.API.Controllers
 {
@@ -13,28 +14,33 @@ namespace Cookiemonster.API.Controllers
     {
         private readonly IRepository<Recipe> _recipeRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<RecipeController> _logger; 
 
-        public RecipeController(IRepository<Recipe> recipeRepository, IMapper mapper)
+        public RecipeController(IRepository<Recipe> recipeRepository, IMapper mapper, ILogger<RecipeController> logger)
         {
             _recipeRepository = recipeRepository;
             _mapper = mapper;
+            _logger = logger; 
         }
 
         // GET: api/recipes
         [HttpGet("AllRecipes")]
-        public ActionResult<IEnumerable<RecipeDTOGet>> Get()
+        public ActionResult<IEnumerable<RecipeDTOGet>> GetAllRecipes()
         {
+            _logger.LogInformation("GetAllRecipes - Fetching all recipes");
             var recipes = _recipeRepository.GetAll();
             return Ok(_mapper.Map<List<RecipeDTOGet>>(recipes));
         }
 
         // GET: api/recipes/5
         [HttpGet("RecipeById/{id}")]
-        public ActionResult<RecipeDTOGet> Get(int id)
+        public ActionResult<RecipeDTOGet> GetRecipeById(int id)
         {
+            _logger.LogInformation($"GetRecipeById - Fetching recipe with ID {id}");
             var recipe = _recipeRepository.Get(id);
             if (recipe == null)
             {
+                _logger.LogWarning($"GetRecipeById - Recipe with ID {id} not found");
                 return NotFound();
             }
             return Ok(_mapper.Map<RecipeDTOGet>(recipe));
@@ -46,11 +52,13 @@ namespace Cookiemonster.API.Controllers
         {
             if (recipe == null || !ModelState.IsValid)
             {
+                _logger.LogWarning("CreateRecipe - Invalid model state");
                 return BadRequest(ModelState);
             }
 
             var createdRecipe = _recipeRepository.Create(_mapper.Map<Recipe>(recipe));
-            return CreatedAtAction(nameof(Get), _mapper.Map<RecipeDTOGet>(createdRecipe));
+            _logger.LogInformation($"CreateRecipe - Recipe created with ID: {createdRecipe.RecipeId}");
+            return CreatedAtAction(nameof(GetRecipeById), new { id = createdRecipe.RecipeId }, _mapper.Map<RecipeDTOGet>(createdRecipe));
         }
 
         // PATCH: api/recipes/5
@@ -59,20 +67,22 @@ namespace Cookiemonster.API.Controllers
         {
             if (recipe == null || !ModelState.IsValid)
             {
+                _logger.LogWarning($"PatchRecipe - Invalid model state for recipe ID {id}");
                 return BadRequest(ModelState);
             }
 
             var previousRecipe = _recipeRepository.Get(id);
             if (previousRecipe == null)
             {
+                _logger.LogInformation($"PatchRecipe - Recipe with ID {id} not found");
                 return NotFound();
             }
 
             Recipe mappedRecipe = _mapper.Map<Recipe>(recipe);
             mappedRecipe.RecipeId = id;
-
             _recipeRepository.Update(mappedRecipe, x => x.RecipeId);
 
+            _logger.LogInformation($"PatchRecipe - Recipe with ID {id} updated");
             return Ok();
         }
 
@@ -83,10 +93,12 @@ namespace Cookiemonster.API.Controllers
             var deleted = _recipeRepository.Delete(id);
             if (!deleted)
             {
+                _logger.LogInformation($"DeleteRecipe - Recipe with ID {id} not found or could not be deleted");
                 return NotFound();
             }
+
+            _logger.LogInformation($"DeleteRecipe - Recipe with ID {id} deleted");
             return Ok();
         }
     }
 }
-
