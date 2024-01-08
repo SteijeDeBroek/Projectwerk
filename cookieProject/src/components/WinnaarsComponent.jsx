@@ -47,6 +47,7 @@ class WinnaarsComponent extends Component {
       backgroundPosition: "center",
       height: this.props.position == 0 ? "250px" : "200px",
       width: this.props.position == 0 ? "300px" : "250px",
+      boxShadow: this.props.position == 0 ? "0 0 50px gold" : "none",
       padding: "10px",
       display: "flex",
       flexDirection: "column",
@@ -56,16 +57,21 @@ class WinnaarsComponent extends Component {
     return (
       <div
         id="winnaars"
-        className={`border ${this.props.borderColor} rounded-2xl hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:border-white`}
+        className={`border ${
+          this.props.position == 0
+            ? "border-yellow-300"
+            : this.props.borderColor
+        } rounded-2xl hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ${
+          this.props.position == 0 ? "" : "hover:border-white"
+        }`}
         key={"Winnaar" + this.props.recipe.recipeId}
         style={imageStyle}
       >
         <p
           key={"Recipe" + this.props.recipe.recipeId}
-          className="font-sans font-semibold text-white capitalize"
+          className="text-white font-semibold capitalize"
           style={{
             fontFamily: "Arial",
-            textShadow: "1px 1px 2px black",
           }}
         >
           {this.props.recipe.title}

@@ -74,11 +74,13 @@ const CompetitiesComponent = () => {
   }
 
   return (
-    <div className="px-4 lg:px-10 space-y-5">
-      {" "}
-      <p className="text-4xl font-bold text-gray-800">Competities</p>
-      <div className="space-y-5">
-        {" "}
+    <div className="pl-10 mb-10 flex-col">
+      <div className="mb-10 p-10 inline-block border-4 border-blue-800 rounded-2xl">
+        <p className="text-5xl font-bold text-blue-800">
+          Afgelopen competities
+        </p>
+      </div>
+      <div>
         {competities.map((c, index) => {
           return (
             <CompetitiesBoxComponent

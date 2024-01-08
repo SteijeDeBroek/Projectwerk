@@ -17,11 +17,11 @@ class CompetitiesBoxComponent extends Component {
     }
     return (
       <div
-        className={`mb-10 border ${this.props.borderColor} rounded-l-2xl ${this.props.backgroundColor}`}
+        className={`mb-10 border-4 ${this.props.borderColor} rounded-l-2xl ${this.props.backgroundColor} border-r-0`}
         key={"Category" + this.props.competitie.categoryId}
       >
         <h2
-          className="capitalize "
+          className="capitalize text-white text-2xl font-bold p-10"
           key={"Category" + this.props.competitie.categoryId}
         >
           {this.props.competitie.name}
