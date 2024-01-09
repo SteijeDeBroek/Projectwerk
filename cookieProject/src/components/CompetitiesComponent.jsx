@@ -89,6 +89,7 @@ const CompetitiesComponent = () => {
               recipes={recipes[index]}
               borderColor={borderColors[index]}
               backgroundColor={backgroundColors[index]}
+              index={index}
             />
           );
         })}

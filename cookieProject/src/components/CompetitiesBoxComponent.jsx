@@ -3,7 +3,21 @@ import WinnaarsComponent from "./WinnaarsComponent";
 
 class CompetitiesBoxComponent extends Component {
   render() {
-    // console.log(this.props); // Debugging
+    const headerBgColors = [
+      "bg-green-400",
+      "bg-teal-400",
+      "bg-indigo-400",
+      "bg-purple-400",
+      "bg-pink-400",
+      "bg-red-400",
+      "bg-orange-400",
+      "bg-amber-400",
+      "bg-lime-400",
+      "bg-yellow-400",
+    ];
+
+    const headerColor = headerBgColors[this.props.index];
+
     let Winnaars = [];
     for (let i = 0; i < 4; i++) {
       Winnaars.push(
@@ -21,7 +35,7 @@ class CompetitiesBoxComponent extends Component {
         key={"Category" + this.props.competitie.categoryId}
       >
         <h2
-          className="capitalize text-white text-2xl font-bold p-10"
+          className={`capitalize text-white text-7xl font-bold p-10 ${headerColor}`}
           key={"Category" + this.props.competitie.categoryId}
         >
           {this.props.competitie.name}
