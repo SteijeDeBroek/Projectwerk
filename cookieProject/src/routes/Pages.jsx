@@ -6,6 +6,7 @@ import UploadPage from "../pages/UploadPage";
 import VotePage from "../pages/VotePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import RegisterPage from "../pages/RegisterPage";
+import RecipeDetailsPage from "../pages/RecipeDetailsPage";
 
 export const pages = [
   {
@@ -42,6 +43,12 @@ export const pages = [
     headerLabel: "Vote",
     path: "/vote",
     element: <VotePage />,
+    shouldLogin: true,
+  },
+  {
+    headerLabel: null,
+    path: "/recipe/:recipeId",
+    element: <RecipeDetailsPage />,
     shouldLogin: true,
   },
   {

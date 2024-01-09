@@ -1,39 +1,30 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getImageById } from "../api";
 import goldMedal from "../assets/gold.png";
 import silverMedal from "../assets/silver.png";
 import bronzeMedal from "../assets/bronze.png";
 
-class WinnaarsComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: null,
-      isLoading: true,
-      error: null,
-      medal: null,
-    };
-  }
+const WinnaarsComponent = (props) => {
+  const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [medal, setMedal] = useState(null);
+  const navigate = useNavigate();
 
-  componentDidMount() {
-    const imageId = this.props.recipe.imageIds[0];
-    const position = this.props.position;
+  useEffect(() => {
+    const imageId = props.recipe.imageIds[0];
+    const position = props.position;
 
     switch (position) {
       case 0:
-        this.setState({
-          medal: goldMedal,
-        });
+        setMedal(goldMedal);
         break;
       case 1:
-        this.setState({
-          medal: silverMedal,
-        });
+        setMedal(silverMedal);
         break;
       case 2:
-        this.setState({
-          medal: bronzeMedal,
-        });
+        setMedal(bronzeMedal);
         break;
       default:
         break;
@@ -41,83 +32,78 @@ class WinnaarsComponent extends Component {
 
     getImageById(imageId)
       .then((imageData) => {
-        this.setState({
-          image: imageData,
-          isLoading: false,
-        });
+        setImage(imageData);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching image:", error);
-        this.setState({
-          isLoading: false,
-          error: error,
-        });
+        setIsLoading(false);
+        setError(error);
       });
+  }, [props.position, props.recipe.imageIds]);
+
+  const navigateToRecipe = () => {
+    navigate(`/recipe/${props.recipe.recipeId}`);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  render() {
-    const { isLoading } = this.state;
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
+  const imageStyle = {
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.9)), url(data:image/jpg;base64,${image.base64Image})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: props.position === 0 ? "250px" : "200px",
+    width: props.position === 0 ? "300px" : "250px",
+    boxShadow: props.position === 0 ? "0 0 50px gold" : "none",
+    padding: "10px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+  };
 
-    if (this.state.error) {
-      return <div>Error: {this.state.error.message}</div>;
-    }
-
-    const imageStyle = {
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.9)), url(data:image/jpg;base64,${this.state.image.base64Image})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      height: this.props.position == 0 ? "250px" : "200px",
-      width: this.props.position == 0 ? "300px" : "250px",
-      boxShadow: this.props.position == 0 ? "0 0 50px gold" : "none",
-      padding: "10px",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-end",
-    };
-
-    return (
-      <div
-        id="winnaars"
-        className={`border ${
-          this.props.position == 0
-            ? "border-yellow-300"
-            : this.props.borderColor
-        } rounded-2xl hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ${
-          this.props.position == 0 ? "" : "hover:border-white"
-        }`}
-        key={"Winnaar" + this.props.recipe.recipeId}
-        style={imageStyle}
+  return (
+    <div
+      id="winnaars"
+      className={`border ${
+        props.position === 0 ? "border-yellow-300" : props.borderColor
+      } rounded-2xl hover:shadow-2xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ${
+        props.position === 0 ? "" : "hover:border-white"
+      }`}
+      key={"Winnaar" + props.recipe.recipeId}
+      style={imageStyle}
+      onClick={navigateToRecipe}
+    >
+      <p
+        key={"Recipe" + props.recipe.recipeId}
+        className="text-white font-semibold capitalize"
+        style={{
+          fontFamily: "Arial",
+          maxWidth: "80%",
+        }}
       >
-        <p
-          key={"Recipe" + this.props.recipe.recipeId}
-          className="text-white font-semibold capitalize"
+        {props.recipe.title}
+      </p>
+      {medal && (
+        <img
+          src={medal}
+          alt="medal"
+          className="w-24 h-24"
           style={{
-            fontFamily: "Arial",
-            maxWidth: "80%",
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            transform: "translate(50%, 50%)",
           }}
-        >
-          {this.props.recipe.title}
-        </p>
-        {this.state.medal && (
-          <img
-            src={this.state.medal}
-            alt="medal"
-            className="w-24 h-24"
-            style={{
-              position: "absolute",
-              bottom: 0,
-              right: 0,
-              transform: "translate(50%, 50%)",
-            }}
-          />
-        )}
-      </div>
-    );
-  }
-}
+        />
+      )}
+    </div>
+  );
+};
 
 export default WinnaarsComponent;
