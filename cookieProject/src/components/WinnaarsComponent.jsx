@@ -1,5 +1,8 @@
 import { Component } from "react";
 import { getImageById } from "../api";
+import goldMedal from "../assets/gold.png";
+import silverMedal from "../assets/silver.png";
+import bronzeMedal from "../assets/bronze.png";
 
 class WinnaarsComponent extends Component {
   constructor(props) {
@@ -8,11 +11,33 @@ class WinnaarsComponent extends Component {
       image: null,
       isLoading: true,
       error: null,
+      medal: null,
     };
   }
 
   componentDidMount() {
     const imageId = this.props.recipe.imageIds[0];
+    const position = this.props.position;
+
+    switch (position) {
+      case 0:
+        this.setState({
+          medal: goldMedal,
+        });
+        break;
+      case 1:
+        this.setState({
+          medal: silverMedal,
+        });
+        break;
+      case 2:
+        this.setState({
+          medal: bronzeMedal,
+        });
+        break;
+      default:
+        break;
+    }
 
     getImageById(imageId)
       .then((imageData) => {
@@ -72,10 +97,24 @@ class WinnaarsComponent extends Component {
           className="text-white font-semibold capitalize"
           style={{
             fontFamily: "Arial",
+            maxWidth: "80%",
           }}
         >
           {this.props.recipe.title}
         </p>
+        {this.state.medal && (
+          <img
+            src={this.state.medal}
+            alt="medal"
+            className="w-24 h-24"
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              transform: "translate(50%, 50%)",
+            }}
+          />
+        )}
       </div>
     );
   }
