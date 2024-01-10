@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getRecipeById } from "../api";
 
@@ -21,6 +21,27 @@ const RecipeDetailsPage = () => {
         setIsLoading(false);
       });
   }, [recipeId]);
+
+  const renderDescription = () => {
+    if (!recipe || !recipe.description) {
+      return null;
+    }
+    const sentences = recipe.description.split(".");
+
+    return sentences.map((sentence, index) => (
+      <p
+        key={index}
+        style={{
+          padding: "0.5rem",
+          fontSize: "1rem",
+          textAlign: "center",
+          color: "black",
+        }}
+      >
+        {sentence.trim()}
+      </p>
+    ));
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -46,18 +67,11 @@ const RecipeDetailsPage = () => {
           alignItems: "center",
         }}
       >
-        {recipe.title}
+        <p className="text-center text-6xl font-bold font-serif border-black border-2 p-2 rounded-md">
+          {recipe.title}
+        </p>
       </h1>
-      <p
-        style={{
-          padding: "2rem",
-          fontSize: "1rem",
-          textAlign: "center",
-          color: "black",
-        }}
-      >
-        {recipe.description}
-      </p>
+      {renderDescription()}
     </div>
   );
 };
