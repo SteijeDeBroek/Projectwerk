@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Cookiemonster.Infrastructure.Repositories
 {
     public class UserRepository : Repository<User>
+        //async!
     {
         private readonly AppDbContext _context;
 

@@ -1,21 +1,18 @@
 ﻿using Cookiemonster.Infrastructure.EFRepository.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cookiemonster.Domain.Interfaces
 {
     public interface IRepository<T> where T : class, IDeletable
     {
-        public T? Get(int id1, int id2 = 0);
-
-        public List<T> GetAll();
-        public T Create(T entity);
-        public T? Update(T entity, Func<T, object> keySelector);
-
-
-
-        public bool Delete(int id1, int id2 = 0);
-
-        public IQueryable<T> Queryable();
-
-
+        Task<T?> GetAsync(int id1, int id2 = 0);
+        Task<List<T>> GetAllAsync();
+        Task<T> CreateAsync(T entity);
+        Task<T?> UpdateAsync(T entity, Func<T, object> keySelector);
+        Task<bool> DeleteAsync(int id1, int id2 = 0);
+        IQueryable<T> Queryable();
     }
 }

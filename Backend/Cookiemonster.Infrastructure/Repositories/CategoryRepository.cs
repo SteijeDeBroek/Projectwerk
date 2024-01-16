@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Infrastructure.EFRepository.Models;
@@ -19,25 +23,36 @@ namespace Cookiemonster.Infrastructure.Repositories
         public IQueryable<Category> GetMostRecent(int amount)
         {
             return Queryable().Where(c => !c.IsDeleted && c.EndDate > DateTime.Now)
-            .OrderByDescending(c => c.StartDate)
-            .Take(amount);
-        }
-
-        public List<int> GetSortedWinningImages(Recipe winningRecipe)
-        {
-            return _context.Images.Where(i => !i.IsDeleted && i.RecipeId  == winningRecipe.RecipeId).Select(i => i.ImageId).ToList();
-        }
-
-        /*public Recipe? GetWinningRecipe(int id) {
-            return GetAllRecipes(id)?.ToList().MaxBy(r => r.TotalUpvotes);
-        }*/
-
-        public IQueryable<Recipe>? GetSortedWinningRecipes(int id, int amount)
-        {
-            return GetAllRecipes(id)?
-                .OrderByDescending(r => r.TotalUpvotes)
+                .OrderByDescending(c => c.StartDate)
                 .Take(amount);
         }
 
+        public async Task<List<int>> GetSortedWinningImagesAsync(Recipe winningRecipe)
+        {
+            return await _context.Images
+                .Where(i => !i.IsDeleted && i.RecipeId == winningRecipe.RecipeId)
+                .Select(i => i.ImageId)
+                .ToListAsync();
+        }
+
+        public async Task<IQueryable<Recipe>> GetSortedWinningRecipesAsync(int id, int amount)
+        {
+            var recipes = GetAllRecipes(id);
+
+            var sortedRecipes = await recipes?
+                .OrderByDescending(r => r.TotalUpvotes)
+                .Take(amount)
+                .ToListAsync();
+
+            return sortedRecipes?.AsQueryable();
+        }
+
+
+        public async Task<Recipe?> GetWinningRecipeAsync(int id)
+        {
+            var recipes = await GetAllRecipes(id)?.ToListAsync();
+
+            return recipes?.MaxBy(r => r.TotalUpvotes);
+        }
     }
 }
