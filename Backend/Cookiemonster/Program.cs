@@ -12,6 +12,10 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Cookiemonster.API;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Authentication;
 
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -142,25 +146,20 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
 
 }).AddInMemoryStorage();
 
-// Na app.UseHttpsRedirection(), voor app.UseSwaggerResponseCheck() en app.MapControllers():
-/*
-// to print json:
-var options = new HealthCheckOptions
+var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
 {
-    ResponseWriter = async (c, r) =>
-    {
-        c.Response.ContentType = "application/json";
-
-        var result = JsonSerializer.Serialize(new
-        {
-            status = r.Status.ToString(),
-            errors = r.Entries.Select(e => new { key = e.Key, value = e.Value.Status.ToString() })
-        });
-        await c.Response.WriteAsync(result);
-    }
+    SslProtocols = SslProtocols.Tls12,
+    ClientCertificateMode = ClientCertificateMode.AllowCertificate,
+    ServerCertificate = new X509Certificate2("./certificate.pfx", "password") //password ontbreekt, ilya?
 };
 
-*/
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ConfigureEndpointDefaults(listenOptions =>
+    {
+        listenOptions.UseHttps(httpsConnectionAdapterOptions);
+    });
+});
 
 
 
