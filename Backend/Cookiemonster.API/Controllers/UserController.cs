@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,12 +18,12 @@ namespace Cookiemonster.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly ILogger<UserController> _logger;
 
-        public UserController(IRepository<User> userRepository, IConfiguration configuration, IMapper mapper, ILogger<UserController> logger)
+        public UserController(IUserRepository userRepository, IConfiguration configuration, IMapper mapper, ILogger<UserController> logger)
         {
             _userRepository = userRepository;
             _configuration = configuration;
@@ -32,6 +33,7 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/users
         [HttpGet("AllUsers")]
+        [Produces("application/json")]
         public ActionResult<IEnumerable<UserDTOGet>> GetAllUsers()
         {
             _logger.LogInformation("User GetAllUsers called");
@@ -41,6 +43,7 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/users/5
         [HttpGet("UserById/{id}")]
+        [Produces("application/json")]
         public ActionResult<UserDTOGet> GetUserById(int id)
         {
             _logger.LogInformation($"User GetUserById called for ID: {id}");
@@ -55,6 +58,13 @@ namespace Cookiemonster.API.Controllers
 
         // POST: api/users
         [HttpPost("User")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+             Summary = "Create a new user",
+             Description = "Creates a new user.",
+             OperationId = "CreateUser"
+        )]
         public IActionResult CreateUser(UserDTOPost userDto)
         {
             if (userDto == null || !ModelState.IsValid)
@@ -68,6 +78,8 @@ namespace Cookiemonster.API.Controllers
 
             return CreatedAtAction(nameof(GetUserById), new { id = createdUser.UserId }, _mapper.Map<UserDTOGet>(createdUser));
         }
+
+
 
         /*[HttpPatch("User/{id}")]
         public IActionResult UpdateUser(int id, [FromBody] UserDTOPost userDto)
@@ -98,6 +110,12 @@ namespace Cookiemonster.API.Controllers
 
         // DELETE: api/users/5
         [HttpDelete("User/{id}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+             Summary = "Delete a user by ID",
+             Description = "Deletes a user by its ID.",
+             OperationId = "DeleteUser"
+        )]
         public IActionResult DeleteUser(int id)
         {
             _logger.LogInformation($"User DeleteUser called for ID: {id}");
@@ -112,6 +130,34 @@ namespace Cookiemonster.API.Controllers
             _logger.LogInformation($"User with ID: {id} deleted");
 
             return NoContent();
+        }
+
+        [HttpPost("login")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+             Summary = "User login",
+             Description = "Authenticates a user.",
+             OperationId = "UserLogin"
+        )]
+        public IActionResult Login(UserDTOPost loginDto)
+        {
+            if (loginDto == null || string.IsNullOrWhiteSpace(loginDto.Username) || string.IsNullOrWhiteSpace(loginDto.Password))
+            {
+                _logger.LogWarning("Invalid login attempt");
+                return BadRequest("Invalid login credentials");
+            }
+
+            var user = _userRepository.FindByUsernameAsync(loginDto.Username);
+            if (user != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
+            {
+                // The user is authenticated. You can generate a JWT token or perform other login success actions here.
+                _logger.LogInformation("User logged in successfully");
+                return Ok("Login successful");
+            }
+
+            _logger.LogWarning("Login failed for username: {Username}", loginDto.Username);
+            return Unauthorized("Invalid username or password");
         }
     }
 }

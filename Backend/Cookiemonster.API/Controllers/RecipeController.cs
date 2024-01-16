@@ -4,7 +4,9 @@ using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging; 
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -14,17 +16,23 @@ namespace Cookiemonster.API.Controllers
     {
         private readonly IRepository<Recipe> _recipeRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<RecipeController> _logger; 
+        private readonly ILogger<RecipeController> _logger;
 
         public RecipeController(IRepository<Recipe> recipeRepository, IMapper mapper, ILogger<RecipeController> logger)
         {
             _recipeRepository = recipeRepository;
             _mapper = mapper;
-            _logger = logger; 
+            _logger = logger;
         }
 
         // GET: api/recipes
         [HttpGet("AllRecipes")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all recipes",
+            Description = "Retrieve a list of all recipes.",
+            OperationId = "GetAllRecipes"
+        )]
         public ActionResult<IEnumerable<RecipeDTOGet>> GetAllRecipes()
         {
             _logger.LogInformation("GetAllRecipes - Fetching all recipes");
@@ -34,6 +42,12 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/recipes/5
         [HttpGet("RecipeById/{id}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get a recipe by ID",
+            Description = "Retrieve a recipe by its ID.",
+            OperationId = "GetRecipeById"
+        )]
         public ActionResult<RecipeDTOGet> GetRecipeById(int id)
         {
             _logger.LogInformation($"GetRecipeById - Fetching recipe with ID {id}");
@@ -48,6 +62,13 @@ namespace Cookiemonster.API.Controllers
 
         // POST: api/recipes
         [HttpPost("Recipe")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create a recipe",
+            Description = "Create a new recipe.",
+            OperationId = "CreateRecipe"
+        )]
         public ActionResult CreateRecipe(RecipeDTOPost recipe)
         {
             if (recipe == null || !ModelState.IsValid)
@@ -63,6 +84,13 @@ namespace Cookiemonster.API.Controllers
 
         // PATCH: api/recipes/5
         [HttpPatch("Recipe/{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Update a recipe by ID",
+            Description = "Update a recipe by its ID.",
+            OperationId = "PatchRecipe"
+        )]
         public ActionResult PatchRecipe(int id, [FromBody] RecipeDTOPost recipe)
         {
             if (recipe == null || !ModelState.IsValid)
@@ -88,6 +116,12 @@ namespace Cookiemonster.API.Controllers
 
         // DELETE: api/recipes/5
         [HttpDelete("Recipe/{id}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Delete a recipe by ID",
+            Description = "Delete a recipe by its ID.",
+            OperationId = "DeleteRecipe"
+        )]
         public ActionResult DeleteRecipe(int id)
         {
             var deleted = _recipeRepository.Delete(id);

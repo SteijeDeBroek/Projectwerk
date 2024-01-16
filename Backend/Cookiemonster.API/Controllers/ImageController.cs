@@ -4,7 +4,9 @@ using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging; 
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -14,7 +16,7 @@ namespace Cookiemonster.API.Controllers
     {
         private readonly IRepository<Image> _imageRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<ImageController> _logger; 
+        private readonly ILogger<ImageController> _logger;
 
         public ImageController(IRepository<Image> imageRepository, IMapper mapper, ILogger<ImageController> logger)
         {
@@ -25,6 +27,12 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/images
         [HttpGet("AllImages")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all images",
+            Description = "Retrieve a list of all images.",
+            OperationId = "GetAllImages"
+        )]
         public ActionResult<IEnumerable<ImageDTOGet>> GetAllImages()
         {
             _logger.LogInformation("GetAllImages - Fetching all images");
@@ -34,6 +42,12 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/images/5
         [HttpGet("ImageById/{id}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get an image by ID",
+            Description = "Retrieve an image by its ID.",
+            OperationId = "GetImageById"
+        )]
         public ActionResult<ImageDTOGet> GetImageById(int id)
         {
             _logger.LogInformation($"GetImageById - Fetching image with ID {id}");
@@ -48,6 +62,13 @@ namespace Cookiemonster.API.Controllers
 
         // POST: api/images
         [HttpPost("Image")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create an image",
+            Description = "Create a new image.",
+            OperationId = "CreateImage"
+        )]
         public ActionResult CreateImage(ImageDTOPost image)
         {
             if (image == null || !ModelState.IsValid)
@@ -63,6 +84,13 @@ namespace Cookiemonster.API.Controllers
 
         // PATCH: api/images/5
         [HttpPatch("Image/{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Update an image by ID",
+            Description = "Update an image by its ID.",
+            OperationId = "PatchImage"
+        )]
         public ActionResult PatchImage(int id, [FromBody] ImageDTOPost image)
         {
             if (image == null || !ModelState.IsValid)
@@ -88,6 +116,12 @@ namespace Cookiemonster.API.Controllers
 
         // DELETE: api/images/5
         [HttpDelete("Image/{id}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Delete an image by ID",
+            Description = "Delete an image by its ID.",
+            OperationId = "DeleteImage"
+        )]
         public ActionResult DeleteImage(int id)
         {
             var deleted = _imageRepository.Delete(id);
