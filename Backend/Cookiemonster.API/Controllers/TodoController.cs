@@ -32,6 +32,9 @@ namespace Cookiemonster.API.Controllers
             Summary = "Get all todos",
             Description = "Retrieves a list of all todos.",
             OperationId = "GetAllTodos")]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult<IEnumerable<TodoDTO>> Get()
         {
             _logger.LogInformation("Fetching all todos");
@@ -46,6 +49,9 @@ namespace Cookiemonster.API.Controllers
             Summary = "Get a todo by RecipeId and UserId",
             Description = "Retrieves a todo by its RecipeId and UserId.",
             OperationId = "GetTodoById")]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult<TodoDTO> Get(int recipeId, int userId)
         {
             _logger.LogInformation($"Fetching todo with RecipeId {recipeId} and UserId {userId}");
@@ -66,6 +72,9 @@ namespace Cookiemonster.API.Controllers
             Summary = "Create a new todo",
             Description = "Creates a new todo.",
             OperationId = "CreateTodo")]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult CreateTodo([FromBody] TodoDTO todo)
         {
             if (todo == null || !ModelState.IsValid)
@@ -109,6 +118,9 @@ namespace Cookiemonster.API.Controllers
             Summary = "Delete a todo by RecipeId and UserId",
             Description = "Deletes a todo by its RecipeId and UserId.",
             OperationId = "DeleteTodo")]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult DeleteTodo(int recipeId, int userId)
         {
             _logger.LogInformation($"Attempting to delete todo with RecipeId {recipeId} and UserId {userId}");

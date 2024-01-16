@@ -31,6 +31,9 @@ namespace Cookiemonster.API.Controllers
             Description = "Retrieves all votes.",
             OperationId = "GetAllVotes"
         )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult<IEnumerable<VoteDTO>> GetAllVotes()
         {
             var votes = _voteRepository.GetAll();
@@ -45,6 +48,9 @@ namespace Cookiemonster.API.Controllers
             Description = "Retrieves a vote by RecipeId and UserId.",
             OperationId = "GetVoteById"
         )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult<VoteDTO> GetVoteById(int recipeId, int userId)
         {
             var vote = _voteRepository.Get(recipeId, userId);
@@ -63,6 +69,9 @@ namespace Cookiemonster.API.Controllers
             Description = "Creates a new vote.",
             OperationId = "CreateVote"
         )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult CreateVote(VoteDTO vote)
         {
             if (vote == null || !ModelState.IsValid)
@@ -107,6 +116,9 @@ namespace Cookiemonster.API.Controllers
             Description = "Deletes a vote by RecipeId and UserId.",
             OperationId = "DeleteVote"
         )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult DeleteVote(int recipeId, int userId)
         {
             var deleted = _voteRepository.Delete(recipeId, userId);

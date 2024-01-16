@@ -26,8 +26,22 @@ namespace Cookiemonster.API.Controllers
         }
 
         // GET: api/images
+<<<<<<< Updated upstream
         [HttpGet("GetAsync", Name = "GetAllImagesAsync")]
         public async Task<ActionResult<IEnumerable<ImageDTOGet>>> GetAllImagesAsync()
+=======
+        [HttpGet("AllImages")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all images",
+            Description = "Retrieve a list of all images.",
+            OperationId = "GetAllImages"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
+        public ActionResult<IEnumerable<ImageDTOGet>> GetAllImages()
+>>>>>>> Stashed changes
         {
             _logger.LogInformation("GetAllImages - Fetching all images");
             try
@@ -43,8 +57,23 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+<<<<<<< Updated upstream
         [HttpGet("{id}", Name = "GetImageByIdAsync")]
         public async Task<ActionResult<ImageDTOGet>> GetAsync(int id)
+=======
+        // GET: api/images/5
+        [HttpGet("ImageById/{id}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get an image by ID",
+            Description = "Retrieve an image by its ID.",
+            OperationId = "GetImageById"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
+        public ActionResult<ImageDTOGet> GetImageById(int id)
+>>>>>>> Stashed changes
         {
             _logger.LogInformation($"Get (ImageById) - Attempting to fetch image with ID {id}");
             try
@@ -64,8 +93,24 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+<<<<<<< Updated upstream
         [HttpPost(Name = "AddImageAsync")]
         public async Task<ActionResult> CreateImageAsync(ImageDTOPost image)
+=======
+        // POST: api/images
+        [HttpPost("Image")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create an image",
+            Description = "Create a new image.",
+            OperationId = "CreateImage"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
+        public ActionResult CreateImage(ImageDTOPost image)
+>>>>>>> Stashed changes
         {
             try
             {
@@ -86,8 +131,24 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+<<<<<<< Updated upstream
         [HttpPatch("{id}", Name = "UpdateImageAsync")]
         public async Task<ActionResult> PatchImageAsync(int id, [FromBody] ImageDTOPost image)
+=======
+        // PATCH: api/images/5
+        [HttpPatch("Image/{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Update an image by ID",
+            Description = "Update an image by its ID.",
+            OperationId = "PatchImage"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
+        public ActionResult PatchImage(int id, [FromBody] ImageDTOPost image)
+>>>>>>> Stashed changes
         {
             try
             {
@@ -117,8 +178,23 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+<<<<<<< Updated upstream
         [HttpDelete("{id}", Name = "DeleteImageAsync")]
         public async Task<ActionResult> DeleteImageAsync(int id)
+=======
+        // DELETE: api/images/5
+        [HttpDelete("Image/{id}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Delete an image by ID",
+            Description = "Delete an image by its ID.",
+            OperationId = "DeleteImage"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
+        public ActionResult DeleteImage(int id)
+>>>>>>> Stashed changes
         {
             try
             {
