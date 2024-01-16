@@ -10,7 +10,7 @@ namespace Cookiemonster.Domain.Interfaces
         IQueryable<Recipe> GetAllRecipes(int id);
         IQueryable<Category> GetMostRecent(int amount);
         Task<List<int>> GetSortedWinningImagesAsync(Recipe winningRecipe);
-        Task<IQueryable<Recipe>> GetSortedWinningRecipesAsync(int id, int amount);
+        Task<List<Recipe>> GetSortedWinningRecipesAsync(int id, int amount);
         Task<Recipe?> GetWinningRecipeAsync(int id);
     }
 }

@@ -103,7 +103,7 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public IQueryable<T> Queryable()
         {
-            return _dbSet.AsQueryable();
+            return _dbSet.Where(entity => entity.IsDeleted == false).AsQueryable();
         }
     }
 }

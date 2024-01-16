@@ -22,7 +22,7 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public IQueryable<Category> GetMostRecent(int amount)
         {
-            return Queryable().Where(c => !c.IsDeleted && c.EndDate > DateTime.Now)
+            return Queryable().Where(c => c.EndDate > DateTime.Now)
                 .OrderByDescending(c => c.StartDate)
                 .Take(amount);
         }
@@ -35,7 +35,7 @@ namespace Cookiemonster.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IQueryable<Recipe>> GetSortedWinningRecipesAsync(int id, int amount)
+        public async Task<List<Recipe>> GetSortedWinningRecipesAsync(int id, int amount)
         {
             var recipes = GetAllRecipes(id);
 
@@ -44,7 +44,7 @@ namespace Cookiemonster.Infrastructure.Repositories
                 .Take(amount)
                 .ToListAsync();
 
-            return sortedRecipes?.AsQueryable();
+            return sortedRecipes;
         }
 
 
