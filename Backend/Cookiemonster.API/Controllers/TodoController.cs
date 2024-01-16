@@ -5,6 +5,8 @@ using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -25,6 +27,11 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/todos
         [HttpGet("AllTodos")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all todos",
+            Description = "Retrieves a list of all todos.",
+            OperationId = "GetAllTodos")]
         public ActionResult<IEnumerable<TodoDTO>> Get()
         {
             _logger.LogInformation("Fetching all todos");
@@ -34,6 +41,11 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/todos/5-4
         [HttpGet("TodoById/{recipeId}-{userId}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get a todo by RecipeId and UserId",
+            Description = "Retrieves a todo by its RecipeId and UserId.",
+            OperationId = "GetTodoById")]
         public ActionResult<TodoDTO> Get(int recipeId, int userId)
         {
             _logger.LogInformation($"Fetching todo with RecipeId {recipeId} and UserId {userId}");
@@ -48,7 +60,13 @@ namespace Cookiemonster.API.Controllers
 
         // POST: api/todos
         [HttpPost("Todo")]
-        public ActionResult CreateTodo(TodoDTO todo)
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create a new todo",
+            Description = "Creates a new todo.",
+            OperationId = "CreateTodo")]
+        public ActionResult CreateTodo([FromBody] TodoDTO todo)
         {
             if (todo == null || !ModelState.IsValid)
             {
@@ -69,7 +87,7 @@ namespace Cookiemonster.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var previousTodo = _todoRepository.Get(recipeId,userId);
+            var previousTodo = _todoRepository.Get(recipeId, userId);
 
             if (previousTodo == null)
             {
@@ -83,8 +101,14 @@ namespace Cookiemonster.API.Controllers
             return Ok();
         }*/
 
+
         // DELETE: api/todos/5-4
         [HttpDelete("Todo/{recipeId}-{userId}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Delete a todo by RecipeId and UserId",
+            Description = "Deletes a todo by its RecipeId and UserId.",
+            OperationId = "DeleteTodo")]
         public ActionResult DeleteTodo(int recipeId, int userId)
         {
             _logger.LogInformation($"Attempting to delete todo with RecipeId {recipeId} and UserId {userId}");

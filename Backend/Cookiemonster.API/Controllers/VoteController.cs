@@ -5,6 +5,8 @@ using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -23,6 +25,12 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/votes
         [HttpGet("AllVotes")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all votes",
+            Description = "Retrieves all votes.",
+            OperationId = "GetAllVotes"
+        )]
         public ActionResult<IEnumerable<VoteDTO>> GetAllVotes()
         {
             var votes = _voteRepository.GetAll();
@@ -31,6 +39,12 @@ namespace Cookiemonster.API.Controllers
 
         // GET: api/votes/5-4
         [HttpGet("VoteById/{recipeId}-{userId}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get a vote by RecipeId and UserId",
+            Description = "Retrieves a vote by RecipeId and UserId.",
+            OperationId = "GetVoteById"
+        )]
         public ActionResult<VoteDTO> GetVoteById(int recipeId, int userId)
         {
             var vote = _voteRepository.Get(recipeId, userId);
@@ -43,6 +57,12 @@ namespace Cookiemonster.API.Controllers
 
         // POST: api/votes
         [HttpPost("Vote")]
+        [Consumes("application/json")]
+        [SwaggerOperation(
+            Summary = "Create a new vote",
+            Description = "Creates a new vote.",
+            OperationId = "CreateVote"
+        )]
         public ActionResult CreateVote(VoteDTO vote)
         {
             if (vote == null || !ModelState.IsValid)
@@ -54,7 +74,8 @@ namespace Cookiemonster.API.Controllers
             return CreatedAtAction(nameof(GetVoteById), new { recipeId = createdVote.RecipeId, userId = createdVote.UserId }, vote);
         }
 
-        /*[HttpPatch("Vote/{recipeId}-{userId}")]
+        /*
+        [HttpPatch("Vote/{recipeId}-{userId}")]
         public ActionResult PatchVote(int recipeId, int userId, [FromBody] VoteDTOPatch vote)
         {
             if (vote == null or !ModelState.IsValid)
@@ -80,6 +101,12 @@ namespace Cookiemonster.API.Controllers
 
         // DELETE: api/votes/5-4
         [HttpDelete("Vote/{recipeId}-{userId}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Delete a vote by RecipeId and UserId",
+            Description = "Deletes a vote by RecipeId and UserId.",
+            OperationId = "DeleteVote"
+        )]
         public ActionResult DeleteVote(int recipeId, int userId)
         {
             var deleted = _voteRepository.Delete(recipeId, userId);

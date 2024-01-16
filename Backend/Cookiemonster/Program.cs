@@ -11,6 +11,8 @@ using Cookiemonster.Infrastructure.Repositories;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Cookiemonster.API;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using AspNetCoreRateLimit;
+
 using Serilog;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
@@ -87,6 +89,14 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
     setup.MaximumHistoryEntriesPerEndpoint(50);
     setup.AddHealthCheckEndpoint("EFCore connection", "/healthz");
 }).AddInMemoryStorage();
+
+// RATE LIMITING SERVICES
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
 
 
 
@@ -189,7 +199,8 @@ if (app.Environment.IsDevelopment())
     app.Logger.LogDebug("Development mode");
     app.MapSwagger();
     app.UseSwaggerUI();
-}
+    app.UseIpRateLimiting();
+};
 
 // Configure the HTTP request pipeline.
 // if (!app.Environment.IsDevelopment())
