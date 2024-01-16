@@ -101,9 +101,11 @@ namespace Cookiemonster.Infrastructure.Repositories
             return true;
         }
 
-        public IQueryable<T> Queryable()
+        public async Task<IQueryable<T>> QueryableAsync()
         {
-            return _dbSet.AsQueryable();
+            var result = await _dbSet.ToListAsync();
+            return result.AsQueryable();
         }
+
     }
 }

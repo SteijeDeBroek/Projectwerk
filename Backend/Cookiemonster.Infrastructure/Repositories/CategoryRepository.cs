@@ -15,17 +15,18 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public CategoryRepository(AppDbContext context) : base(context) { _context = context; }
 
-        public IQueryable<Recipe> GetAllRecipes(int id)
+        public async Task<IQueryable<Recipe>> GetAllRecipesAsync(int id)
         {
-            return _context.Recipes.Where(r => !r.IsDeleted && r.CategoryId == id);
+            return await Task.FromResult(_context.Recipes.Where(r => !r.IsDeleted && r.CategoryId == id));
         }
 
-        public IQueryable<Category> GetMostRecent(int amount)
+        public async Task<IQueryable<Category>> GetMostRecentAsync(int amount)
         {
-            return Queryable().Where(c => !c.IsDeleted && c.EndDate > DateTime.Now)
+            return await Task.FromResult(_context.Categories.Where(c => !c.IsDeleted && c.EndDate > DateTime.Now)
                 .OrderByDescending(c => c.StartDate)
-                .Take(amount);
+                .Take(amount));
         }
+
 
         public async Task<List<int>> GetSortedWinningImagesAsync(Recipe winningRecipe)
         {
@@ -37,22 +38,33 @@ namespace Cookiemonster.Infrastructure.Repositories
 
         public async Task<IQueryable<Recipe>> GetSortedWinningRecipesAsync(int id, int amount)
         {
-            var recipes = GetAllRecipes(id);
+            var recipesTask = GetAllRecipesAsync(id);
 
-            var sortedRecipes = await recipes?
-                .OrderByDescending(r => r.TotalUpvotes)
-                .Take(amount)
-                .ToListAsync();
+            // Wacht op de taak om te voltooien
+            var recipes = await recipesTask;
 
-            return sortedRecipes?.AsQueryable();
+            // Voer de volgende bewerkingen uit als de taak is voltooid en de resultaten beschikbaar zijn
+            if (recipes != null)
+            {
+                var sortedRecipes = recipes
+                    .OrderByDescending(r => r.TotalUpvotes)
+                    .Take(amount)
+                    .ToList();
+
+                return sortedRecipes.AsQueryable();
+            }
+
+            return Enumerable.Empty<Recipe>().AsQueryable(); 
         }
+
 
 
         public async Task<Recipe?> GetWinningRecipeAsync(int id)
         {
-            var recipes = await GetAllRecipes(id)?.ToListAsync();
+            var recipes = await GetAllRecipesAsync(id);
 
             return recipes?.MaxBy(r => r.TotalUpvotes);
         }
+
     }
 }

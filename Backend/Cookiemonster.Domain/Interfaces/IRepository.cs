@@ -13,6 +13,7 @@ namespace Cookiemonster.Domain.Interfaces
         Task<T> CreateAsync(T entity);
         Task<T?> UpdateAsync(T entity, Func<T, object> keySelector);
         Task<bool> DeleteAsync(int id1, int id2 = 0);
-        IQueryable<T> Queryable();
+        Task<IQueryable<T>> QueryableAsync(); 
+
     }
 }
