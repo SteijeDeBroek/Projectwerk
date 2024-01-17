@@ -160,26 +160,26 @@ export const getTodosByUserId = async (userId) => {
 };
 
 export const getVotes = async () => {
-  const resp = await axios.get(baseURL + "Votes/AllVotes");
+  const resp = await axios.get(baseURL + "votes/AllVotes");
   const data = await resp.data;
   return data;
 };
 
 export const getVoteById = async (recipeId, userId) => {
   const resp = await axios.get(
-    baseURL + `Votes/VoteById/${recipeId}-${userId}`
+    baseURL + `votes/VoteById/${recipeId}-${userId}`
   );
   const data = await resp.data;
   return data;
 };
 
 export const deleteVote = async (recipeId, userId) => {
-  const resp = await axios.delete(baseURL + `Votes/Vote/${recipeId}-${userId}`);
+  const resp = await axios.delete(baseURL + `votes/Vote/${recipeId}-${userId}`);
   return await resp.status;
 };
 
 export const postVote = async (post) => {
-  const resp = await axios.post(baseURL + "Votes/Vote", post);
+  const resp = await axios.post(baseURL + "votes/Vote", post);
   return await resp.status;
 };
 
