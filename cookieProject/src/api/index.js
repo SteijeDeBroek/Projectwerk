@@ -25,7 +25,7 @@ export const mostRecentCategories = async (amount) => {
 };
 
 export const getCategoryById = async (id) => {
-  const resp = await axios.get(baseURL + `Categories/CategoryById/${id}`);
+  const resp = await axios.get(baseURL + `Categories/${id}`);
   const data = await resp.data;
   return data;
 };
@@ -59,7 +59,7 @@ export const getWinningImages = async () => {
 };
 
 export const getImageById = async (id) => {
-  const resp = await axios.get(baseURL + `Images/ImageById/${id}`);
+  const resp = await axios.get(baseURL + `Images/${id}`);
   const data = await resp.data;
   return data;
 };
@@ -93,9 +93,7 @@ export const getRecipes = async () => {
 };
 
 export const getSortedWinningRecipes = async (id, amount = 4) => {
-  const resp = await axios.get(
-    baseURL + `categories/getSortedWinningRecipes/${id}-${amount}`
-  );
+  const resp = await axios.get(baseURL + `categories/${id}-${amount}`);
   const data = await resp.data;
   return data;
 };
@@ -199,7 +197,6 @@ export const getTodosByUserId = async (userId) => {
   return resp.data;
 };
 
-
 //votes
 export const getVotes = async () => {
   const resp = await axios.get(baseURL + "Votes/AllVotes");
@@ -246,9 +243,7 @@ export const manualCategories = async () => {
   let data = [];
   const categories = [3, 6, 7];
   for (let i = 0; i < 3; i++) {
-    const resp = await axios.get(
-      baseURL + `Categories/CategoryById/${categories[i]}`
-    );
+    const resp = await axios.get(baseURL + `Categories/${categories[i]}`);
     data.push(resp.data);
   }
   return data;

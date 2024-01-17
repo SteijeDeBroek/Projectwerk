@@ -1,4 +1,3 @@
-import React from "react";
 import HomeBannerComponent from "../components/HomeBannerComponent";
 import CompetitiesComponent from "../components/CompetitiesComponent";
 
