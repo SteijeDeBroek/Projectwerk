@@ -109,7 +109,7 @@ namespace Cookiemonster.API.Controllers
                 var createdUser = await _userRepository.CreateAsync(user);
                 _logger.LogInformation($"User created with ID: {createdUser.UserId}");
 
-                return CreatedAtAction(nameof(GetUserByIdAsync), new { id = createdUser.UserId }, _mapper.Map<UserDTOGet>(createdUser));
+                return Ok();
             }
             catch (Exception ex)
             {

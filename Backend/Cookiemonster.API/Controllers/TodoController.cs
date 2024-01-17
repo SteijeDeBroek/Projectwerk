@@ -104,7 +104,7 @@ namespace Cookiemonster.API.Controllers
                 var todo = _mapper.Map<Todo>(todoDto);
                 var createdTodo = await _todoRepository.CreateAsync(todo);
                 _logger.LogInformation($"Todo created with RecipeId {createdTodo.RecipeId} and UserId {createdTodo.UserId}");
-                return CreatedAtAction(nameof(GetAsync), new { recipeId = createdTodo.RecipeId, userId = createdTodo.UserId }, _mapper.Map<TodoDTO>(createdTodo));
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -112,28 +112,6 @@ namespace Cookiemonster.API.Controllers
                 return StatusCode(500);
             }
         }
-
-        // PATCH: api/todos/5-4
-        /*[HttpPatch("Todo/{recipeId}-{userId}")]
-        public ActionResult PatchTodo(int recipeId, int userId, [FromBody] TodoDTOPost todo)
-        {
-            if (todo == null || !ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var previousTodo = _todoRepository.Get(recipeId, userId);
-
-            if (previousTodo == null)
-            {
-                return NotFound();
-            }
-            Todo mappedTodo = _mapper.Map<Todo>(todo);
-            mappedTodo.RecipeId = recipeId;
-            mappedTodo.UserId = userId;
-
-            _todoRepository.Update(mappedTodo);
-            return Ok();
-        }*/
 
         [HttpDelete("Todo/{recipeId}-{userId}")]
         [Produces("application/json")]

@@ -171,7 +171,7 @@ namespace Cookiemonster.API.Controllers
 
                 var createdCategory = await _categoryRepository.CreateAsync(_mapper.Map<Category>(category));
                 _logger.LogInformation($"CreateCategory - Category created with ID: {createdCategory.CategoryId}");
-                return CreatedAtAction("AddCategoryAsync", _mapper.Map<CategoryDTOGet>(createdCategory));
+                return Ok();
             }
             catch(Exception ex)
             {
