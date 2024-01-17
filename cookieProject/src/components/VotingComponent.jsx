@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "animate.css";
 import {
-  getImageById,
   getTodosByUserId,
   getRecipeById,
   postVote,
@@ -36,8 +35,10 @@ const VotingComponent = () => {
   useEffect(() => {
     const fetchImageAndTitle = async () => {
       try {
-        const image = await getImageById(todos[currentIndex].recipeId);
-        const recipe = getRecipeById(todos[currentIndex].recipeId);
+        const image = await getRandomImageByRecipeId(
+          todos[currentIndex].recipeId
+        );
+        const recipe = await getRecipeById(todos[currentIndex].recipeId);
 
         // Use the fetched data as needed
         setImage(image);
@@ -102,7 +103,7 @@ const VotingComponent = () => {
       <div className="mb-4">
         <p className="text-xl font-bold text-center text-blue-800">VotePage</p>
         <img
-          src={image.base64Image}
+          src={"data:image/jpeg;base64," + image.base64Image}
           alt="Vote"
           className="w-full h-32 object-cover mb-4 rounded"
         />
