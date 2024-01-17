@@ -22,7 +22,7 @@ const fileCheck = Yup.mixed()
 
 const uploadSchema = Yup.object().shape({
   titel: Yup.string().trim().required().min(3).max(50),
-  file: fileCheck,
+  file: fileCheck.required("Please upload at least one image."),
   file2: fileCheck.nullable(),
   file3: fileCheck.nullable(),
 });
@@ -38,21 +38,26 @@ function UploadComponent() {
         file2: null,
         file3: null,
       },
-      onSubmit: (values) => {
-        console.log(values);
+      onSubmit: async (values) => {
         // post request API
-        uploadFiles();
+        const postReq = await generatePostRequest();
+        console.log(postReq);
       },
       validationSchema: uploadSchema,
     });
 
   const handleFileChange = (event, position) => {
     if (event.target.files) {
-      console.log("fileObj", event.target.files[0]);
       let tempFIles = [...files];
       tempFIles[position] = event.target.files[0];
       setFiles(tempFIles);
     }
+    handleChange({
+      target: {
+        name: event.target.name,
+        value: event.target.files[0],
+      },
+    });
   };
 
   const convertBase64 = (file) => {
@@ -79,16 +84,19 @@ function UploadComponent() {
     return base64Files;
   };
 
-  const uploadFiles = () => {
-    convertAllFiles()
-      .then((result) => {
-        const convertedFiles = result;
-        console.log("convertedFiles:", convertedFiles);
-        // postFiles(convertedFiles); // post request naar API
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const generatePostRequest = async () => {
+    try {
+      const convertedFiles = await convertAllFiles();
+      return {
+        titel: values.titel,
+        file: convertedFiles[0],
+        file2: convertedFiles[1],
+        file3: convertedFiles[2],
+      };
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   };
 
   return (

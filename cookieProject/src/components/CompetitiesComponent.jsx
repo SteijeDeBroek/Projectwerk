@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import "../css/Competities.css";
-import { manualCategories, getSortedWinningRecipes } from "../api";
+import { getSortedWinningRecipes, getMostRecentCategories } from "../api";
 import CompetitiesBoxComponent from "./CompetitiesBoxComponent";
 
 const CompetitiesComponent = () => {
@@ -40,7 +40,7 @@ const CompetitiesComponent = () => {
   useEffect(() => {
     const fetchCompetities = async () => {
       try {
-        const competitionsResponse = await manualCategories();
+        const competitionsResponse = await getMostRecentCategories(3);
         setCompetities(competitionsResponse);
 
         // Initialiseer een lege array voor de recepten
