@@ -31,7 +31,7 @@ const VotingComponent = () => {
       }
     };
     fetchRandomizedTodos();
-  }, [isLoading]);
+  }, []);
 
   useEffect(() => {
     const fetchImageAndTitle = async () => {
@@ -105,6 +105,14 @@ const VotingComponent = () => {
       setChefTitle("Tim Boury!");
     }
   }, [voteCount]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div className="max-w-md mx-auto mt-10 p-8 border rounded-lg shadow-lg bg-white">
