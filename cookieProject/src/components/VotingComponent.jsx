@@ -61,16 +61,23 @@ const VotingComponent = () => {
     }
 
     try {
+      var date = new Date();
+      var currentDate = date.toISOString();
       // replace with database interaction
       if (voteType === "like") {
         await postVote({
           vote1: true,
-          timestamp: Date.now(),
+          timestamp: currentDate,
           recipeId: todos[currentIndex].recipeId,
           userId: todos[currentIndex].userId,
         });
       } else if (voteType === "dislike") {
-        // Call database API to increment the dislike count
+        await postVote({
+          vote1: false,
+          timestamp: currentDate,
+          recipeId: todos[currentIndex].recipeId,
+          userId: todos[currentIndex].userId,
+        });
       }
 
       setVoted(true);
