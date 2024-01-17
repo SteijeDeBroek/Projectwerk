@@ -23,10 +23,13 @@ namespace Cookiemonster.Infrastructure.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
+
+
+
         public async Task<IEnumerable<Todo>> GetTodosByUserIdAsync(int userId)
         {
             var user = await _context.Users
-                                     .Include(u => u.Todos)
+                                       .Include(u => u.Todos)
                                      .FirstOrDefaultAsync(u => u.UserId == userId && !u.IsDeleted);
 
             var todos = user?.Todos.ToList() ?? new List<Todo>();

@@ -63,7 +63,7 @@ namespace Cookiemonster.API.Controllers
         [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
         [SwaggerResponse(500, "Internal Server Error")]
         [SwaggerResponse(503, "Service onbereikbaar")]
-        [HttpGet("{id}, {amount}", Name = "GetSortedWinningRecipesAsync/{id}-{amount}")]
+        [HttpGet("{id},{amount}", Name = "GetSortedWinningRecipesAsync/{id}-{amount}")]
         public async Task<ActionResult<IEnumerable<RecipeDTOGet>>> GetSortedWinningRecipesAsync(int id, int amount)
         {
             _logger.LogInformation($"GetSortedWinningRecipes - Fetching sorted winning recipes for category ID {id} with amount {amount}");
