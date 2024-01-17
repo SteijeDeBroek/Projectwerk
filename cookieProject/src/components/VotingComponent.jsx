@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "animate.css";
 import {
   getImageById,
   getTodosByUserId,
   getRecipeById,
-  postVotes,
-  getRandomImageByRecipeId,
+  postVote,
 } from "../api";
 
 const VotingComponent = () => {
@@ -41,7 +40,7 @@ const VotingComponent = () => {
         const recipe = getRecipeById(todos[currentIndex].recipeId);
 
         // Use the fetched data as needed
-        setImage(imageBase64);
+        setImage(image);
         setRecipe(recipe);
       } catch (err) {
         console.error("Error fetching image and title:", err);
@@ -62,7 +61,7 @@ const VotingComponent = () => {
     try {
       // replace with database interaction
       if (voteType === "like") {
-        await postVotes({
+        await postVote({
           vote1: true,
           timestamp: Date.now(),
           recipeId: todos[currentIndex].recipeId,
