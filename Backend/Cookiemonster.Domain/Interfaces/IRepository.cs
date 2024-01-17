@@ -8,12 +8,11 @@ namespace Cookiemonster.Domain.Interfaces
 {
     public interface IRepository<T> where T : class, IDeletable
     {
-        Task<T?> GetAsync(int id1, int id2 = 0);
+        Task<T?> GetAsync(int id);
         Task<List<T>> GetAllAsync();
         Task<T> CreateAsync(T entity);
         Task<T?> UpdateAsync(T entity, Func<T, object> keySelector);
-        Task<bool> DeleteAsync(int id1, int id2 = 0);
-        Task<IQueryable<T>> QueryableAsync(); 
-
+        Task<bool> DeleteAsync(int id);
+        IQueryable<T> Queryable(); 
     }
 }

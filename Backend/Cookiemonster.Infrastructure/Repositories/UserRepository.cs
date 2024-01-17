@@ -1,24 +1,21 @@
-﻿using Cookiemonster.Infrastructure.EFRepository.Context;
+﻿using Cookiemonster.Domain.Interfaces;
+using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Infrastructure.EFRepository.Models;
-using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks; // Voeg deze using-directive toe voor Task
+using System.Threading.Tasks;
 
 namespace Cookiemonster.Infrastructure.Repositories
 {
-    public class UserRepository : Repository<User>
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        private readonly AppDbContext _context;
+        public UserRepository(AppDbContext context) : base(context) { }
 
-        public UserRepository(AppDbContext context) : base(context)
-        {
-            _context = context;
-        }
-
-        public async Task<User> CreateAsync(User user)
+        public async Task<User> CreateUserAsync(User user)
         {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            return await base.CreateAsync(user);
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return user;
         }
 
         public async Task<User> FindByUsernameAsync(string username)
