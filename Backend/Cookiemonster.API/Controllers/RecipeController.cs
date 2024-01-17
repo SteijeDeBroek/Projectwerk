@@ -16,11 +16,11 @@ namespace Cookiemonster.API.Controllers
     [ApiController]
     public class RecipeController : ControllerBase
     {
-        private readonly IRepository<Recipe> _recipeRepository;
+        private readonly IRecipeRepository _recipeRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<RecipeController> _logger;
 
-        public RecipeController(IRepository<Recipe> recipeRepository, IMapper mapper, ILogger<RecipeController> logger)
+        public RecipeController(IRecipeRepository recipeRepository, IMapper mapper, ILogger<RecipeController> logger)
         {
             _logger?.LogTrace("-> RecipeController::RecipeController");
             _recipeRepository = recipeRepository;
@@ -178,6 +178,58 @@ namespace Cookiemonster.API.Controllers
 
                 _logger.LogInformation($"DeleteRecipe - Recipe with ID {id} deleted");
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("{recipeId}/Upvote/{userId}", Name = "AddUpvoteToRecipeAsync")]
+        [SwaggerResponse(200, "Upvote added successfully")]
+        [SwaggerResponse(400, "Invalid request")]
+        [SwaggerResponse(404, "Recipe not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        public async Task<IActionResult> AddUpvoteToRecipeAsync(int recipeId, int userId)
+        {
+            _logger.LogInformation($"AddUpvote - Attempting to add upvote for recipe ID {recipeId} by user ID {userId}");
+            try
+            {
+                var success = await _recipeRepository.AddUpvoteToRecipeAsync(recipeId, userId);
+                if (!success)
+                {
+                    _logger.LogWarning($"AddUpvote - Recipe with ID {recipeId} not found or failed to add upvote");
+                    return NotFound();
+                }
+
+                return Ok("Upvote added successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("{recipeId}/Downvote/{userId}", Name = "AddDownvoteToRecipeAsync")]
+        [SwaggerResponse(200, "Downvote added successfully")]
+        [SwaggerResponse(400, "Invalid request")]
+        [SwaggerResponse(404, "Recipe not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        public async Task<IActionResult> AddDownvoteToRecipeAsync(int recipeId, int userId)
+        {
+            _logger.LogInformation($"AddDownvote - Attempting to add downvote for recipe ID {recipeId} by user ID {userId}");
+            try
+            {
+                var success = await _recipeRepository.AddDownvoteToRecipeAsync(recipeId, userId);
+                if (!success)
+                {
+                    _logger.LogWarning($"AddDownvote - Recipe with ID {recipeId} not found or failed to add downvote");
+                    return NotFound();
+                }
+
+                return Ok("Downvote added successfully");
             }
             catch (Exception ex)
             {

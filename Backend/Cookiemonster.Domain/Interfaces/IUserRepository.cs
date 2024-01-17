@@ -7,5 +7,6 @@ namespace Cookiemonster.Domain.Interfaces
     {
         Task<User> FindByUsernameAsync(string username);
         Task<User> CreateUserAsync(User user);
+        Task<IEnumerable<Todo>> GetTodosByUserIdAsync(int userId);
     }
 }

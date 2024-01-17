@@ -215,5 +215,37 @@ namespace Cookiemonster.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpGet("UserTodos/{userId}")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+        Summary = "Get todos for a user by ID",
+        Description = "Retrieves todos for a user by their ID.",
+        OperationId = "GetTodosByUserId")]
+        [SwaggerResponse(200, "Request successful")]
+        [SwaggerResponse(404, "User not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        public async Task<ActionResult<IEnumerable<TodoDTO>>> GetTodosByUserIdAsync(int userId)
+        {
+            _logger.LogInformation($"Getting todos for user with ID: {userId}");
+            try
+            {
+                var todos = await _userRepository.GetTodosByUserIdAsync(userId);
+                if (todos == null)
+                {
+                    _logger.LogWarning($"User with ID {userId} not found");
+                    return NotFound();
+                }
+
+                return Ok(_mapper.Map<List<TodoDTO>>(todos));
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return StatusCode(500);
+            }
+        }
+
+
     }
 }
