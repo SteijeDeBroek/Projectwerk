@@ -64,6 +64,12 @@ export const getImageById = async (id) => {
   return data;
 };
 
+export const getRandomImageByRecipeId = async (id) => {
+  const resp = await axios.get(baseURL + `RandomImage/${id}`);
+  const data = await resp.data;
+  return data;
+};
+
 export const patchImages = async (id, put) => {
   const resp = await axios.patch(baseURL + `Images/Image/${id}`, put);
   return await resp.status;

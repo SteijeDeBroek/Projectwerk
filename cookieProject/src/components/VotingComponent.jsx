@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import "animate.css";
 import {
   getImageById,
-  getRandomizedTodos,
+  getTodosByUserId,
   getRecipeById,
   postVotes,
+  getRandomImageByRecipeId,
 } from "../api";
 
 const VotingComponent = () => {
@@ -12,6 +13,8 @@ const VotingComponent = () => {
   const [voteCount, setVoteCount] = useState(0);
   const [chefTitle, setChefTitle] = useState("");
   const [todos, setTodos] = useState([]);
+  const [recipe, setRecipe] = useState("");
+  const [image, setImage] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +22,7 @@ const VotingComponent = () => {
   useEffect(() => {
     const fetchRandomizedTodos = async () => {
       try {
-        const randomTodosResponse = await getRandomizedTodos(3, 20);
+        const randomTodosResponse = await getTodosByUserId(3);
         setTodos(randomTodosResponse);
         setIsLoading(false);
       } catch (err) {
@@ -31,26 +34,49 @@ const VotingComponent = () => {
     fetchRandomizedTodos();
   }, [isLoading]);
 
-  const handleVote = (voteType) => {
+  useEffect(() => {
+    const fetchImageAndTitle = async () => {
+      try {
+        const image = await getImageById(todos[currentIndex].recipeId);
+        const recipe = getRecipeById(todos[currentIndex].recipeId);
+
+        // Use the fetched data as needed
+        setImage(imageBase64);
+        setRecipe(recipe);
+      } catch (err) {
+        console.error("Error fetching image and title:", err);
+      }
+    };
+
+    if (!isLoading) {
+      fetchImageAndTitle();
+    }
+  }, [todos, currentIndex, isLoading]);
+
+  const handleVote = async (voteType) => {
     if (voted) {
       alert("You have already voted!");
       return;
     }
 
-    // replace with database interaction
-    if (voteType === "like") {
-      postVotes({
-        vote1: "true",
-        timestamp: Date.now(),
-        recipeId: todos[currentIndex].recipeId,
-        userId: this.props.userId,
-      });
-    } else if (voteType === "dislike") {
-      // Call database API to increment the dislike count
-    }
+    try {
+      // replace with database interaction
+      if (voteType === "like") {
+        await postVotes({
+          vote1: true,
+          timestamp: Date.now(),
+          recipeId: todos[currentIndex].recipeId,
+          userId: todos[currentIndex].userId,
+        });
+      } else if (voteType === "dislike") {
+        // Call database API to increment the dislike count
+      }
 
-    setVoted(true);
-    setVoteCount((prevCount) => prevCount + 1);
+      setVoted(true);
+      setVoteCount((prevCount) => prevCount + 1);
+    } catch (error) {
+      console.error("Error posting vote:", error);
+    }
   };
 
   const handleNext = () => {
@@ -77,11 +103,11 @@ const VotingComponent = () => {
       <div className="mb-4">
         <p className="text-xl font-bold text-center text-blue-800">VotePage</p>
         <img
-          src={getImageById(todos[currentIndex]).base64Image}
+          src={image.base64Image}
           alt="Vote"
           className="w-full h-32 object-cover mb-4 rounded"
         />
-        <p>{getRecipeById(todos[currentIndex]).title}</p>
+        <p>{recipe.title}</p>
       </div>
 
       <div className="flex items-center justify-between">
