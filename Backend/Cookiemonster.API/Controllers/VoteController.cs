@@ -89,7 +89,7 @@ namespace Cookiemonster.API.Controllers
 
                 var vote = _mapper.Map<Vote>(voteDto);
                 var createdVote = await _voteRepository.CreateAsync(vote);
-                return CreatedAtAction(nameof(GetVoteByIdAsync), new { recipeId = createdVote.RecipeId, userId = createdVote.UserId }, _mapper.Map<VoteDTO>(createdVote));
+                return Ok();
             }
             catch (Exception ex)
             {

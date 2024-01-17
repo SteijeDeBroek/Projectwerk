@@ -33,7 +33,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
 
 
 
-// Voor REACT client toegevoegd:
+
 {
     Console.WriteLine("Cors active");
     // Adding CORS Policy

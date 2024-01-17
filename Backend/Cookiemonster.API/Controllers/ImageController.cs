@@ -105,7 +105,7 @@ namespace Cookiemonster.API.Controllers
 
                 var createdImage = await _imageRepository.CreateAsync(_mapper.Map<Image>(image));
                 _logger.LogInformation($"CreateImage - Image created with ID: {createdImage.ImageId}");
-                return CreatedAtAction("AddImageAsync", _mapper.Map<ImageDTOGet>(createdImage));
+                return Ok();
             }
             catch (Exception ex)
             {

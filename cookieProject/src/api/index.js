@@ -122,6 +122,12 @@ export const getTodos = async () => {
   return data;
 };
 
+export const getRandomizedTodos = async (id, amount) => {
+  const resp = await axios.get(baseURL + `Users/getRandomTodos/${id}-${amount}`);
+  const data = await resp.data;
+  return data;
+};
+
 export const getTodoById = async (recipeId, userId) => {
   const resp = await axios.get(
     baseURL + `Todos/TodoById/${recipeId}-${userId}`

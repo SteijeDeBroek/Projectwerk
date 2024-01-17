@@ -1,9 +1,35 @@
 import React, { useState, useEffect } from "react";
 import "animate.css";
+import {
+  getImageById,
+  getRandomizedTodos,
+  getRecipeById,
+  postVotes,
+} from "../api";
+
 const VotingComponent = () => {
   const [voted, setVoted] = useState(false);
   const [voteCount, setVoteCount] = useState(0);
   const [chefTitle, setChefTitle] = useState("");
+  const [todos, setTodos] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchRandomizedTodos = async () => {
+      try {
+        const randomTodosResponse = await getRandomizedTodos(3, 20);
+        setTodos(randomTodosResponse);
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Error fetching todos:", err);
+        setError(err);
+        setIsLoading(false);
+      }
+    };
+    fetchRandomizedTodos();
+  }, [isLoading]);
 
   const handleVote = (voteType) => {
     if (voted) {
@@ -13,7 +39,12 @@ const VotingComponent = () => {
 
     // replace with database interaction
     if (voteType === "like") {
-      // Call database API to increment the like count
+      postVotes({
+        vote1: "true",
+        timestamp: Date.now(),
+        recipeId: todos[currentIndex].recipeId,
+        userId: this.props.userId,
+      });
     } else if (voteType === "dislike") {
       // Call database API to increment the dislike count
     }
@@ -23,12 +54,13 @@ const VotingComponent = () => {
   };
 
   const handleNext = () => {
-    // Placeholder logic to fetch and display the next dish
-    // Example: api.fetchNextDish();
+    // Increment the index to display the next image and title
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % todos.length);
     setVoted(false); // Reset voted state for the new dish
   };
 
   useEffect(() => {
+    // Update chef title based on vote count
     if (voteCount === 10) {
       setChefTitle("Hobby-kok");
     } else if (voteCount === 20) {
@@ -45,11 +77,13 @@ const VotingComponent = () => {
       <div className="mb-4">
         <p className="text-xl font-bold text-center text-blue-800">VotePage</p>
         <img
-          src="afbeelding-url"
+          src={getImageById(todos[currentIndex]).base64Image}
           alt="Vote"
           className="w-full h-32 object-cover mb-4 rounded"
         />
+        <p>{getRecipeById(todos[currentIndex]).title}</p>
       </div>
+
       <div className="flex items-center justify-between">
         <button
           onClick={() => handleVote("like")}

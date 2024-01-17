@@ -105,7 +105,7 @@ namespace Cookiemonster.API.Controllers
 
                 var createdRecipe = await _recipeRepository.CreateAsync(_mapper.Map<Recipe>(recipe));
                 _logger.LogInformation($"CreateRecipe - Recipe created with ID: {createdRecipe.RecipeId}");
-                return CreatedAtAction("AddRecipeAsync", _mapper.Map<RecipeDTOGet>(createdRecipe));
+                return Ok();
             }
             catch (Exception ex)
             {
