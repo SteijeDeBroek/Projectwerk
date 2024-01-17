@@ -6,11 +6,9 @@ using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -34,20 +32,20 @@ namespace Cookiemonster.API.Controllers
         // GET: api/users
         [HttpGet("AllUsers")]
         [Produces("application/json")]
-        public ActionResult<IEnumerable<UserDTOGet>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDTOGet>>> GetAllUsersAsync()
         {
             _logger.LogInformation("User GetAllUsers called");
-            var users = _userRepository.GetAll();
+            var users = await _userRepository.GetAllAsync();
             return Ok(_mapper.Map<List<UserDTOGet>>(users));
         }
 
         // GET: api/users/5
         [HttpGet("UserById/{id}")]
         [Produces("application/json")]
-        public ActionResult<UserDTOGet> GetUserById(int id)
+        public async Task<ActionResult<UserDTOGet>> GetUserByIdAsync(int id)
         {
             _logger.LogInformation($"User GetUserById called for ID: {id}");
-            var user = _userRepository.Get(id);
+            var user = await _userRepository.GetAsync(id);
             if (user == null)
             {
                 _logger.LogWarning($"User with ID {id} not found");
@@ -65,7 +63,7 @@ namespace Cookiemonster.API.Controllers
              Description = "Creates a new user.",
              OperationId = "CreateUser"
         )]
-        public IActionResult CreateUser(UserDTOPost userDto)
+        public async Task<IActionResult> CreateUserAsync([FromBody] UserDTOPost userDto)
         {
             if (userDto == null || !ModelState.IsValid)
             {
@@ -73,13 +71,12 @@ namespace Cookiemonster.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdUser = _userRepository.Create(_mapper.Map<User>(userDto));
+            var user = _mapper.Map<User>(userDto);
+            var createdUser = await _userRepository.CreateAsync(user);
             _logger.LogInformation($"User created with ID: {createdUser.UserId}");
 
-            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.UserId }, _mapper.Map<UserDTOGet>(createdUser));
+            return CreatedAtAction(nameof(GetUserByIdAsync), new { id = createdUser.UserId }, _mapper.Map<UserDTOGet>(createdUser));
         }
-
-
 
         /*[HttpPatch("User/{id}")]
         public IActionResult UpdateUser(int id, [FromBody] UserDTOPost userDto)
@@ -116,11 +113,11 @@ namespace Cookiemonster.API.Controllers
              Description = "Deletes a user by its ID.",
              OperationId = "DeleteUser"
         )]
-        public IActionResult DeleteUser(int id)
+        public async Task<IActionResult> DeleteUserAsync(int id)
         {
             _logger.LogInformation($"User DeleteUser called for ID: {id}");
 
-            var success = _userRepository.Delete(id);
+            var success = await _userRepository.DeleteAsync(id);
             if (!success)
             {
                 _logger.LogWarning($"User with ID {id} not found for deletion");
@@ -140,7 +137,7 @@ namespace Cookiemonster.API.Controllers
              Description = "Authenticates a user.",
              OperationId = "UserLogin"
         )]
-        public IActionResult Login(UserDTOPost loginDto)
+        public async Task<IActionResult> LoginAsync([FromBody] UserDTOPost loginDto)
         {
             if (loginDto == null || string.IsNullOrWhiteSpace(loginDto.Username) || string.IsNullOrWhiteSpace(loginDto.Password))
             {
@@ -148,10 +145,9 @@ namespace Cookiemonster.API.Controllers
                 return BadRequest("Invalid login credentials");
             }
 
-            var user = _userRepository.FindByUsernameAsync(loginDto.Username);
+            var user = await _userRepository.FindByUsernameAsync(loginDto.Username);
             if (user != null && BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
             {
-                // The user is authenticated. You can generate a JWT token or perform other login success actions here.
                 _logger.LogInformation("User logged in successfully");
                 return Ok("Login successful");
             }

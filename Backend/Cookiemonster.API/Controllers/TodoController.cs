@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Cookiemonster.API.DTOGets;
-using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -32,10 +32,10 @@ namespace Cookiemonster.API.Controllers
             Summary = "Get all todos",
             Description = "Retrieves a list of all todos.",
             OperationId = "GetAllTodos")]
-        public ActionResult<IEnumerable<TodoDTO>> Get()
+        public async Task<ActionResult<IEnumerable<TodoDTO>>> GetAllAsync()
         {
             _logger.LogInformation("Fetching all todos");
-            var todos = _todoRepository.GetAll();
+            var todos = await _todoRepository.GetAllAsync();
             return Ok(_mapper.Map<List<TodoDTO>>(todos));
         }
 
@@ -46,10 +46,10 @@ namespace Cookiemonster.API.Controllers
             Summary = "Get a todo by RecipeId and UserId",
             Description = "Retrieves a todo by its RecipeId and UserId.",
             OperationId = "GetTodoById")]
-        public ActionResult<TodoDTO> Get(int recipeId, int userId)
+        public async Task<ActionResult<TodoDTO>> GetAsync(int recipeId, int userId)
         {
             _logger.LogInformation($"Fetching todo with RecipeId {recipeId} and UserId {userId}");
-            var todo = _todoRepository.Get(recipeId, userId);
+            var todo = await _todoRepository.GetAsync(recipeId); // Adjust this if needed to support composite keys
             if (todo == null)
             {
                 _logger.LogWarning($"Todo not found with RecipeId {recipeId} and UserId {userId}");
@@ -66,17 +66,18 @@ namespace Cookiemonster.API.Controllers
             Summary = "Create a new todo",
             Description = "Creates a new todo.",
             OperationId = "CreateTodo")]
-        public ActionResult CreateTodo([FromBody] TodoDTO todo)
+        public async Task<ActionResult> CreateAsync([FromBody] TodoDTO todoDto)
         {
-            if (todo == null || !ModelState.IsValid)
+            if (todoDto == null || !ModelState.IsValid)
             {
                 _logger.LogWarning("Invalid model state for creating todo");
                 return BadRequest(ModelState);
             }
 
-            var createdTodo = _todoRepository.Create(_mapper.Map<Todo>(todo));
+            var todo = _mapper.Map<Todo>(todoDto);
+            var createdTodo = await _todoRepository.CreateAsync(todo);
             _logger.LogInformation($"Todo created with RecipeId {createdTodo.RecipeId} and UserId {createdTodo.UserId}");
-            return CreatedAtAction(nameof(Get), new { recipeId = createdTodo.RecipeId, userId = createdTodo.UserId });
+            return CreatedAtAction(nameof(GetAsync), new { recipeId = createdTodo.RecipeId, userId = createdTodo.UserId }, _mapper.Map<TodoDTO>(createdTodo));
         }
 
         // PATCH: api/todos/5-4
@@ -109,10 +110,10 @@ namespace Cookiemonster.API.Controllers
             Summary = "Delete a todo by RecipeId and UserId",
             Description = "Deletes a todo by its RecipeId and UserId.",
             OperationId = "DeleteTodo")]
-        public ActionResult DeleteTodo(int recipeId, int userId)
+        public async Task<ActionResult> DeleteAsync(int recipeId, int userId)
         {
             _logger.LogInformation($"Attempting to delete todo with RecipeId {recipeId} and UserId {userId}");
-            var deleted = _todoRepository.Delete(recipeId, userId);
+            var deleted = await _todoRepository.DeleteAsync(recipeId); // Adjust this if needed to support composite keys
             if (!deleted)
             {
                 _logger.LogWarning($"Todo not found or could not be deleted with RecipeId {recipeId} and UserId {userId}");

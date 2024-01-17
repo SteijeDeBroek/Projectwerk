@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Cookiemonster.API.DTOGets;
-using Cookiemonster.API.DTOPatches;
-using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -31,9 +30,9 @@ namespace Cookiemonster.API.Controllers
             Description = "Retrieves all votes.",
             OperationId = "GetAllVotes"
         )]
-        public ActionResult<IEnumerable<VoteDTO>> GetAllVotes()
+        public async Task<ActionResult<IEnumerable<VoteDTO>>> GetAllVotesAsync()
         {
-            var votes = _voteRepository.GetAll();
+            var votes = await _voteRepository.GetAllAsync();
             return Ok(_mapper.Map<List<VoteDTO>>(votes));
         }
 
@@ -45,9 +44,9 @@ namespace Cookiemonster.API.Controllers
             Description = "Retrieves a vote by RecipeId and UserId.",
             OperationId = "GetVoteById"
         )]
-        public ActionResult<VoteDTO> GetVoteById(int recipeId, int userId)
+        public async Task<ActionResult<VoteDTO>> GetVoteByIdAsync(int recipeId, int userId)
         {
-            var vote = _voteRepository.Get(recipeId, userId);
+            var vote = await _voteRepository.GetAsync(recipeId); // Adjust this if needed to support composite keys
             if (vote == null)
             {
                 return NotFound();
@@ -63,15 +62,16 @@ namespace Cookiemonster.API.Controllers
             Description = "Creates a new vote.",
             OperationId = "CreateVote"
         )]
-        public ActionResult CreateVote(VoteDTO vote)
+        public async Task<ActionResult> CreateVoteAsync([FromBody] VoteDTO voteDto)
         {
-            if (vote == null || !ModelState.IsValid)
+            if (voteDto == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var createdVote = _voteRepository.Create(_mapper.Map<Vote>(vote));
-            return CreatedAtAction(nameof(GetVoteById), new { recipeId = createdVote.RecipeId, userId = createdVote.UserId }, vote);
+            var vote = _mapper.Map<Vote>(voteDto);
+            var createdVote = await _voteRepository.CreateAsync(vote);
+            return CreatedAtAction(nameof(GetVoteByIdAsync), new { recipeId = createdVote.RecipeId, userId = createdVote.UserId }, _mapper.Map<VoteDTO>(createdVote));
         }
 
         /*
@@ -98,7 +98,6 @@ namespace Cookiemonster.API.Controllers
             return Ok();
         }
         */
-
         // DELETE: api/votes/5-4
         [HttpDelete("Vote/{recipeId}-{userId}")]
         [Produces("application/json")]
@@ -107,9 +106,9 @@ namespace Cookiemonster.API.Controllers
             Description = "Deletes a vote by RecipeId and UserId.",
             OperationId = "DeleteVote"
         )]
-        public ActionResult DeleteVote(int recipeId, int userId)
+        public async Task<ActionResult> DeleteVoteAsync(int recipeId, int userId)
         {
-            var deleted = _voteRepository.Delete(recipeId, userId);
+            var deleted = await _voteRepository.DeleteAsync(recipeId); // Adjust this if needed to support composite keys
             if (!deleted)
             {
                 return NotFound();

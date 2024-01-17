@@ -156,20 +156,20 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
 
 }).AddInMemoryStorage();
 
-var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
-{
-    SslProtocols = SslProtocols.Tls12,
-    ClientCertificateMode = ClientCertificateMode.AllowCertificate,
-    ServerCertificate = new X509Certificate2("./certificate.pfx", "password") //password ontbreekt, ilya?
-};
+//var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
+//{
+//    SslProtocols = SslProtocols.Tls12,
+//    ClientCertificateMode = ClientCertificateMode.AllowCertificate,
+//    ServerCertificate = new X509Certificate2("./certificate.pfx", "password") //password ontbreekt, ilya?
+//};
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ConfigureEndpointDefaults(listenOptions =>
-    {
-        listenOptions.UseHttps(httpsConnectionAdapterOptions);
-    });
-});
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ConfigureEndpointDefaults(listenOptions =>
+//    {
+//        listenOptions.UseHttps(httpsConnectionAdapterOptions);
+//    });
+//});
 
 
 
