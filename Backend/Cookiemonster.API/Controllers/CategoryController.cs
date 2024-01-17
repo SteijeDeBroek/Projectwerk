@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Cookiemonster.API.DTOGets;
 using Cookiemonster.API.DTOPosts;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -17,6 +18,7 @@ namespace Cookiemonster.API.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<CategoryController> _logger;
 
+
         public CategoryController(ICategoryRepository categoryRepository, IMapper mapper, ILogger<CategoryController> logger)
         {
             _logger?.LogTrace("-> CategoryController::CategoryController");
@@ -26,7 +28,15 @@ namespace Cookiemonster.API.Controllers
             _logger?.LogTrace("-> CategoryController::CategoryController");
         }
 
-
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all categories",
+            Description = "Returns a list of all categories.",
+            OperationId = "GetAllCategories"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         [HttpGet("GetAsync", Name = "GetAllCategoriesAsync")]
         public async Task<ActionResult<IEnumerable<CategoryDTOGet>>> GetAllCategoriesAsync()
         {
@@ -44,18 +54,15 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
-        /*[HttpGet("GetWinningRecipe/{id}")]
-        public ActionResult<RecipeDTOGet> GetWinningRecipe(int id)
-        {
-            Recipe? winningRecipe = _categoryRepository.GetWinningRecipe(id);
-            if (winningRecipe == null)
-            {
-                return NotFound();
-            }
-            return Ok(_mapper.Map<RecipeDTOGet>(winningRecipe));
-        }*/
-
-
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get sorted winning recipes",
+            Description = "Fetches sorted winning recipes for a category with a specified amount.",
+            OperationId = "GetSortedWinningRecipes"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         [HttpGet("{id}, {amount}", Name = "GetSortedWinningRecipesAsync/{id}-{amount}")]
         public async Task<ActionResult<IEnumerable<RecipeDTOGet>>> GetSortedWinningRecipesAsync(int id, int amount)
         {
@@ -86,12 +93,21 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create a category",
+            Description = "Creates a new category.",
+            OperationId = "CreateCategory"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         [HttpGet("GetMostRecentAsync", Name = "GetMostRecentCategoriesAsync")]
         public async Task<ActionResult<IEnumerable<CategoryDTOGet>>> GetMostRecentAsync(int amount)
         {
             try
             {
-                var mostRecentCategories = await _categoryRepository.GetMostRecent(amount);
+                var mostRecentCategories = await _categoryRepository.GetMostRecentAsync(amount);
                 if (mostRecentCategories == null) return NotFound();
                 return Ok(_mapper.Map<List<CategoryDTOGet>>(mostRecentCategories));
             }
@@ -102,6 +118,15 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get category by id",
+            Description = "Returns a single category.",
+            OperationId = "GetCategoryById"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         [HttpGet("{id}", Name = "GetCategoryByIdAsync")]
         public async Task<ActionResult<CategoryDTOGet>> GetAsync(int id)
         {
@@ -123,6 +148,16 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create a category",
+            Description = "Creates a new category.",
+            OperationId = "CreateCategory"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         [HttpPost(Name = "AddCategoryAsync")]
         public async Task<ActionResult> CreateCategoryAsync(CategoryDTOPost category)
         {
@@ -145,6 +180,16 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Update a category by ID",
+            Description = "Updates an existing category by its ID.",
+            OperationId = "UpdateCategory"
+        )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         [HttpPatch("{id}", Name = "UpdateCategoryAsync")]
         public async Task<ActionResult> PatchCategoryAsync(int id, [FromBody] CategoryDTOPost category)
         {
@@ -176,6 +221,14 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
+        [SwaggerOperation(
+           Summary = "Delete a category by ID",
+           Description = "Deletes a category by its ID.",
+           OperationId = "DeleteCategory"
+       )]
+        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(503, "Service onbereikbaar")]
         [HttpDelete("{id}", Name = "DeleteCategoryAsync")]
         public async Task<ActionResult> DeleteCategoryAsync(int id)
         {
