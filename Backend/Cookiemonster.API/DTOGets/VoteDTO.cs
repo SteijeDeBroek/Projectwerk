@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Cookiemonster.API.DTOGets
+﻿namespace Cookiemonster.API.DTOGets
 {
     public class VoteDTO
     {
@@ -8,9 +6,8 @@ namespace Cookiemonster.API.DTOGets
 
         public DateTime Timestamp { get; set; }
 
-        [Required]
         public int RecipeId { get; set; }
-        [Required]
+
         public int UserId { get; set; }
     }
 }

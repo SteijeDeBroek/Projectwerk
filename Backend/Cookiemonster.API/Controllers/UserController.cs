@@ -34,9 +34,6 @@ namespace Cookiemonster.API.Controllers
         // GET: api/users
         [HttpGet("AllUsers")]
         [Produces("application/json")]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult<IEnumerable<UserDTOGet>> GetAllUsers()
         {
             _logger.LogInformation("User GetAllUsers called");
@@ -47,9 +44,6 @@ namespace Cookiemonster.API.Controllers
         // GET: api/users/5
         [HttpGet("UserById/{id}")]
         [Produces("application/json")]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
         public ActionResult<UserDTOGet> GetUserById(int id)
         {
             _logger.LogInformation($"User GetUserById called for ID: {id}");
@@ -71,9 +65,6 @@ namespace Cookiemonster.API.Controllers
              Description = "Creates a new user.",
              OperationId = "CreateUser"
         )]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
         public IActionResult CreateUser(UserDTOPost userDto)
         {
             if (userDto == null || !ModelState.IsValid)
@@ -149,9 +140,6 @@ namespace Cookiemonster.API.Controllers
              Description = "Authenticates a user.",
              OperationId = "UserLogin"
         )]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
         public IActionResult Login(UserDTOPost loginDto)
         {
             if (loginDto == null || string.IsNullOrWhiteSpace(loginDto.Username) || string.IsNullOrWhiteSpace(loginDto.Password))

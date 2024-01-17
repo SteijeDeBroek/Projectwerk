@@ -26,23 +26,9 @@ namespace Cookiemonster.API.Controllers
             _logger?.LogTrace("-> CategoryController::CategoryController");
         }
 
-<<<<<<< Updated upstream
 
         [HttpGet("GetAsync", Name = "GetAllCategoriesAsync")]
         public async Task<ActionResult<IEnumerable<CategoryDTOGet>>> GetAllCategoriesAsync()
-=======
-        [HttpGet("AllCategories")]
-        [Produces("application/json")]
-        [SwaggerOperation(
-            Summary = "Get all categories",
-            Description = "Returns a list of all categories.",
-            OperationId = "GetAllCategories"
-        )]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
-        public ActionResult<IEnumerable<CategoryDTOGet>> GetAllCategories()
->>>>>>> Stashed changes
         {
             _logger.LogInformation("GetAllCategories - Fetching all categories");
             try
@@ -69,23 +55,9 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<RecipeDTOGet>(winningRecipe));
         }*/
 
-<<<<<<< Updated upstream
 
         [HttpGet("{id}, {amount}", Name = "GetSortedWinningRecipesAsync/{id}-{amount}")]
         public async Task<ActionResult<IEnumerable<RecipeDTOGet>>> GetSortedWinningRecipesAsync(int id, int amount)
-=======
-        [HttpGet("GetSortedWinningRecipes/{id}-{amount}")]
-        [Produces("application/json")]
-        [SwaggerOperation(
-            Summary = "Get sorted winning recipes",
-            Description = "Fetches sorted winning recipes for a category with a specified amount.",
-            OperationId = "GetSortedWinningRecipes"
-        )]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
-        public ActionResult<IEnumerable<RecipeDTOGet>> GetSortedWinningRecipes(int id, int amount)
->>>>>>> Stashed changes
         {
             _logger.LogInformation($"GetSortedWinningRecipes - Fetching sorted winning recipes for category ID {id} with amount {amount}");
             try
@@ -114,23 +86,8 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
-<<<<<<< Updated upstream
         [HttpGet("GetMostRecentAsync", Name = "GetMostRecentCategoriesAsync")]
         public async Task<ActionResult<IEnumerable<CategoryDTOGet>>> GetMostRecentAsync(int amount)
-=======
-        [HttpPost("Category")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [SwaggerOperation(
-            Summary = "Create a category",
-            Description = "Creates a new category.",
-            OperationId = "CreateCategory"
-        )]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
-        public ActionResult CreateCategory(CategoryDTOPost category)
->>>>>>> Stashed changes
         {
             try
             {
@@ -145,23 +102,8 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
-<<<<<<< Updated upstream
         [HttpGet("{id}", Name = "GetCategoryByIdAsync")]
         public async Task<ActionResult<CategoryDTOGet>> GetAsync(int id)
-=======
-        [HttpPatch("Category/{id}")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [SwaggerOperation(
-            Summary = "Update a category by ID",
-            Description = "Updates an existing category by its ID.",
-            OperationId = "UpdateCategory"
-        )]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
-        public ActionResult UpdateCategory(int id, CategoryDTOPost category)
->>>>>>> Stashed changes
         {
             _logger.LogInformation($"Get (CategoryById) - Attempting to fetch category with ID {id}");
             try
@@ -181,21 +123,8 @@ namespace Cookiemonster.API.Controllers
             }
         }
 
-<<<<<<< Updated upstream
         [HttpPost(Name = "AddCategoryAsync")]
         public async Task<ActionResult> CreateCategoryAsync(CategoryDTOPost category)
-=======
-        [HttpDelete("Category/{id}")]
-        [SwaggerOperation(
-            Summary = "Delete a category by ID",
-            Description = "Deletes a category by its ID.",
-            OperationId = "DeleteCategory"
-        )]
-        [SwaggerResponse(400, "ongeldige of slechte request verstuurd")]
-        [SwaggerResponse(500, "Internal Server Error")]
-        [SwaggerResponse(503, "Service onbereikbaar")]
-        public ActionResult DeleteCategory(int id)
->>>>>>> Stashed changes
         {
             try
             {
