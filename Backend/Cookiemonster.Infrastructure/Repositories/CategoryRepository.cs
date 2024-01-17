@@ -1,3 +1,6 @@
+// Repository<T> klasse blijft ongewijzigd.
+
+// CategoryRepository klasse
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Infrastructure.EFRepository.Models;
@@ -7,37 +10,41 @@ namespace Cookiemonster.Infrastructure.Repositories
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        private readonly AppDbContext _context;
+        public CategoryRepository(AppDbContext context) : base(context) { }
 
-        public CategoryRepository(AppDbContext context) : base(context) { _context = context; }
 
-        public IQueryable<Recipe> GetAllRecipes(int id)
+        public async Task<List<Recipe>> GetAllRecipesAsync(int id)
         {
-            return _context.Recipes.Where(r => !r.IsDeleted && r.CategoryId == id);
+            return await _context.Recipes
+                .Where(r => !r.IsDeleted && r.CategoryId == id)
+                .ToListAsync();
         }
 
-        public IQueryable<Category> GetMostRecent(int amount)
+        public async Task<List<Category>> GetMostRecentAsync(int amount)
         {
-            return Queryable().Where(c => !c.IsDeleted && c.EndDate > DateTime.Now)
-            .OrderByDescending(c => c.StartDate)
-            .Take(amount);
+            return await _context.Categories
+                .Where(c => !c.IsDeleted && c.EndDate > DateTime.Now)
+                .OrderByDescending(c => c.StartDate)
+                .Take(amount)
+                .ToListAsync();
         }
 
-        public List<int> GetSortedWinningImages(Recipe winningRecipe)
+       
+        public async Task<List<int>> GetSortedWinningImagesAsync(Recipe winningRecipe)
         {
-            return _context.Images.Where(i => !i.IsDeleted && i.RecipeId  == winningRecipe.RecipeId).Select(i => i.ImageId).ToList();
+            return await _context.Images
+                .Where(i => !i.IsDeleted && i.RecipeId == winningRecipe.RecipeId)
+                .Select(i => i.ImageId)
+                .ToListAsync();
         }
 
-        /*public Recipe? GetWinningRecipe(int id) {
-            return GetAllRecipes(id)?.ToList().MaxBy(r => r.TotalUpvotes);
-        }*/
-
-        public IQueryable<Recipe>? GetSortedWinningRecipes(int id, int amount)
+        public async Task<List<Recipe>> GetSortedWinningRecipesAsync(int id, int amount)
         {
-            return GetAllRecipes(id)?
-                .OrderByDescending(r => r.TotalUpvotes)
-                .Take(amount);
+            return await _context.Recipes
+                .Where(r => !r.IsDeleted && r.CategoryId == id)
+                .OrderByDescending(r => r.TotalUpvotes) 
+                .Take(amount)
+                .ToListAsync();
         }
-
     }
 }

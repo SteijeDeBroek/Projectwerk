@@ -1,12 +1,9 @@
 import axios from "axios";
 
-//tijd ervoor en erna loggen (tip wim!)
 const baseURL = "https://localhost:7170/";
 
-//definieer de functies
-// categories
 export const getCategories = async () => {
-  const resp = await axios.get(baseURL + "Categories/AllCategories");
+  const resp = await axios.get(baseURL + "Categories/GetAsync");
   const data = await resp.data;
   return data;
 };
@@ -15,7 +12,7 @@ export const mostRecentCategories = async (amount) => {
   console.time("mostRecentCategories_TimerStart");
 
   const resp = await axios.get(
-    baseURL + `Categories/MostRecentCategories?amount=${amount}`
+    baseURL + `Categories/GetMostRecentAsync?amount=${amount}`
   );
 
   const data = await resp.data;
@@ -25,97 +22,92 @@ export const mostRecentCategories = async (amount) => {
 };
 
 export const getCategoryById = async (id) => {
-  const resp = await axios.get(baseURL + `Categories/CategoryById/${id}`);
+  const resp = await axios.get(baseURL + `Categories/${id}`);
   const data = await resp.data;
   return data;
 };
 
 export const patchCategories = async (id, patch) => {
-  const resp = await axios.patch(baseURL + `Categories/Category/${id}`, patch);
+  const resp = await axios.patch(baseURL + `Categories/${id}`, patch);
   return await resp.status;
 };
 
 export const deleteCategories = async (id) => {
-  const resp = await axios.delete(baseURL + `Categories/Category/${id}`);
+  const resp = await axios.delete(baseURL + `Categories/${id}`);
   return await resp.status;
 };
 
 export const postCategories = async (post) => {
-  const resp = await axios.post(baseURL + "Categories/Category", post);
+  const resp = await axios.post(baseURL + "Categories", post);
   return await resp.status;
 };
 
-//images
 export const getImages = async () => {
-  const resp = await axios.get(baseURL + "Images/AllImages");
-  const data = await resp.data;
-  return data;
-};
-
-export const getWinningImages = async () => {
-  const resp = await axios.get(baseURL + "Images/WinningImages");
+  const resp = await axios.get(baseURL + "Images/GetAsync");
   const data = await resp.data;
   return data;
 };
 
 export const getImageById = async (id) => {
-  const resp = await axios.get(baseURL + `Images/ImageById/${id}`);
+  const resp = await axios.get(baseURL + `Images/${id}`);
+  const data = await resp.data;
+  return data;
+};
+
+export const getRandomImageByRecipeId = async (id) => {
+  const resp = await axios.get(baseURL + `Recipes/RandomImage/${id}`);
   const data = await resp.data;
   return data;
 };
 
 export const patchImages = async (id, put) => {
-  const resp = await axios.patch(baseURL + `Images/Image/${id}`, put);
+  const resp = await axios.patch(baseURL + `Images/${id}`, put);
   return await resp.status;
 };
 
 export const deleteImages = async (id) => {
-  const resp = await axios.delete(baseURL + `Images/Image/${id}`);
+  const resp = await axios.delete(baseURL + `Images/${id}`);
   return await resp.status;
 };
 
 export const postImages = async (post) => {
-  const resp = await axios.post(baseURL + "Images/Image", post);
+  const resp = await axios.post(baseURL + "Images", post);
   return await resp.status;
 };
 
-//recipes
 export const getRecipes = async () => {
-  const resp = await axios.get(baseURL + "Recipes/AllRecipes");
+  const resp = await axios.get(baseURL + "Recipes/GetAsync");
   const data = await resp.data;
   return data;
 };
 
 export const getSortedWinningRecipes = async (id, amount = 4) => {
-  const resp = await axios.get(
-    baseURL + `categories/getSortedWinningRecipes/${id}-${amount}`
-  );
+  const resp = await axios.get(baseURL + `Categories/${id}-${amount}`);
   const data = await resp.data;
   return data;
 };
 
 export const getRecipeById = async (id) => {
-  const resp = await axios.get(baseURL + `Recipes/RecipeById/${id}`);
+  const resp = await axios.get(baseURL + `Recipes/${id}`);
   const data = await resp.data;
   return data;
 };
 
 export const patchRecipes = async (id, put) => {
-  const resp = await axios.patch(baseURL + `Recipes/Recipe/${id}`, put);
+  const resp = await axios.patch(baseURL + `Recipes/${id}`, put);
   return await resp.status;
 };
 
 export const deleteRecipes = async (id) => {
-  const resp = await axios.delete(baseURL + `Recipes/Recipe/${id}`);
+  const resp = await axios.delete(baseURL + `Recipes/${id}`);
   return await resp.status;
 };
 
 export const postRecipes = async (post) => {
-  const resp = await axios.post(baseURL + "Recipes/Recipe", post);
+  const resp = await axios.post(baseURL + "Recipes", post);
   return await resp.status;
 };
 
-//todos
 export const getTodos = async () => {
   const resp = await axios.get(baseURL + "Todos/AllTodos");
   const data = await resp.data;
@@ -130,14 +122,6 @@ export const getTodoById = async (recipeId, userId) => {
   return data;
 };
 
-export const patchTodos = async (recipeId, userId, put) => {
-  const resp = await axios.patch(
-    baseURL + `Todos/Todo/${recipeId}-${userId}`,
-    put
-  );
-  return await resp.status;
-};
-
 export const deleteTodos = async (recipeId, userId) => {
   const resp = await axios.delete(baseURL + `Todos/Todo/${recipeId}-${userId}`);
   return await resp.status;
@@ -148,34 +132,16 @@ export const postTodos = async (post) => {
   return await resp.status;
 };
 
-//Users
 export const getUsers = async () => {
   const resp = await axios.get(baseURL + "Users/AllUsers");
   const data = await resp.data;
   return data;
 };
 
-export const getWinningUsers = async () => {
-  const resp = await axios.get(baseURL + "Users/WinningUsers");
-  const data = await resp.data;
-  return data;
-};
-
-export const getUsersThatAlreadyVoted = async () => {
-  const resp = await axios.get(baseURL + "Users/AlreadyVoted");
-  const data = await resp.data;
-  return data;
-};
-
-export const getUsersById = async (id) => {
+export const getUserById = async (id) => {
   const resp = await axios.get(baseURL + `Users/UserById/${id}`);
   const data = await resp.data;
   return data;
-};
-
-export const patchUsers = async (id, put) => {
-  const resp = await axios.patch(baseURL + `Users/User/${id}`, put);
-  return await resp.status;
 };
 
 export const deleteUsers = async (id) => {
@@ -183,12 +149,16 @@ export const deleteUsers = async (id) => {
   return await resp.status;
 };
 
-export const postUsers = async (post) => {
+export const postUser = async (post) => {
   const resp = await axios.post(baseURL + "Users/User", post);
   return await resp.status;
 };
 
-//votes
+export const getTodosByUserId = async (userId) => {
+  const resp = await axios.get(baseURL + `Users/UserTodos/${userId}`);
+  return resp.data;
+};
+
 export const getVotes = async () => {
   const resp = await axios.get(baseURL + "Votes/AllVotes");
   const data = await resp.data;
@@ -203,19 +173,28 @@ export const getVoteById = async (recipeId, userId) => {
   return data;
 };
 
-export const patchVotes = async (id, put) => {
-  const resp = await axios.patch(baseURL + `Votes/Vote/${id}`, put);
+export const deleteVote = async (recipeId, userId) => {
+  const resp = await axios.delete(baseURL + `Votes/Vote/${recipeId}-${userId}`);
   return await resp.status;
 };
 
-export const deleteVotes = async (id) => {
-  const resp = await axios.delete(baseURL + `Votes/Vote/${id}`);
-  return await resp.status;
-};
-
-export const postVotes = async (post) => {
+export const postVote = async (post) => {
   const resp = await axios.post(baseURL + "Votes/Vote", post);
   return await resp.status;
+};
+
+export const addUpvoteToRecipe = async (recipeId, userId) => {
+  const resp = await axios.post(
+    baseURL + `Recipes/${recipeId}/Upvote/${userId}`
+  );
+  return resp.data;
+};
+
+export const addDownvoteToRecipe = async (recipeId, userId) => {
+  const resp = await axios.post(
+    baseURL + `Recipes/${recipeId}/Downvote/${userId}`
+  );
+  return resp.data;
 };
 
 // TESTING
@@ -224,9 +203,7 @@ export const manualCategories = async () => {
   let data = [];
   const categories = [3, 6, 7];
   for (let i = 0; i < 3; i++) {
-    const resp = await axios.get(
-      baseURL + `Categories/CategoryById/${categories[i]}`
-    );
+    const resp = await axios.get(baseURL + `Categories/${categories[i]}`);
     data.push(resp.data);
   }
   return data;

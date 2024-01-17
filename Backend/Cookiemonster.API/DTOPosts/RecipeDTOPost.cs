@@ -12,9 +12,9 @@ namespace Cookiemonster.API.DTOPosts
         public int TotalUpvotes { get; set; }
 
         public int TotalDownvotes { get; set; }
-
+        [Required]
         public int CategoryId { get; set; }
-
+        [Required]
         public int UserId { get; set; }
     }
 }

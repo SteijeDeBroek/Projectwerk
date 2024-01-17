@@ -11,7 +11,13 @@ using Cookiemonster.Infrastructure.Repositories;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Cookiemonster.API;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using AspNetCoreRateLimit;
+
 using Serilog;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Authentication;
 
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -27,7 +33,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
 
 
 
-// Voor REACT client toegevoegd:
+
 {
     Console.WriteLine("Cors active");
     // Adding CORS Policy
@@ -49,11 +55,11 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<DbContext, AppDbContext>();
-builder.Services.AddScoped<IRepository<Recipe>, RecipeRepository>();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Image>, ImageRepository>();
 builder.Services.AddScoped<IRepository<Todo>, TodoRepository>();
-builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRepository<Vote>, VoteRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -83,6 +89,14 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
     setup.MaximumHistoryEntriesPerEndpoint(50);
     setup.AddHealthCheckEndpoint("EFCore connection", "/healthz");
 }).AddInMemoryStorage();
+
+// RATE LIMITING SERVICES
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.Configure<IpRateLimitPolicies>(builder.Configuration.GetSection("IpRateLimitPolicies"));
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
 
 
 
@@ -142,25 +156,20 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
 
 }).AddInMemoryStorage();
 
-// Na app.UseHttpsRedirection(), voor app.UseSwaggerResponseCheck() en app.MapControllers():
-/*
-// to print json:
-var options = new HealthCheckOptions
-{
-    ResponseWriter = async (c, r) =>
-    {
-        c.Response.ContentType = "application/json";
+//var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
+//{
+//    SslProtocols = SslProtocols.Tls12,
+//    ClientCertificateMode = ClientCertificateMode.AllowCertificate,
+//    ServerCertificate = new X509Certificate2("./certificate.pfx", "password") //password ontbreekt, ilya?
+//};
 
-        var result = JsonSerializer.Serialize(new
-        {
-            status = r.Status.ToString(),
-            errors = r.Entries.Select(e => new { key = e.Key, value = e.Value.Status.ToString() })
-        });
-        await c.Response.WriteAsync(result);
-    }
-};
-
-*/
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ConfigureEndpointDefaults(listenOptions =>
+//    {
+//        listenOptions.UseHttps(httpsConnectionAdapterOptions);
+//    });
+//});
 
 
 
@@ -190,7 +199,8 @@ if (app.Environment.IsDevelopment())
     app.Logger.LogDebug("Development mode");
     app.MapSwagger();
     app.UseSwaggerUI();
-}
+    app.UseIpRateLimiting();
+};
 
 // Configure the HTTP request pipeline.
 // if (!app.Environment.IsDevelopment())

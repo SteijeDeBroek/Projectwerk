@@ -1,14 +1,13 @@
 ﻿using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Infrastructure.EFRepository.Interfaces;
-using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cookiemonster.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class, IDeletable
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
 
         public Repository(AppDbContext context)
@@ -17,16 +16,16 @@ namespace Cookiemonster.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public T? Get(int id1, int id2 = 0)
+        public async Task<T?> GetAsync(int id1, int id2 = 0)
         {
             T? entity;
             if (id2 == 0)
             {
-                entity = _dbSet.Find(id1);
+                entity = await _dbSet.FindAsync(id1);
             }
             else
             {
-                entity = _dbSet.Find(id1, id2);
+                entity = await _dbSet.FindAsync(id1, id2);
             }
             if (entity?.IsDeleted == false)
             {
@@ -35,31 +34,19 @@ namespace Cookiemonster.Infrastructure.Repositories
             return null;
         }
 
-        public List<T> GetAll()
+        public async Task<List<T>> GetAllAsync()
         {
-            return _dbSet.Where(entity => entity.IsDeleted == false).ToList();
+            return await _dbSet.Where(entity => entity.IsDeleted == false).ToListAsync();
         }
 
-        /*public IQueryable<Category> GetThreeLast()
-        {
-            if (typeof(T) == typeof(Category))
-            {
-                DbSet<Category> newDbSet = _dbSet as DbSet<Category>;
-                return newDbSet.Where(entity => !entity.IsDeleted)
-                               .OrderByDescending(entity => entity.StartDate)
-                               .Take(3);
-            }
-            return null;
-        }*/
-
-        public T Create(T entity)
+        public async Task<T> CreateAsync(T entity)
         {
             _dbSet.Add(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return entity;
         }
 
-        public T? Update(T entity, Func<T, object> keySelector)
+        public async Task<T?> UpdateAsync(T entity, Func<T, object> keySelector)
         {
             if (entity.IsDeleted == false)
             {
@@ -67,7 +54,7 @@ namespace Cookiemonster.Infrastructure.Repositories
                 var keyValue = keySelector(entity);
 
                 // Check if the entity is already being tracked
-                var existingEntity = _dbSet.Find(keyValue);
+                var existingEntity = await _dbSet.FindAsync(keyValue);
 
                 if (existingEntity == null)
                 {
@@ -76,24 +63,23 @@ namespace Cookiemonster.Infrastructure.Repositories
                     _context.Entry(entity).State = EntityState.Modified;
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return entity;
             }
 
             return null;
         }
 
-
-        public bool Delete(int id1, int id2 = 0)
+        public async Task<bool> DeleteAsync(int id1, int id2 = 0)
         {
             T? entity;
             if (id2 == 0)
             {
-                entity = _dbSet.Find(id1);
+                entity = await _dbSet.FindAsync(id1);
             }
             else
             {
-                entity = _dbSet.Find(id1, id2);
+                entity = await _dbSet.FindAsync(id1, id2);
             }
             if (entity == null || entity.IsDeleted == true)
                 return false;
@@ -106,13 +92,9 @@ namespace Cookiemonster.Infrastructure.Repositories
             {
                 entity.IsDeleted = true;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public IQueryable<T> Queryable()
-        {
-            return _dbSet.AsQueryable();
-        }
     }
 }
