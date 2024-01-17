@@ -66,5 +66,21 @@ namespace Cookiemonster.Infrastructure.Repositories
                 return false;
             }
         }
+        public async Task<Image> GetRandomImageByRecipeIdAsync(int recipeId)
+        {
+            var images = await _context.Recipes
+                .Where(r => r.RecipeId == recipeId)
+                .SelectMany(r => r.Images)
+                .ToListAsync();
+
+            if (!images.Any())
+            {
+                return null;
+            }
+
+            var random = new Random();
+            int randomIndex = random.Next(images.Count);
+            return images[randomIndex];
+        }
     }
 }

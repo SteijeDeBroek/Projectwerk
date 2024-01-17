@@ -237,5 +237,38 @@ namespace Cookiemonster.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpGet("RandomImage/{recipeId}", Name = "GetRandomImageByRecipeId")]
+        [Produces("application/json")]
+        [SwaggerResponse(200, "Random image fetched successfully")]
+        [SwaggerResponse(404, "Recipe not found or no images available")]
+        public async Task<ActionResult<ImageDTOGet>> GetRandomImageByRecipeIdAsync(int recipeId)
+        {
+            try
+            {
+                var image = await _recipeRepository.GetRandomImageByRecipeIdAsync(recipeId);
+                if (image == null)
+                {
+                    return NotFound("No image found for the given recipe ID.");
+                }
+
+                // Aangezien je een Base64-formaat verwacht voor de afbeelding in je DTO.
+                var imageDto = new ImageDTOGet
+                {
+                    ImageId = image.ImageId,
+                    Base64Image = image.Base64Image,
+                    RecipeId = image.RecipeId
+                };
+
+                return Ok(imageDto);
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+
     }
 }

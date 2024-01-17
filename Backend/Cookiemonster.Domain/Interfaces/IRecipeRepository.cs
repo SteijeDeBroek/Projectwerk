@@ -11,5 +11,6 @@ namespace Cookiemonster.Domain.Interfaces
     {
         Task<bool> AddUpvoteToRecipeAsync(int recipeId, int userId);
         Task<bool> AddDownvoteToRecipeAsync(int recipeId, int userId);
+        Task<Image> GetRandomImageByRecipeIdAsync(int recipeId);
     }
 }

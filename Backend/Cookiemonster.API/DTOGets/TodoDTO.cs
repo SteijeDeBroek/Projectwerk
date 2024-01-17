@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Cookiemonster.Infrastructure.EFRepository.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cookiemonster.API.DTOGets
 {
@@ -8,5 +9,6 @@ namespace Cookiemonster.API.DTOGets
         public int UserId { get; set; }
         [Required]
         public int RecipeId { get; set; }
+
     }
 }
