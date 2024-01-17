@@ -122,12 +122,6 @@ export const getTodos = async () => {
   return data;
 };
 
-export const getRandomizedTodos = async (id, amount) => {
-  const resp = await axios.get(baseURL + `Users/getRandomTodos/${id}-${amount}`);
-  const data = await resp.data;
-  return data;
-};
-
 export const getTodoById = async (recipeId, userId) => {
   const resp = await axios.get(
     baseURL + `Todos/TodoById/${recipeId}-${userId}`
@@ -194,6 +188,12 @@ export const postUsers = async (post) => {
   return await resp.status;
 };
 
+export const getTodosByUserId = async (userId) => {
+  const resp = await axios.get(baseURL + `UserTodos/${userId}`);
+  return resp.data;
+};
+
+
 //votes
 export const getVotes = async () => {
   const resp = await axios.get(baseURL + "Votes/AllVotes");
@@ -222,6 +222,16 @@ export const deleteVotes = async (id) => {
 export const postVotes = async (post) => {
   const resp = await axios.post(baseURL + "Votes/Vote", post);
   return await resp.status;
+};
+
+export const addUpvoteToRecipe = async (recipeId, userId) => {
+  const resp = await axios.post(baseURL + `${recipeId}/Upvote/${userId}`);
+  return resp.data;
+};
+
+export const addDownvoteToRecipe = async (recipeId, userId) => {
+  const resp = await axios.post(baseURL + `${recipeId}/Downvote/${userId}`);
+  return resp.data;
 };
 
 // TESTING
