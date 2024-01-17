@@ -5,6 +5,10 @@ using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -26,6 +30,14 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpGet("GetAsync", Name = "GetAllRecipesAsync")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all recipes",
+            Description = "Returns a list of all recipes.",
+            OperationId = "GetAllRecipes")]
+        [SwaggerResponse(200, "Request successful")]
+        [SwaggerResponse(404, "Recipes not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult<IEnumerable<RecipeDTOGet>>> GetAllRecipesAsync()
         {
             _logger.LogInformation("GetAllRecipes - Fetching all recipes");
@@ -43,6 +55,14 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetRecipeByIdAsync")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get recipe by id",
+            Description = "Returns a single recipe by its ID.",
+            OperationId = "GetRecipeById")]
+        [SwaggerResponse(200, "Request successful")]
+        [SwaggerResponse(404, "Recipe not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult<RecipeDTOGet>> GetAsync(int id)
         {
             _logger.LogInformation($"Get (RecipeById) - Attempting to fetch recipe with ID {id}");
@@ -64,6 +84,15 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpPost(Name = "AddRecipeAsync")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create a recipe",
+            Description = "Creates a new recipe.",
+            OperationId = "CreateRecipe")]
+        [SwaggerResponse(201, "Recipe created")]
+        [SwaggerResponse(400, "Invalid request")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> CreateRecipeAsync(RecipeDTOPost recipe)
         {
             try
@@ -86,6 +115,16 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpPatch("{id}", Name = "UpdateRecipeAsync")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Update a recipe by ID",
+            Description = "Updates an existing recipe by its ID.",
+            OperationId = "UpdateRecipe")]
+        [SwaggerResponse(200, "Recipe updated")]
+        [SwaggerResponse(400, "Invalid request")]
+        [SwaggerResponse(404, "Recipe not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> PatchRecipeAsync(int id, [FromBody] RecipeDTOPost recipe)
         {
             try
@@ -118,6 +157,14 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteRecipeAsync")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Delete a recipe by ID",
+            Description = "Deletes a recipe by its ID.",
+            OperationId = "DeleteRecipe")]
+        [SwaggerResponse(200, "Recipe deleted")]
+        [SwaggerResponse(404, "Recipe not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> DeleteRecipeAsync(int id)
         {
             try

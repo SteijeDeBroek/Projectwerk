@@ -4,7 +4,11 @@ using Cookiemonster.API.DTOPosts;
 using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging; 
+using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cookiemonster.API.Controllers
 {
@@ -14,7 +18,7 @@ namespace Cookiemonster.API.Controllers
     {
         private readonly IRepository<Image> _imageRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<ImageController> _logger; 
+        private readonly ILogger<ImageController> _logger;
 
         public ImageController(IRepository<Image> imageRepository, IMapper mapper, ILogger<ImageController> logger)
         {
@@ -26,6 +30,14 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpGet("GetAsync", Name = "GetAllImagesAsync")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get all images",
+            Description = "Returns a list of all images.",
+            OperationId = "GetAllImages")]
+        [SwaggerResponse(200, "Request successful")]
+        [SwaggerResponse(404, "Images not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult<IEnumerable<ImageDTOGet>>> GetAllImagesAsync()
         {
             _logger.LogInformation("GetAllImages - Fetching all images");
@@ -43,6 +55,14 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetImageByIdAsync")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Get image by id",
+            Description = "Returns a single image by its ID.",
+            OperationId = "GetImageById")]
+        [SwaggerResponse(200, "Request successful")]
+        [SwaggerResponse(404, "Image not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult<ImageDTOGet>> GetAsync(int id)
         {
             _logger.LogInformation($"Get (ImageById) - Attempting to fetch image with ID {id}");
@@ -64,6 +84,15 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpPost(Name = "AddImageAsync")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Create an image",
+            Description = "Creates a new image.",
+            OperationId = "CreateImage")]
+        [SwaggerResponse(201, "Image created")]
+        [SwaggerResponse(400, "Invalid request")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> CreateImageAsync(ImageDTOPost image)
         {
             try
@@ -78,7 +107,7 @@ namespace Cookiemonster.API.Controllers
                 _logger.LogInformation($"CreateImage - Image created with ID: {createdImage.ImageId}");
                 return CreatedAtAction("AddImageAsync", _mapper.Map<ImageDTOGet>(createdImage));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger?.LogError(ex.ToString());
                 return StatusCode(500);
@@ -86,6 +115,16 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpPatch("{id}", Name = "UpdateImageAsync")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Update an image by ID",
+            Description = "Updates an existing image by its ID.",
+            OperationId = "UpdateImage")]
+        [SwaggerResponse(200, "Image updated")]
+        [SwaggerResponse(400, "Invalid request")]
+        [SwaggerResponse(404, "Image not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> PatchImageAsync(int id, [FromBody] ImageDTOPost image)
         {
             try
@@ -109,7 +148,8 @@ namespace Cookiemonster.API.Controllers
 
                 _logger.LogInformation($"PatchImage - Image with ID {id} updated");
                 return Ok();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger?.LogError(ex.ToString());
                 return StatusCode(500);
@@ -117,6 +157,14 @@ namespace Cookiemonster.API.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteImageAsync")]
+        [Produces("application/json")]
+        [SwaggerOperation(
+            Summary = "Delete an image by ID",
+            Description = "Deletes an image by its ID.",
+            OperationId = "DeleteImage")]
+        [SwaggerResponse(200, "Image deleted")]
+        [SwaggerResponse(404, "Image not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> DeleteImageAsync(int id)
         {
             try
@@ -130,7 +178,8 @@ namespace Cookiemonster.API.Controllers
 
                 _logger.LogInformation($"DeleteImage - Image with ID {id} deleted");
                 return Ok();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger?.LogError(ex.ToString());
                 return StatusCode(500);

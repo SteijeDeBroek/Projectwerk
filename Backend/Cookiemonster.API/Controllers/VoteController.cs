@@ -4,6 +4,7 @@ using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,56 +23,78 @@ namespace Cookiemonster.API.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/votes
         [HttpGet("AllVotes")]
         [Produces("application/json")]
         [SwaggerOperation(
             Summary = "Get all votes",
             Description = "Retrieves all votes.",
-            OperationId = "GetAllVotes"
-        )]
+            OperationId = "GetAllVotes")]
+        [SwaggerResponse(200, "Request successful")]
+        [SwaggerResponse(404, "Votes not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult<IEnumerable<VoteDTO>>> GetAllVotesAsync()
         {
-            var votes = await _voteRepository.GetAllAsync();
-            return Ok(_mapper.Map<List<VoteDTO>>(votes));
+            try
+            {
+                var votes = await _voteRepository.GetAllAsync();
+                if (votes == null) return NotFound();
+                return Ok(_mapper.Map<List<VoteDTO>>(votes));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
-        // GET: api/votes/5-4
         [HttpGet("VoteById/{recipeId}-{userId}")]
         [Produces("application/json")]
         [SwaggerOperation(
             Summary = "Get a vote by RecipeId and UserId",
             Description = "Retrieves a vote by RecipeId and UserId.",
-            OperationId = "GetVoteById"
-        )]
+            OperationId = "GetVoteById")]
+        [SwaggerResponse(200, "Request successful")]
+        [SwaggerResponse(404, "Vote not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult<VoteDTO>> GetVoteByIdAsync(int recipeId, int userId)
         {
-            var vote = await _voteRepository.GetAsync(recipeId, userId);
-            if (vote == null)
+            try
             {
-                return NotFound();
+                var vote = await _voteRepository.GetAsync(recipeId, userId);
+                if (vote == null) return NotFound();
+                return Ok(_mapper.Map<VoteDTO>(vote));
             }
-            return Ok(_mapper.Map<VoteDTO>(vote));
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
-        // POST: api/votes
         [HttpPost("Vote")]
         [Consumes("application/json")]
         [SwaggerOperation(
             Summary = "Create a new vote",
             Description = "Creates a new vote.",
-            OperationId = "CreateVote"
-        )]
+            OperationId = "CreateVote")]
+        [SwaggerResponse(201, "Vote created")]
+        [SwaggerResponse(400, "Invalid request")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> CreateVoteAsync([FromBody] VoteDTO voteDto)
         {
-            if (voteDto == null || !ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (voteDto == null || !ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            var vote = _mapper.Map<Vote>(voteDto);
-            var createdVote = await _voteRepository.CreateAsync(vote);
-            return CreatedAtAction(nameof(GetVoteByIdAsync), new { recipeId = createdVote.RecipeId, userId = createdVote.UserId }, _mapper.Map<VoteDTO>(createdVote));
+                var vote = _mapper.Map<Vote>(voteDto);
+                var createdVote = await _voteRepository.CreateAsync(vote);
+                return CreatedAtAction(nameof(GetVoteByIdAsync), new { recipeId = createdVote.RecipeId, userId = createdVote.UserId }, _mapper.Map<VoteDTO>(createdVote));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         /*
@@ -98,22 +121,28 @@ namespace Cookiemonster.API.Controllers
             return Ok();
         }
         */
-        // DELETE: api/votes/5-4
+
         [HttpDelete("Vote/{recipeId}-{userId}")]
         [Produces("application/json")]
         [SwaggerOperation(
             Summary = "Delete a vote by RecipeId and UserId",
             Description = "Deletes a vote by RecipeId and UserId.",
-            OperationId = "DeleteVote"
-        )]
+            OperationId = "DeleteVote")]
+        [SwaggerResponse(200, "Vote deleted")]
+        [SwaggerResponse(404, "Vote not found")]
+        [SwaggerResponse(500, "Internal Server Error")]
         public async Task<ActionResult> DeleteVoteAsync(int recipeId, int userId)
         {
-            var deleted = await _voteRepository.DeleteAsync(recipeId, userId);
-            if (!deleted)
+            try
             {
-                return NotFound();
+                var deleted = await _voteRepository.DeleteAsync(recipeId, userId);
+                if (!deleted) return NotFound();
+                return Ok();
             }
-            return Ok();
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
     }
 }
