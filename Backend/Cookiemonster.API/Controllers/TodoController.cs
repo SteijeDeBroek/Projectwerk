@@ -25,7 +25,6 @@ namespace Cookiemonster.API.Controllers
             _logger = logger;
         }
 
-        // GET: api/todos
         [HttpGet("AllTodos")]
         [Produces("application/json")]
         [SwaggerOperation(
@@ -39,7 +38,6 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<List<TodoDTO>>(todos));
         }
 
-        // GET: api/todos/5-4
         [HttpGet("TodoById/{recipeId}-{userId}")]
         [Produces("application/json")]
         [SwaggerOperation(
@@ -49,7 +47,7 @@ namespace Cookiemonster.API.Controllers
         public async Task<ActionResult<TodoDTO>> GetAsync(int recipeId, int userId)
         {
             _logger.LogInformation($"Fetching todo with RecipeId {recipeId} and UserId {userId}");
-            var todo = await _todoRepository.GetAsync(recipeId); // Adjust this if needed to support composite keys
+            var todo = await _todoRepository.GetAsync(recipeId, userId);
             if (todo == null)
             {
                 _logger.LogWarning($"Todo not found with RecipeId {recipeId} and UserId {userId}");
@@ -58,7 +56,6 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<TodoDTO>(todo));
         }
 
-        // POST: api/todos
         [HttpPost("Todo")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -103,7 +100,6 @@ namespace Cookiemonster.API.Controllers
         }*/
 
 
-        // DELETE: api/todos/5-4
         [HttpDelete("Todo/{recipeId}-{userId}")]
         [Produces("application/json")]
         [SwaggerOperation(
@@ -113,7 +109,7 @@ namespace Cookiemonster.API.Controllers
         public async Task<ActionResult> DeleteAsync(int recipeId, int userId)
         {
             _logger.LogInformation($"Attempting to delete todo with RecipeId {recipeId} and UserId {userId}");
-            var deleted = await _todoRepository.DeleteAsync(recipeId); // Adjust this if needed to support composite keys
+            var deleted = await _todoRepository.DeleteAsync(recipeId, userId);
             if (!deleted)
             {
                 _logger.LogWarning($"Todo not found or could not be deleted with RecipeId {recipeId} and UserId {userId}");

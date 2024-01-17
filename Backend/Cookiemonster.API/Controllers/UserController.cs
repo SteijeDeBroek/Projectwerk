@@ -29,7 +29,6 @@ namespace Cookiemonster.API.Controllers
             _logger = logger;
         }
 
-        // GET: api/users
         [HttpGet("AllUsers")]
         [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<UserDTOGet>>> GetAllUsersAsync()
@@ -39,7 +38,6 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<List<UserDTOGet>>(users));
         }
 
-        // GET: api/users/5
         [HttpGet("UserById/{id}")]
         [Produces("application/json")]
         public async Task<ActionResult<UserDTOGet>> GetUserByIdAsync(int id)
@@ -54,7 +52,6 @@ namespace Cookiemonster.API.Controllers
             return Ok(_mapper.Map<UserDTOGet>(user));
         }
 
-        // POST: api/users
         [HttpPost("User")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -105,7 +102,6 @@ namespace Cookiemonster.API.Controllers
         }
         */
 
-        // DELETE: api/users/5
         [HttpDelete("User/{id}")]
         [Produces("application/json")]
         [SwaggerOperation(

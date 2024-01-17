@@ -25,7 +25,6 @@ namespace Cookiemonster.API.Controllers
             _logger?.LogTrace("-> ImageController::ImageController");
         }
 
-        // GET: api/images
         [HttpGet("GetAsync", Name = "GetAllImagesAsync")]
         public async Task<ActionResult<IEnumerable<ImageDTOGet>>> GetAllImagesAsync()
         {

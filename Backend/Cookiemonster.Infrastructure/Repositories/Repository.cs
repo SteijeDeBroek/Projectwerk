@@ -1,12 +1,7 @@
 ﻿using Cookiemonster.Domain.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Infrastructure.EFRepository.Interfaces;
-using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cookiemonster.Infrastructure.Repositories
 {
@@ -21,32 +16,49 @@ namespace Cookiemonster.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T?> GetAsync(int id)
+        public async Task<T?> GetAsync(int id1, int id2 = 0)
         {
-            var entity = await _dbSet.FindAsync(id);
-            return entity?.IsDeleted == false ? entity : null;
+            T? entity;
+            if (id2 == 0)
+            {
+                entity = await _dbSet.FindAsync(id1);
+            }
+            else
+            {
+                entity = await _dbSet.FindAsync(id1, id2);
+            }
+            if (entity?.IsDeleted == false)
+            {
+                return entity;
+            }
+            return null;
         }
 
         public async Task<List<T>> GetAllAsync()
         {
-            return await _dbSet.Where(entity => !entity.IsDeleted).ToListAsync();
+            return await _dbSet.Where(entity => entity.IsDeleted == false).ToListAsync();
         }
 
         public async Task<T> CreateAsync(T entity)
         {
-            await _dbSet.AddAsync(entity);
+            _dbSet.Add(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
         public async Task<T?> UpdateAsync(T entity, Func<T, object> keySelector)
         {
-            if (!entity.IsDeleted)
+            if (entity.IsDeleted == false)
             {
+                // Get the primary key value
                 var keyValue = keySelector(entity);
+
+                // Check if the entity is already being tracked
                 var existingEntity = await _dbSet.FindAsync(keyValue);
+
                 if (existingEntity == null)
                 {
+                    // If not tracked, attach and set the state to Modified
                     _dbSet.Attach(entity);
                     _context.Entry(entity).State = EntityState.Modified;
                 }
@@ -58,10 +70,18 @@ namespace Cookiemonster.Infrastructure.Repositories
             return null;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id1, int id2 = 0)
         {
-            var entity = await _dbSet.FindAsync(id);
-            if (entity == null || entity.IsDeleted)
+            T? entity;
+            if (id2 == 0)
+            {
+                entity = await _dbSet.FindAsync(id1);
+            }
+            else
+            {
+                entity = await _dbSet.FindAsync(id1, id2);
+            }
+            if (entity == null || entity.IsDeleted == true)
                 return false;
 
             if (entity.IsDeletable)
@@ -72,14 +92,9 @@ namespace Cookiemonster.Infrastructure.Repositories
             {
                 entity.IsDeleted = true;
             }
-
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public IQueryable<T> Queryable()
-        {
-            return _dbSet.AsQueryable();
-        }
     }
 }

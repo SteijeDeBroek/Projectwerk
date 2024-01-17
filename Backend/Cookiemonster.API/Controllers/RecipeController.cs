@@ -25,7 +25,6 @@ namespace Cookiemonster.API.Controllers
             _logger?.LogTrace("-> RecipeController::RecipeController");
         }
 
-        // GET: api/recipes
         [HttpGet("GetAsync", Name = "GetAllRecipesAsync")]
         public async Task<ActionResult<IEnumerable<RecipeDTOGet>>> GetAllRecipesAsync()
         {

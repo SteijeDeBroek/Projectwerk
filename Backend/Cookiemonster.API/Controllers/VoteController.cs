@@ -46,7 +46,7 @@ namespace Cookiemonster.API.Controllers
         )]
         public async Task<ActionResult<VoteDTO>> GetVoteByIdAsync(int recipeId, int userId)
         {
-            var vote = await _voteRepository.GetAsync(recipeId); // Adjust this if needed to support composite keys
+            var vote = await _voteRepository.GetAsync(recipeId, userId);
             if (vote == null)
             {
                 return NotFound();
@@ -108,7 +108,7 @@ namespace Cookiemonster.API.Controllers
         )]
         public async Task<ActionResult> DeleteVoteAsync(int recipeId, int userId)
         {
-            var deleted = await _voteRepository.DeleteAsync(recipeId); // Adjust this if needed to support composite keys
+            var deleted = await _voteRepository.DeleteAsync(recipeId, userId);
             if (!deleted)
             {
                 return NotFound();
