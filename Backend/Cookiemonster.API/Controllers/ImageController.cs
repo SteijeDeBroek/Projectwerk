@@ -36,7 +36,7 @@ namespace Cookiemonster.API.Controllers
         public ActionResult<IEnumerable<ImageDTOGet>> GetAllImages()
         {
             _logger.LogInformation("GetAllImages - Fetching all images");
-            var images = _imageRepository.GetAll();
+            var images = _imageRepository.GetAllAsync();
             return Ok(_mapper.Map<List<ImageDTOGet>>(images));
         }
 
@@ -51,7 +51,7 @@ namespace Cookiemonster.API.Controllers
         public ActionResult<ImageDTOGet> GetImageById(int id)
         {
             _logger.LogInformation($"GetImageById - Fetching image with ID {id}");
-            var image = _imageRepository.Get(id);
+            var image = _imageRepository.GetAsync(id);
             if (image == null)
             {
                 _logger.LogWarning($"GetImageById - Image with ID {id} not found");
@@ -77,7 +77,7 @@ namespace Cookiemonster.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdImage = _imageRepository.Create(_mapper.Map<Image>(image));
+            var createdImage = _imageRepository.CreateAs(_mapper.Map<Image>(image));
             _logger.LogInformation($"CreateImage - Image created with ID: {createdImage.ImageId}");
             return CreatedAtAction(nameof(GetImageById), new { id = createdImage.ImageId }, _mapper.Map<ImageDTOGet>(createdImage));
         }
@@ -99,7 +99,7 @@ namespace Cookiemonster.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var previousImage = _imageRepository.Get(id);
+            var previousImage = _imageRepository.GetAsync(id);
             if (previousImage == null)
             {
                 _logger.LogInformation($"PatchImage - Image with ID {id} not found");
@@ -108,7 +108,7 @@ namespace Cookiemonster.API.Controllers
 
             Image mappedImage = _mapper.Map<Image>(image);
             mappedImage.ImageId = id;
-            _imageRepository.Update(mappedImage, x => x.ImageId);
+            _imageRepository.UpdateAsync(mappedImage, x => x.ImageId);
 
             _logger.LogInformation($"PatchImage - Image with ID {id} updated");
             return Ok();
@@ -124,7 +124,7 @@ namespace Cookiemonster.API.Controllers
         )]
         public ActionResult DeleteImage(int id)
         {
-            var deleted = _imageRepository.Delete(id);
+            var deleted = _imageRepository.DeleteAsync(id);
             if (!deleted)
             {
                 _logger.LogInformation($"DeleteImage - Image with ID {id} not found or could not be deleted");

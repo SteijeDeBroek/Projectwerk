@@ -9,11 +9,9 @@ namespace Cookiemonster.Domain.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        public IQueryable<Recipe> GetAllRecipes(int id);
-        public IQueryable<Category> GetMostRecent(int amount);
-        public List<int> GetSortedWinningImages(Recipe winningRecipe);
-
-        // public Recipe? GetWinningRecipe(int amount);
-        public IQueryable<Recipe>? GetSortedWinningRecipes(int id, int amount);
+        Task<List<Recipe>> GetAllRecipesAsync(int id);
+        Task<List<Category>> GetMostRecentAsync(int amount);
+        Task<List<int>> GetSortedWinningImagesAsync(Recipe winningRecipe);
+        Task<List<Recipe>> GetSortedWinningRecipesAsync(int id, int amount);
     }
 }

@@ -59,14 +59,13 @@ namespace Cookiemonster.API.Controllers
         [SwaggerOperation(
             Summary = "Get sorted winning recipes",
             Description = "Fetches sorted winning recipes for a category with a specified amount.",
-            OperationId = "GetSortedWinningRecipes"
-        )]
-        public ActionResult<IEnumerable<RecipeDTOGet>> GetSortedWinningRecipes(int id, int amount)
+            OperationId = "GetSortedWinningRecipes")]
+        public async Task<ActionResult<IEnumerable<RecipeDTOGet>>> GetSortedWinningRecipes(int id, int amount)
         {
             _logger.LogInformation($"GetSortedWinningRecipes - Fetching sorted winning recipes for category ID {id} with amount {amount}");
-            var winningRecipes = _categoryRepository.GetSortedWinningRecipes(id, amount)?.ToList();
+            var winningRecipes = await _categoryRepository.GetSortedWinningRecipesAsync(id, amount);
 
-            if (winningRecipes == null)
+            if (winningRecipes == null || !winningRecipes.Any())
             {
                 _logger.LogWarning($"GetSortedWinningRecipes - No winning recipes found for category ID {id}");
                 return NotFound();
@@ -76,11 +75,13 @@ namespace Cookiemonster.API.Controllers
 
             for (int i = 0; i < mappedRecipes.Count; i++)
             {
-                mappedRecipes[i].ImageIds = _categoryRepository.GetSortedWinningImages(winningRecipes[i]);
+                var imageIds = await _categoryRepository.GetSortedWinningImagesAsync(winningRecipes[i]);
+                mappedRecipes[i].ImageIds = imageIds;
             }
 
             return Ok(mappedRecipes);
         }
+
 
         [HttpPost("Category")]
         [Consumes("application/json")]
@@ -142,7 +143,7 @@ namespace Cookiemonster.API.Controllers
         )]
         public ActionResult DeleteCategory(int id)
         {
-            var deleted = _categoryRepository.Delete(id);
+            var deleted = _categoryRepository.DeleteAsync(id);
             if (!deleted)
             {
                 _logger.LogInformation($"DeleteCategory - Category with ID {id} not found or could not be deleted");

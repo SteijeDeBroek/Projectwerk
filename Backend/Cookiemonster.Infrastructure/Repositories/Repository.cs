@@ -3,12 +3,16 @@ using Cookiemonster.Infrastructure.EFRepository.Context;
 using Cookiemonster.Infrastructure.EFRepository.Interfaces;
 using Cookiemonster.Infrastructure.EFRepository.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cookiemonster.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class, IDeletable
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
 
         public Repository(AppDbContext context)
@@ -17,85 +21,47 @@ namespace Cookiemonster.Infrastructure.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public T? Get(int id1, int id2 = 0)
+        public async Task<T?> GetAsync(int id)
         {
-            T? entity;
-            if (id2 == 0)
-            {
-                entity = _dbSet.Find(id1);
-            }
-            else
-            {
-                entity = _dbSet.Find(id1, id2);
-            }
-            if (entity?.IsDeleted == false)
-            {
-                return entity;
-            }
-            return null;
+            var entity = await _dbSet.FindAsync(id);
+            return entity?.IsDeleted == false ? entity : null;
         }
 
-        public List<T> GetAll()
+        public async Task<List<T>> GetAllAsync()
         {
-            return _dbSet.Where(entity => entity.IsDeleted == false).ToList();
+            return await _dbSet.Where(entity => !entity.IsDeleted).ToListAsync();
         }
 
-        /*public IQueryable<Category> GetThreeLast()
+        public async Task<T> CreateAsync(T entity)
         {
-            if (typeof(T) == typeof(Category))
-            {
-                DbSet<Category> newDbSet = _dbSet as DbSet<Category>;
-                return newDbSet.Where(entity => !entity.IsDeleted)
-                               .OrderByDescending(entity => entity.StartDate)
-                               .Take(3);
-            }
-            return null;
-        }*/
-
-        public T Create(T entity)
-        {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
         }
 
-        public T? Update(T entity, Func<T, object> keySelector)
+        public async Task<T?> UpdateAsync(T entity, Func<T, object> keySelector)
         {
-            if (entity.IsDeleted == false)
+            if (!entity.IsDeleted)
             {
-                // Get the primary key value
                 var keyValue = keySelector(entity);
-
-                // Check if the entity is already being tracked
-                var existingEntity = _dbSet.Find(keyValue);
-
+                var existingEntity = await _dbSet.FindAsync(keyValue);
                 if (existingEntity == null)
                 {
-                    // If not tracked, attach and set the state to Modified
                     _dbSet.Attach(entity);
                     _context.Entry(entity).State = EntityState.Modified;
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return entity;
             }
 
             return null;
         }
 
-
-        public bool Delete(int id1, int id2 = 0)
+        public async Task<bool> DeleteAsync(int id)
         {
-            T? entity;
-            if (id2 == 0)
-            {
-                entity = _dbSet.Find(id1);
-            }
-            else
-            {
-                entity = _dbSet.Find(id1, id2);
-            }
-            if (entity == null || entity.IsDeleted == true)
+            var entity = await _dbSet.FindAsync(id);
+            if (entity == null || entity.IsDeleted)
                 return false;
 
             if (entity.IsDeletable)
@@ -106,7 +72,8 @@ namespace Cookiemonster.Infrastructure.Repositories
             {
                 entity.IsDeleted = true;
             }
-            _context.SaveChanges();
+
+            await _context.SaveChangesAsync();
             return true;
         }
 
