@@ -1,16 +1,30 @@
 /* eslint-disable no-unused-vars */
 
-// exeptie op 0 fotos
 import React from "react";
 import { useState } from "react";
 import "../css/Upload.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-//formik en yup hier alsook toepassen
+const fileCheck = Yup.mixed()
+  .test("fileFormat", "Unsupported Format", function (value) {
+    if (value) {
+      return ["image/jpg", "image/jpeg"].includes(value.type);
+    }
+    return true;
+  })
+  .test("fileSize", "File too large", function (value) {
+    if (value) {
+      return value.size <= 5_000_000;
+    }
+    return true;
+  });
 
 const uploadSchema = Yup.object().shape({
   titel: Yup.string().trim().required().min(3).max(50),
+  file: fileCheck,
+  file2: fileCheck.nullable(),
+  file3: fileCheck.nullable(),
 });
 
 function UploadComponent() {
@@ -20,11 +34,14 @@ function UploadComponent() {
     useFormik({
       initialValues: {
         titel: "",
+        file: null,
+        file2: null,
+        file3: null,
       },
       onSubmit: (values) => {
         console.log(values);
         // post request API
-        handleUpload();
+        uploadFiles();
       },
       validationSchema: uploadSchema,
     });
@@ -62,7 +79,7 @@ function UploadComponent() {
     return base64Files;
   };
 
-  const handleUpload = () => {
+  const uploadFiles = () => {
     convertAllFiles()
       .then((result) => {
         const convertedFiles = result;
@@ -72,20 +89,6 @@ function UploadComponent() {
       .catch((error) => {
         console.log(error);
       });
-
-    // const formData = new FormData();
-    // formData.append("files", files);
-    // fetch("url", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     console.log("succes", result);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error: ", error);
-    //   });
   };
 
   return (
@@ -118,9 +121,9 @@ function UploadComponent() {
             name="file"
             onChange={(event) => handleFileChange(event, 0)}
           />
+          {errors.file ? <p>{errors.file}</p> : null}
         </div>
         <div>
-          {" "}
           <input
             className="upload-input"
             type="file"
@@ -128,6 +131,7 @@ function UploadComponent() {
             onChange={(event) => handleFileChange(event, 1)}
             style={{ margin: "50px" }}
           />
+          {errors.file2 ? <p>{errors.file2}</p> : null}
         </div>
         <div>
           <input
@@ -137,13 +141,13 @@ function UploadComponent() {
             onChange={(event) => handleFileChange(event, 2)}
             style={{ margin: "10px" }}
           />
+          {errors.file3 ? <p>{errors.file3}</p> : null}
         </div>
 
         <button
           disabled={!isValid || !dirty}
           style={{ margin: "50px" }}
           className="border border-blue-300 rounded bg-blue-300 p-3  hover:bg-blue-600 focus:bg-blue-600"
-          onClick={handleUpload}
         >
           <p className="font font-medium">Upload</p>
         </button>
