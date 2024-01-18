@@ -51,6 +51,19 @@ const RecipeDetailsPage = () => {
       }
       return null; // Ignore empty sentences
     });
+    return sentences.map((sentence, index) => (
+      <p
+        key={index}
+        style={{
+          padding: "0.5rem",
+          fontSize: "1rem",
+          textAlign: "center",
+          color: "black",
+        }}
+      >
+        {sentence.trim()}
+      </p>
+    ));
   };
 
   if (isLoading) {

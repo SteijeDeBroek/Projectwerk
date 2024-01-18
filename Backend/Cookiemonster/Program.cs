@@ -42,7 +42,7 @@ builder.Host.UseSerilog((ctx, lc) => lc
         options.AddPolicy(name: MyAllowSpecificOrigins,
                           policy =>
                           {
-                              policy.WithOrigins("http://localhost:8000") // Add the client's origin
+                              policy.WithOrigins("http://localhost:8000", "https://localhost:8000") // Add the client's origin
                                     .AllowAnyHeader()
                                     .AllowAnyMethod()
                                     .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));

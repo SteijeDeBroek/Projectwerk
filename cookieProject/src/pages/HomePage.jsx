@@ -4,7 +4,8 @@ import CompetitiesComponent from "../components/CompetitiesComponent";
 const HomePage = () => {
   return (
     <>
-      <HomeBannerComponent />,<CompetitiesComponent />
+      <HomeBannerComponent />
+      <CompetitiesComponent />
     </>
   );
 };
