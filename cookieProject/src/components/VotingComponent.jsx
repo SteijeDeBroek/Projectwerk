@@ -5,15 +5,17 @@ import {
   getRecipeById,
   postVote,
   getRandomImageByRecipeId,
+  getCategoryById,
+  deleteTodos,
 } from "../api";
 
 const VotingComponent = () => {
-  // const [voted, setVoted] = useState(false);
   const [voteCount, setVoteCount] = useState(0);
   const [chefTitle, setChefTitle] = useState("");
   const [todos, setTodos] = useState([]);
   const [recipe, setRecipe] = useState("");
   const [image, setImage] = useState("");
+  const [category, setCategory] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loadingRandomTodos, setLoadingRandomTodos] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,10 +43,11 @@ const VotingComponent = () => {
           todos[currentIndex].recipeId
         );
         const recipe = await getRecipeById(todos[currentIndex].recipeId);
+        const category = await getCategoryById(recipe.categoryId);
 
-        // Use the fetched data as needed
         setImage(image);
         setRecipe(recipe);
+        setCategory(category);
         setIsLoading(false);
       } catch (err) {
         console.error("Error fetching image and title:", err);
@@ -56,24 +59,15 @@ const VotingComponent = () => {
     }
   }, [todos, currentIndex, loadingRandomTodos]);
 
-  // TODO: DELETE THIS SHIT
-  useEffect(() => {
-    console.log(todos);
-  }, [todos]);
-
   const handleVote = async (vote) => {
     try {
-      // var date = new Date();
-      // var currentDate = date.toISOString();
-
       const postData = {
         vote1: vote,
-        // timestamp: currentDate,
         recipeId: todos[currentIndex].recipeId,
         userId: todos[currentIndex].userId,
       };
-      // replace with database interaction
       await postVote(postData);
+      await deleteTodos(postData.recipeId, postData.userId);
 
       setTodos((td) =>
         td.filter((i) => i.recipeId != todos[currentIndex].recipeId)
@@ -86,12 +80,10 @@ const VotingComponent = () => {
   };
 
   const handleNext = () => {
-    // Increment the index to display the next image and title
     setCurrentIndex((prevIndex) => (prevIndex + 1) % todos.length);
   };
 
   useEffect(() => {
-    // Update chef title based on vote count
     if (voteCount === 10) {
       setChefTitle("Hobby-kok");
     } else if (voteCount === 20) {
@@ -119,7 +111,7 @@ const VotingComponent = () => {
     <div className="max-w-md mx-auto mt-10 p-8 border rounded-lg shadow-lg bg-white">
       <div className="mb-4">
         <p className="text-3xl font-bold text-center text-blue-800 mb-4">
-          Cast your vote!
+          Stem op {category.name}
         </p>
         <img
           src={"data:image/jpeg;base64," + image.base64Image}
