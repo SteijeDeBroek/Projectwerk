@@ -6,6 +6,7 @@ const RecipeDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [recipe, setRecipe] = useState(null);
+  const [sentenceNumber, setSentenceNumber] = useState(0);
 
   const { recipeId } = useParams();
 
@@ -28,6 +29,28 @@ const RecipeDetailsPage = () => {
     }
     const sentences = recipe.description.split(".");
 
+    return sentences.map((sentence, index) => {
+      const trimmedSentence = sentence.trim();
+      if (trimmedSentence) {
+        return (
+          <p
+            key={index}
+            style={{
+              padding: "0.5rem",
+              fontSize: "1rem",
+              textAlign: "center",
+              color: "black",
+            }}
+          >
+            <span style={{ fontWeight: "bold" }}>{`${
+              sentenceNumber + index + 1
+            }. `}</span>
+            {trimmedSentence}
+          </p>
+        );
+      }
+      return null; // Ignore empty sentences
+    });
     return sentences.map((sentence, index) => (
       <p
         key={index}
