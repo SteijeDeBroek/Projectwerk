@@ -7,6 +7,7 @@ namespace Cookiemonster.API.DTOGets
         public int RecipeId { get; set; }
 
         [MaxLength(255)]
+        [Required]
         public string Title { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
