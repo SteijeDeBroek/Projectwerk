@@ -49,7 +49,7 @@ const RecipeDetailsPage = () => {
           </p>
         );
       }
-      return null; // Ignore empty sentences
+      return null; // negeer lege zinnen door een null te returnen na het laatste .
     });
   };
 

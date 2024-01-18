@@ -7,6 +7,7 @@ namespace Cookiemonster.API.DTOGets
         public int CategoryId { get; set; }
 
         [MaxLength(500)]
+        [Required]
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Base64Banner { get; set; } = string.Empty;
