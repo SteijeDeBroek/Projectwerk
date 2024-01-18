@@ -43,7 +43,6 @@ const CompetitiesComponent = () => {
         const competitionsResponse = await getMostRecentCategories(3);
         setCompetities(competitionsResponse);
 
-        // Initialiseer een lege array voor de recepten
         let allRecipes = [];
 
         // Loop door de competitiedata en haal voor elke competitie de bijbehorende recepten op

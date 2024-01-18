@@ -1,6 +1,6 @@
 import { pages } from "../routes/Pages";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png"; // Zorg ervoor dat het pad naar het logo correct is
+import logo from "../assets/logo.png";
 
 const HeaderComponent = () => {
   const linkerkant = ["Home", "Upload", "Vote"]; // Links voor de linkerkant

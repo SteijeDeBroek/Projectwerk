@@ -63,7 +63,7 @@ const VotingComponent = () => {
     try {
       var date = new Date();
       var currentDate = date.toISOString();
-      // replace with database interaction
+
       if (voteType === "like") {
         await postVote({
           vote1: true,
@@ -88,13 +88,12 @@ const VotingComponent = () => {
   };
 
   const handleNext = () => {
-    // Increment the index to display the next image and title
     setCurrentIndex((prevIndex) => (prevIndex + 1) % todos.length);
     setVoted(false); // Reset voted state for the new dish
   };
 
   useEffect(() => {
-    // Update chef title based on vote count
+    // update chef title aan de hand van voteCount
     if (voteCount === 10) {
       setChefTitle("Hobby-kok");
     } else if (voteCount === 20) {
